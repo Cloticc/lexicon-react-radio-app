@@ -1,7 +1,7 @@
 <!-- url https://cloticc.github.io/  -->
 # My version of the Radio app
 
-This is my version of the Radio app. I have used the Sveriges Radio API to fetch data and display it in a user-friendly way. The app is built with React and uses React Router to handle the different pages/views. I have also used Sass to style the app.
+This is my version of the Radio app. I have used the Sveriges Radio API to fetch data and display it in a user-friendly way. The app is built with Vite/React and uses React Router to handle the different pages/views.
 
 ## How to run the app
 
