@@ -13,7 +13,7 @@ This is my version of the Radio app. I have used the Sveriges Radio API to fetch
 6. If you want to run the tests, run `npm test`
 7. If you want to build the app, run `npm run build`
 8. If you want to deploy the app, run `npm run deploy`
-9. If you want to see the deployed app, go to [https://cloticc.github.io/](https://cloticc.github.io/)
+9. If you want to see the deployed app, go to [Radio app](https://cloticc.github.io/lexicon-react-radio-app/)
 
 # Exercise React Radio
 
