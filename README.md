@@ -1,6 +1,6 @@
 # Radio App
 
-. The project is to build a radio app using the Sveriges Radio API. The app should be able to show a list of channels, programs and categories. 
+The project is to build a radio app using the Sveriges Radio API. The app should be able to show a list of channels, programs and categories. 
 
 ## Live Demo
 
