@@ -8,13 +8,13 @@ import { fetchData } from '../api/fetchData';
 
 
 
-interface Pagination {
-  page: number;
-  size: number;
-  totalhits: number;
-  totalpages: number;
-  nextpage: string;
-}
+// interface Pagination {
+//   page: number;
+//   size: number;
+//   totalhits: number;
+//   totalpages: number;
+//   nextpage: string;
+// }
 
 interface SocialMediaPlatform {
   platform: string;
@@ -55,11 +55,11 @@ interface Program {
   responsibleeditor: string;
 }
 
-interface Sr {
-  copyright: string;
-  pagination: Pagination;
-  programs: Program[];
-}
+// interface Sr {
+//   copyright: string;
+//   pagination: Pagination;
+//   programs: Program[];
+// }
 export const Program: React.FC = () => {
   const [programCategories, setProgramCategories] = useState<ProgramCategory[]>([]);
   const [programs, setPrograms] = useState<Program[]>([]);

@@ -1,3 +1,20 @@
+<!-- url https://cloticc.github.io/  -->
+# My version of the Radio app
+
+This is my version of the Radio app. I have used the Sveriges Radio API to fetch data and display it in a user-friendly way. The app is built with React and uses React Router to handle the different pages/views. I have also used Sass to style the app.
+
+## How to run the app
+
+1. Clone the repository
+2. Run `npm install` to install the dependencies
+3. Run `npm start` to start the app or `npm run dev` to start the app in development mode
+4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser
+5. Enjoy!
+6. If you want to run the tests, run `npm test`
+7. If you want to build the app, run `npm run build`
+8. If you want to deploy the app, run `npm run deploy`
+9. If you want to see the deployed app, go to [https://cloticc.github.io/](https://cloticc.github.io/)
+
 # Exercise React Radio
 
 In this exercise you will create a Radio application that is using the "Sveriges Radios öppna API". To your help you have this scaffolded repo that includes React Router and Sass. The React router you will need in order to handle the different pages/views but Sass is something that is optional for you.
