@@ -6,7 +6,7 @@ The project is to build a radio app using the Sveriges Radio API. The app should
 
 You can view a live demo of the project [here](https://cloticc.github.io/lexicon-react-radio-app/)
 
-## Installation
+## Installation local environment
 
 To run this project locally, follow these steps:
 
