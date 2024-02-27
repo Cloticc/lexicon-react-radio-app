@@ -1,19 +1,18 @@
-<!-- url https://cloticc.github.io/  -->
-# My version of the Radio app
+# Radio App
 
-This is my version of the Radio app. I have used the Sveriges Radio API to fetch data and display it in a user-friendly way. The app is built with Vite/React and uses React Router to handle the different pages/views.
+This is a project that is part of the Technigo bootcamp. The project is to build a radio app using the Sveriges Radio API. The app should be able to show a list of channels, programs and categories. 
 
-## How to run the app
+## Live Demo
+
+You can view a live demo of the project [here](https://cloticc.github.io/lexicon-react-radio-app/)
+
+## Installation
+
+To run this project locally, follow these steps:
 
 1. Clone the repository
-2. Run `npm install` to install the dependencies
-3. Run `npm start` to start the app or `npm run dev` to start the app in development mode
-4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser
-5. Enjoy!
-6. If you want to run the tests, run `npm test`
-7. If you want to build the app, run `npm run build`
-8. If you want to deploy the app, run `npm run deploy`
-9. If you want to see the deployed app, go to [Radio app](https://cloticc.github.io/lexicon-react-radio-app/)
+2. Install the dependencies with `npm install`
+3. Start the development server with `npm run dev`
 
 # Exercise React Radio
 
