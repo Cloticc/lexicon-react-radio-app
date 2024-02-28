@@ -7,6 +7,7 @@ import { LoginForm } from "./components/LoginForm";
 import { MyPage } from "./components/MyPage";
 import { Navbar } from "./components/Navbar";
 import { Program } from "./components/Program";
+import { ProgramDetails } from './components/ProgramDetails';
 
 export function App() {
 
@@ -17,6 +18,7 @@ export function App() {
       <Routes>
         <Route  path="/" element={<Home />} />
         <Route path="/Channel" element={<Channel />} />
+        <Route path="/program/:id" element={<ProgramDetails />} /> 
         <Route path="/Program" element={<Program />} />
         <Route path="/MyPage" element={<MyPage />} />
         <Route path="/Login" element={<LoginForm />} />
