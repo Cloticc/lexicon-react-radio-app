@@ -41,3 +41,33 @@ export interface Program {
   haspod: boolean;
   responsibleeditor: string;
 }
+
+
+
+// pod
+export interface PodFile {
+  id: string;
+  title: string;
+  description: string;
+  url: string;
+  duration: number;
+  published: string;
+  program: Program;
+}
+
+// episode
+
+export interface Episode {
+  id: string;
+  title: string;
+  description: string;
+  publishdateutc: string;
+  url: string;
+  imageurl: string;
+  broadcast: Broadcast;
+  listenpodfile: PodFile;
+  downloadpodfile: PodFile;
+  episodegroup: EpisodeGroup;
+  availableuntilutc: string;
+  
+}
