@@ -9,28 +9,29 @@ import { useParams } from 'react-router-dom';
 
 export function ProgramDetails() {
   const { id } = useParams();
-  const [program, setProgram] = useState<Program | null>(null);
   const [loading, setLoading] = useState(true);
+  const [program, setProgram] = useState<Program | null>(null);
 
   useEffect(() => {
     const fetchProgram = async () => {
       setLoading(true);
       const { data, isLoading, error } = await fetchData(`programs/${id}?format=json`);
-  
+      // console.log('Data:', data);
+
       if (error) {
         console.error('Error:', error);
         return;
       }
-  
+
       if (!isLoading && data) {
-        setProgram(data);
+        setProgram(data.program); 
         setLoading(false);
       }
     };
-  
+
     fetchProgram();
   }, [id]);
-  
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -47,15 +48,18 @@ export function ProgramDetails() {
         </TabList>
 
         <TabPanel>
-          <h2>{program?.name}</h2>
+          {/* Render details here */}
+          <h1>{program?.name}</h1>
           <p>{program?.description}</p>
           <img src={program?.programimage} alt={program?.name} />
+          <a href={program?.programurl}>Visit Site</a>
+
 
         </TabPanel>
         <TabPanel>
           {/* Render broadcasts here */}
           <h1>Test</h1>
-   
+
         </TabPanel>
         <TabPanel>
           {/* Render pods here */}
