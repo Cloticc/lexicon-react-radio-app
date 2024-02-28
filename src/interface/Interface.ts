@@ -64,10 +64,10 @@ export interface Episode {
   publishdateutc: string;
   url: string;
   imageurl: string;
-  broadcast: Broadcast;
+  broadcast: string;
   listenpodfile: PodFile;
   downloadpodfile: PodFile;
-  episodegroup: EpisodeGroup;
+  episodegroup:  string;
   availableuntilutc: string;
   
 }
