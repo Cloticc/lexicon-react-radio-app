@@ -43,41 +43,51 @@ export interface IProgram {
 }
 
 
-
-// pod
-export interface IPodFile {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  duration: number;
-  published: string;
-  program: IProgram;
-}
-
-// episode
-
-export interface IBroadcastFile {
-  duration: number;
-  publishdateutc: string;
-  id: number;
-  url: string;
-  statkey: string;
+export interface ISr {
+  copyright: string;
+  episode: IEpisode;
 }
 
 export interface IEpisode {
+  broadcastfiles: any;
+  episodegroup: any;
+  availableuntilutc: any;
   id: string;
   title: string;
   description: string;
-  publishdateutc: string;
+  text: string;
   url: string;
+  program: IProgram;
+  publishdateutc: string;
   imageurl: string;
-  broadcast: string;
-  broadcastfiles: IBroadcastFile[];
-  episodegroup: string;
-  availableuntilutc: string;
+  imageurltemplate: string;
+  listenpodfile: IPodFile;
+  downloadpodfile: IPodFile;
+  relatedepisodes: any; 
+  episodegroups: IEpisodeGroup[];
 }
 
+export interface IProgram {
+  id: string;
+  name: string;
+}
+
+export interface IPodFile {
+  id: string;
+  url: string;
+  statkey: string;
+  duration: number;
+  publishdateutc: string;
+  title: string;
+  description: string;
+  filesizeinbytes: number;
+  program: IProgram;
+}
+
+export interface IEpisodeGroup {
+  id: string;
+  name: string;
+}
 
 
 export interface ILiveAudio {
@@ -97,4 +107,5 @@ export interface IChannel {
   channeltype: string;
   xmltvid: string;
 }
+
 
