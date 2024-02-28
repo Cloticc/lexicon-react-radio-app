@@ -6,23 +6,23 @@
 //   totalpages: number;
 //   nextpage: string;
 // }
-export interface SocialMediaPlatform {
+export interface ISocialMediaPlatform {
   platform: string;
   platformurl: string;
 }
-export interface ProgramCategory {
+export interface IProgramCategory {
   id: string;
   name: string;
 }
-export interface Channel {
+export interface IChannel {
   id: string;
   name: string;
 }
-export interface Program {
+export interface IProgram {
   id: string;
   name: string;
   description: string;
-  programcategory: ProgramCategory;
+  programcategory: IProgramCategory;
   payoff: string;
   broadcastinfo: string;
   email: string;
@@ -34,8 +34,8 @@ export interface Program {
   programimagetemplatewide: string;
   socialimage: string;
   socialimagetemplate: string;
-  socialmediaplatforms: SocialMediaPlatform[];
-  channel: Channel;
+  socialmediaplatforms: ISocialMediaPlatform[];
+  channel: IChannel;
   archived: boolean;
   hasondemand: boolean;
   haspod: boolean;
@@ -45,7 +45,7 @@ export interface Program {
 
 
 // pod
-export interface PodFile {
+export interface IPodFile {
   id: string;
   title: string;
   description: string;
@@ -57,7 +57,7 @@ export interface PodFile {
 
 // episode
 
-export interface Episode {
+export interface IEpisode {
   id: string;
   title: string;
   description: string;
@@ -67,7 +67,7 @@ export interface Episode {
   broadcast: string;
   listenpodfile: PodFile;
   downloadpodfile: PodFile;
-  episodegroup:  string;
+  episodegroup: string;
   availableuntilutc: string;
-  
 }
+
