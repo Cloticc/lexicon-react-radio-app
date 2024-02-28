@@ -78,3 +78,23 @@ export interface IEpisode {
   availableuntilutc: string;
 }
 
+
+
+export interface ILiveAudio {
+  id: string;
+  url: string;
+  statkey: string;
+}
+
+export interface IChannel {
+  id: string;
+  name: string;
+  image: string;
+  tagline: string;
+  siteurl: string;
+  liveaudio: ILiveAudio;
+  scheduleurl: string;
+  channeltype: string;
+  xmltvid: string;
+}
+
