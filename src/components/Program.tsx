@@ -76,7 +76,7 @@ export const Program: React.FC = () => {
     const selectedCategory = Number(event.target.value);
     setSelectedCategory(selectedCategory);
     setPrograms([]);
-    
+
   };
 
 
@@ -114,41 +114,54 @@ export const Program: React.FC = () => {
     fetchProgramCategories();
   }, []);
 
-useEffect(() => {
-  const fetchPrograms = async () => {
-    if (selectedCategory !== null) {
-      setIsLoading(true);
-      let page = 1;
-      let totalPages = 1;
-      let allPrograms: Program[] = [];
+  useEffect(() => {
+    const fetchPrograms = async () => {
+      if (selectedCategory !== null) {
+        setIsLoading(true);
+        let page = 1;
+        let totalPages = 1;
+        let allPrograms: Program[] = [];
 
-      while (page <= totalPages) {
-        try {
-          const response = await fetch(`https://api.sr.se/api/v2/programs/index?programcategoryid=${selectedCategory}&format=json&page=${page}`);
-          const data = await response.json();
+        while (page <= totalPages) {
+          try {
+            const response = await fetch(`https://api.sr.se/api/v2/programs/index?programcategoryid=${selectedCategory}&format=json&page=${page}`);
+            const data = await response.json();
 
-          if (data) {
-            allPrograms = allPrograms.concat(data.programs);
-            totalPages = data.pagination.totalpages;
-          } else {
-            setError('No programs found for this category');
+            if (data) {
+              allPrograms = allPrograms.concat(data.programs);
+              totalPages = data.pagination.totalpages;
+            } else {
+              setError('No programs found for this category');
+              break;
+            }
+          } catch (error) {
+            setError(`An error occurred: ${error}`);
             break;
           }
-        } catch (error) {
-          setError(`An error occurred: ${error}`);
-          break;
+
+          page++;
         }
 
-        page++;
+        setPrograms(allPrograms);
+        setIsLoading(false);
       }
+    };
 
-      setPrograms(allPrograms);
-      setIsLoading(false);
-    }
-  };
+    fetchPrograms();
+  }, [selectedCategory]);
 
-  fetchPrograms(); 
-}, [selectedCategory]);
+
+
+// Social playforms list 
+  const socialMediaPlatforms = (program: Program) => {
+    return program.socialmediaplatforms.map(platform => (
+      <li key={platform.platform}>
+        <a href={platform.platformurl} target="_blank" rel="noreferrer">{platform.platform}</a>
+      </li>
+    ));
+  }
+  
+
 
 
   if (isLoading) {
@@ -182,31 +195,35 @@ useEffect(() => {
           ))}
         </select>
 
-          <aside className='program-channels-wrapper'>
-            {programs.map((program, index) => (
-              <li key={`${program.id}-${index}`} className='program-card'>
-                <img src={program.programimage} alt={program.name} />
-                <h3>{program.channel.name}</h3>
-                <p>{program.description}</p>
-                <p>{program.broadcastinfo}</p>
-                <p>Program URL: {program.programurl}</p>
-                <p>Email: {program.email}</p>
-                <p>Phone: {program.phone}</p>
-                <p>Has On Demand: {program.hasondemand ? 'Yes' : 'No'}</p>
-                <p>Has Podcast: {program.haspod ? 'Yes' : 'No'}</p>
-                <p>Responsible Editor: {program.responsibleeditor}</p>
-                <p>Program Category: {program.programcategory.name}</p>
-                <p>Payoff: {program.payoff}</p>
-                <p>Program Image Template: {program.programimagetemplate}</p>
-                <p>Program Image Wide: {program.programimagewide}</p>
-                <p>Program Image Template Wide: {program.programimagetemplatewide}</p>
-                <p>Social Image: {program.socialimage}</p>
-                <p>Social Image Template: {program.socialimagetemplate}</p>
-                <p>Social Media Platforms: {program.socialmediaplatforms.join(', ')}</p>
-                <p>Archived: {program.archived ? 'Yes' : 'No'}</p>
-              </li>
-            ))}
-          </aside>
+        <aside className='program-channels-wrapper'>
+          {programs.map((program, index) => (
+            <li key={`${program.id}-${index}`} className='program-card'>
+              <img src={program.programimage} alt={program.name} />
+              <h3>{program.channel.name}</h3>
+              <p>{program.description}</p>
+              <p>{program.broadcastinfo}</p>
+              <p>Program URL: {program.programurl}</p>
+              <p>Email: {program.email}</p>
+              <p>Phone: {program.phone}</p>
+              <p>Has On Demand: {program.hasondemand ? 'Yes' : 'No'}</p>
+              <p>Has Podcast: {program.haspod ? 'Yes' : 'No'}</p>
+              <p>Responsible Editor: {program.responsibleeditor}</p>
+              <p>Program Category: {program.programcategory.name}</p>
+              <p>Payoff: {program.payoff}</p>
+              {/* <p>Program Image Template: {program.programimagetemplate}</p> */}
+              {/* <p>Program Image Wide: {program.programimagewide}</p> */}
+              {/* <p>Program Image Template Wide: {program.programimagetemplatewide}</p> */}
+              {/* <p>Social Image: {program.socialimage}</p> */}
+              {/* <p>Social Image Template: {program.socialimagetemplate}</p> */}
+              {/* <p>Social Media Platforms: {program.socialmediaplatforms.join(', ')}</p> */}
+              <ul>
+                {socialMediaPlatforms(program)}
+              </ul>
+
+              <p>Archived: {program.archived ? 'Yes' : 'No'}</p>
+            </li>
+          ))}
+        </aside>
       </>
 
     </div>
