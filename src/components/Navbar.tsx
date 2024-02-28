@@ -14,7 +14,7 @@ export function Navbar() {
   return (
     <nav className="navbar">
       <img src="https://upload.wikimedia.org/wikipedia/commons/d/d2/Logo-de-World-Hits-Radio.png" alt="svt logo" />
-      <input type="text" placeholder="Sök Kanal" />
+      <input type="text" placeholder="Search Channel" />
       <ul>
         {links.map((link, index) => (
           <li key={index}>
