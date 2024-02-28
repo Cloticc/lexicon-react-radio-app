@@ -2,6 +2,7 @@ import '../styles/Program.css';
 
 import { ChangeEvent, useEffect, useState } from 'react';
 
+import { Link } from 'react-router-dom';
 import { fetchData } from '../api/fetchData';
 
 // import React from 'react';
@@ -152,7 +153,7 @@ export const Program: React.FC = () => {
 
 
 
-// Social playforms list 
+  // Social playforms list 
   const socialMediaPlatforms = (program: Program) => {
     return program.socialmediaplatforms.map(platform => (
       <li className='social-li' key={platform.platform}>
@@ -160,7 +161,7 @@ export const Program: React.FC = () => {
       </li>
     ));
   }
-  
+
 
 
 
@@ -198,6 +199,10 @@ export const Program: React.FC = () => {
         <aside className='program-channels-wrapper'>
           {programs.map((program, index) => (
             <li key={`${program.id}-${index}`} className='program-card'>
+              <Link to={`/program/${program.id}`}>
+
+                <h2>{program.name} HUGE</h2>
+              </Link>
               <img src={program.programimage} alt={program.name} />
               <h3>{program.channel.name}</h3>
               <p>{program.description}</p>
