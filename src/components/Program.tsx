@@ -203,13 +203,13 @@ export const Program: React.FC = () => {
               <p>{program.description}</p>
               <p>{program.broadcastinfo}</p>
               <p>Program URL: {program.programurl}</p>
-              <p>Email: {program.email}</p>
-              <p>Phone: {program.phone}</p>
-              <p>Has On Demand: {program.hasondemand ? 'Yes' : 'No'}</p>
-              <p>Has Podcast: {program.haspod ? 'Yes' : 'No'}</p>
-              <p>Responsible Editor: {program.responsibleeditor}</p>
-              <p>Program Category: {program.programcategory.name}</p>
-              <p>Payoff: {program.payoff}</p>
+              {/* <p>Email: {program.email}</p> */}
+              {/* <p>Phone: {program.phone}</p> */}
+              {/* <p>Has On Demand: {program.hasondemand ? 'Yes' : 'No'}</p> */}
+              {/* <p>Has Podcast: {program.haspod ? 'Yes' : 'No'}</p> */}
+              {/* <p>Responsible Editor: {program.responsibleeditor}</p> */}
+              {/* <p>Program Category: {program.programcategory.name}</p> */}
+              {/* <p>Payoff: {program.payoff}</p> */}
               {/* <p>Program Image Template: {program.programimagetemplate}</p> */}
               {/* <p>Program Image Wide: {program.programimagewide}</p> */}
               {/* <p>Program Image Template Wide: {program.programimagetemplatewide}</p> */}
