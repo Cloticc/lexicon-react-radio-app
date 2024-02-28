@@ -52,10 +52,18 @@ export interface IPodFile {
   url: string;
   duration: number;
   published: string;
-  program: Program;
+  program: IProgram;
 }
 
 // episode
+
+export interface IBroadcastFile {
+  duration: number;
+  publishdateutc: string;
+  id: number;
+  url: string;
+  statkey: string;
+}
 
 export interface IEpisode {
   id: string;
@@ -65,8 +73,7 @@ export interface IEpisode {
   url: string;
   imageurl: string;
   broadcast: string;
-  listenpodfile: PodFile;
-  downloadpodfile: PodFile;
+  broadcastfiles: IBroadcastFile[];
   episodegroup: string;
   availableuntilutc: string;
 }
