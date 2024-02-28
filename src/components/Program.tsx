@@ -181,16 +181,32 @@ useEffect(() => {
             </option>
           ))}
         </select>
-           <aside className='program-channels-wrapper'>
-          {programs.map((program, index) => (
-            <li key={`${program.id}-${index}`} className='program-card'>
-              <img src={program.programimage} alt={program.name} />
-              <h3>{program.channel.name}</h3>
-              <p>{program.description}</p>
-              <p>{program.broadcastinfo}</p>
-            </li>
-          ))}
-        </aside>
+
+          <aside className='program-channels-wrapper'>
+            {programs.map((program, index) => (
+              <li key={`${program.id}-${index}`} className='program-card'>
+                <img src={program.programimage} alt={program.name} />
+                <h3>{program.channel.name}</h3>
+                <p>{program.description}</p>
+                <p>{program.broadcastinfo}</p>
+                <p>Program URL: {program.programurl}</p>
+                <p>Email: {program.email}</p>
+                <p>Phone: {program.phone}</p>
+                <p>Has On Demand: {program.hasondemand ? 'Yes' : 'No'}</p>
+                <p>Has Podcast: {program.haspod ? 'Yes' : 'No'}</p>
+                <p>Responsible Editor: {program.responsibleeditor}</p>
+                <p>Program Category: {program.programcategory.name}</p>
+                <p>Payoff: {program.payoff}</p>
+                <p>Program Image Template: {program.programimagetemplate}</p>
+                <p>Program Image Wide: {program.programimagewide}</p>
+                <p>Program Image Template Wide: {program.programimagetemplatewide}</p>
+                <p>Social Image: {program.socialimage}</p>
+                <p>Social Image Template: {program.socialimagetemplate}</p>
+                <p>Social Media Platforms: {program.socialmediaplatforms.join(', ')}</p>
+                <p>Archived: {program.archived ? 'Yes' : 'No'}</p>
+              </li>
+            ))}
+          </aside>
       </>
 
     </div>
