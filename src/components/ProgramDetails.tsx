@@ -96,12 +96,11 @@ export function ProgramDetails() {
     queryFn: fetchEpisodes
   });
 
-
   const isError = error || errorPodFiles || errorEpisodes;
   const isLoadingAll = isLoading || isLoadingPodFiles || isLoadingEpisodes;
 
 
-  
+
   if (isLoadingAll) {
     return <p>Loading...</p>;
   }
@@ -111,22 +110,8 @@ export function ProgramDetails() {
   }
 
 
-  let mappedEpisodes = episodes;
-  if (mappedEpisodes && podFiles) {
-  mappedEpisodes = mappedEpisodes.map((episode: IEpisode) => {
-      const listenPodFile = podFiles.find((podFile: IPodFile) => podFile.id === episode.listenpodfile?.id);
-      const downloadPodFile = podFiles.find((podFile: IPodFile) => podFile.id === episode.downloadpodfile?.id);
-  
-      return {
-        ...episode,
-        listenpodfile: listenPodFile ? listenPodFile : episode.listenpodfile,
-        downloadpodfile: downloadPodFile ? downloadPodFile : episode.downloadpodfile
-      };
-    });
-  }
 
 
-  
 
   return (
     <div>
@@ -187,15 +172,15 @@ export function ProgramDetails() {
                   <p>Published: {episode.publishdateutc ? episode.publishdateutc : 'No publish date available'}</p>
                   {episode.url ? <a href={episode.url}>Listen</a> : null}
                   {episode.imageurl ? <img src={episode.imageurl} alt={episode.title ? episode.title : 'No title available'} /> : null}
-                  {episode.listenpodfile && episode.listenpodfile.url ? (
+                  {episode.broadcastfiles && episode.broadcastfiles[0] && episode.broadcastfiles[0].url ? (
                     <audio controls>
-                      <source src={episode.listenpodfile.url} type="audio/mpeg" />
+                      <source src={episode.broadcastfiles[0].url} type="audio/mpeg" />
                       Your browser does not support the audio element.
                     </audio>
                   ) : (
                     <p>No audio file available</p>
                   )}
-                  {episode.downloadpodfile && episode.downloadpodfile.url ? <a href={episode.downloadpodfile.url}>Download</a> : null}
+                  {episode.broadcastfiles && episode.broadcastfiles[0] && episode.broadcastfiles[0].url ? <a href={episode.broadcastfiles[0].url}>Download</a> : null}
                   <p>Episode Group: {episode.episodegroup ? episode.episodegroup : 'No episode group available'}</p>
                   <p>Available Until: {episode.availableuntilutc ? episode.availableuntilutc : 'No available until date available'}</p>
                 </li>
@@ -206,6 +191,18 @@ export function ProgramDetails() {
           </ul>
 
 
+          {episodes && episodes.length > 0 ? (
+            episodes.map((episode: IEpisode) => {
+              console.log(episode);
+              return (
+                <li key={episode.id ? episode.id : 'No ID'}>
+                  {/* ...rest of your code... */}
+                </li>
+              );
+            })
+          ) : (
+            <p className='no-files'>No episodes available</p>
+          )}
         </TabPanel>
 
       </Tabs>
