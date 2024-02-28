@@ -155,7 +155,7 @@ export const Program: React.FC = () => {
 // Social playforms list 
   const socialMediaPlatforms = (program: Program) => {
     return program.socialmediaplatforms.map(platform => (
-      <li key={platform.platform}>
+      <li className='social-li' key={platform.platform}>
         <a href={platform.platformurl} target="_blank" rel="noreferrer">{platform.platform}</a>
       </li>
     ));
@@ -216,7 +216,7 @@ export const Program: React.FC = () => {
               {/* <p>Social Image: {program.socialimage}</p> */}
               {/* <p>Social Image Template: {program.socialimagetemplate}</p> */}
               {/* <p>Social Media Platforms: {program.socialmediaplatforms.join(', ')}</p> */}
-              <ul>
+              <ul className='social-ul'>
                 {socialMediaPlatforms(program)}
               </ul>
 
