@@ -4,37 +4,43 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { useEffect, useState } from 'react';
 
 import { Program } from '../interface/Interface';
-import { fetchData } from '../api/fetchData';
 import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 export function ProgramDetails() {
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [program, setProgram] = useState<Program | null>(null);
 
-  useEffect(() => {
-    const fetchProgram = async () => {
-      setLoading(true);
-      const { data, isLoading, error } = await fetchData(`programs/${id}?format=json`);
-      // console.log('Data:', data);
 
-      if (error) {
-        console.error('Error:', error);
-        return;
-      }
+  const fetchDetails = async () => {
+    const response = await fetch(`https://api.sr.se/api/v2/programs/${id}?format=json`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
 
-      if (!isLoading && data) {
-        setProgram(data.program); 
-        setLoading(false);
-      }
-    };
-
-    fetchProgram();
-  }, [id]);
-
-  if (loading) {
-    return <div>Loading...</div>;
+    if (data) {
+      return data.program;
+    }
+    throw new Error('No program found');
   }
+
+  const { data: program, isLoading, error } = useQuery({
+    queryKey: ['program', id],
+    queryFn: fetchDetails
+  });
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
+
+
+
+
 
   return (
     <div>
