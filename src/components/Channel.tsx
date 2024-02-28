@@ -2,28 +2,11 @@ import '../styles/Channel.css';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { IChannel } from '../interface/Interface';
 import { fetchData } from '../api/fetchData';
 
-interface LiveAudio {
-  id: string;
-  url: string;
-  statkey: string;
-}
-
-interface Channel {
-  id: string;
-  name: string;
-  image: string;
-  tagline: string;
-  siteurl: string;
-  liveaudio: LiveAudio;
-  scheduleurl: string;
-  channeltype: string;
-  xmltvid: string;
-}
-
 export const Channel: React.FC = () => {
-  const [channels, setChannels] = useState<Channel[]>([]);
+  const [channels, setChannels] = useState<IChannel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
@@ -71,7 +54,7 @@ export const Channel: React.FC = () => {
     <div className="channel">
       <h1>Kanaler</h1>
       <ul>
-        {channels.map((channel: Channel, index: number) => (
+        {channels.map((channel: IChannel, index: number) => (
           <li ref={index === channels.length - 1 ? lastChannelElementRef : null} key={`${channel.id}-${channel.name}-${index}`}>
             <h2>{channel.name}</h2>
             <img src={channel.image} alt={channel.name} />
