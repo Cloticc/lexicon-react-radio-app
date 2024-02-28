@@ -1,6 +1,6 @@
 import 'react-tabs/style/react-tabs.css'; // Import the styles
 
-import { Episode, PodFile, Program } from '../interface/Interface';
+import { IEpisode, IPodFile, IProgram } from '../interface/Interface';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { useEffect, useState } from 'react';
 
@@ -70,15 +70,19 @@ export function ProgramDetails() {
   });
 
   const fetchEpisodes = async () => {
-    const today = new Date();
-    const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-console.log(`Today: ${todayStr}` );
 
-    const response = await fetch(`https://api.sr.se/api/v2/episodes/index?programid=${id}&fromdate=${todayStr}&todate=${todayStr}&format=json`);
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    const twoDaysAgoStr = `${twoDaysAgo.getFullYear()}-${String(twoDaysAgo.getMonth() + 1).padStart(2, '0')}-${String(twoDaysAgo.getDate()).padStart(2, '0')}`;
 
+    const startDateStr = '2010-01-01';
+
+    const response = await fetch(`https://api.sr.se/api/v2/episodes/index?programid=${id}&fromdate=${startDateStr}&todate=${twoDaysAgoStr}&audioquality=hi&format=json`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    console.log(response);
+
     const data = await response.json();
 
     if (data) {
@@ -93,10 +97,11 @@ console.log(`Today: ${todayStr}` );
   });
 
 
-
   const isError = error || errorPodFiles || errorEpisodes;
   const isLoadingAll = isLoading || isLoadingPodFiles || isLoadingEpisodes;
 
+
+  
   if (isLoadingAll) {
     return <p>Loading...</p>;
   }
@@ -104,6 +109,24 @@ console.log(`Today: ${todayStr}` );
   if (isError) {
     return <p>Error</p>;
   }
+
+
+  let mappedEpisodes = episodes;
+  if (mappedEpisodes && podFiles) {
+  mappedEpisodes = mappedEpisodes.map((episode: IEpisode) => {
+      const listenPodFile = podFiles.find((podFile: IPodFile) => podFile.id === episode.listenpodfile?.id);
+      const downloadPodFile = podFiles.find((podFile: IPodFile) => podFile.id === episode.downloadpodfile?.id);
+  
+      return {
+        ...episode,
+        listenpodfile: listenPodFile ? listenPodFile : episode.listenpodfile,
+        downloadpodfile: downloadPodFile ? downloadPodFile : episode.downloadpodfile
+      };
+    });
+  }
+
+
+  
 
   return (
     <div>
@@ -135,7 +158,7 @@ console.log(`Today: ${todayStr}` );
 
           <ul>
             {podFiles && podFiles.length > 0 ? (
-              podFiles.map((pod: PodFile) => (
+              podFiles.map((pod: IPodFile) => (
                 <li key={pod.id}>
                   <h2>{pod.title}</h2>
                   <p>{pod.description}</p>
@@ -157,15 +180,24 @@ console.log(`Today: ${todayStr}` );
           <h1>Test</h1>
           <ul>
             {episodes && episodes.length > 0 ? (
-              episodes.map((episode: Episode) => (
-                <li key={episode.id}>
-                  <h2>{episode.title}</h2>
-                  <p>{episode.description}</p>
-                  {/* <p>Duration: {episode.broadcast.timeend - episode.broadcast.timestart} seconds</p> */}
-                  <audio controls>
-                    <source src={episode.listenpodfile.url} type="audio/mpeg" />
-                    Your browser does not support the audio element.
-                  </audio>
+              episodes.map((episode: IEpisode) => (
+                <li key={episode.id ? episode.id : 'No ID'}>
+                  <h2>{episode.title ? episode.title : 'No title available'}</h2>
+                  <p>{episode.description ? episode.description : 'No description available'}</p>
+                  <p>Published: {episode.publishdateutc ? episode.publishdateutc : 'No publish date available'}</p>
+                  {episode.url ? <a href={episode.url}>Listen</a> : null}
+                  {episode.imageurl ? <img src={episode.imageurl} alt={episode.title ? episode.title : 'No title available'} /> : null}
+                  {episode.listenpodfile && episode.listenpodfile.url ? (
+                    <audio controls>
+                      <source src={episode.listenpodfile.url} type="audio/mpeg" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  ) : (
+                    <p>No audio file available</p>
+                  )}
+                  {episode.downloadpodfile && episode.downloadpodfile.url ? <a href={episode.downloadpodfile.url}>Download</a> : null}
+                  <p>Episode Group: {episode.episodegroup ? episode.episodegroup : 'No episode group available'}</p>
+                  <p>Available Until: {episode.availableuntilutc ? episode.availableuntilutc : 'No available until date available'}</p>
                 </li>
               ))
             ) : (
