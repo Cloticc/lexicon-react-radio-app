@@ -1,8 +1,7 @@
 import 'react-tabs/style/react-tabs.css'; // Import the styles
 
-import { IEpisode, IPodFile, IProgram } from '../interface/Interface';
+import { IEpisode, IPodFile } from '../interface/Interface';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-import { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -69,6 +68,20 @@ export function ProgramDetails() {
     queryFn: fetchPodFiles
   });
 
+  const fetchEpisodeDetails = async (episodeId: number) => {
+    const response = await fetch(`http://api.sr.se/api/v2/episodes/get?id=${episodeId}&format=json`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data);
+    if (data) {
+      return data.episode;
+    }
+    throw new Error('No episode details found');
+  }
+
+
   const fetchEpisodes = async () => {
 
     const twoDaysAgo = new Date();
@@ -81,13 +94,17 @@ export function ProgramDetails() {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    console.log(response);
-
+   
     const data = await response.json();
-
-    if (data) {
-      return data.episodes;
-    }
+  if (data) {
+    const episodesWithDetails = await Promise.all(
+      data.episodes.map(async (episode: IEpisode) => {
+      const episodeDetails = await fetchEpisodeDetails(Number(episode.id));
+        return { ...episode, ...episodeDetails };
+      })
+    );
+    return episodesWithDetails;
+  }
     throw new Error('No episodes found');
   }
 
@@ -163,6 +180,7 @@ export function ProgramDetails() {
         <TabPanel>
           {/* Render episode here */}
           <h1>Test</h1>
+
           <ul>
             {episodes && episodes.length > 0 ? (
               episodes.map((episode: IEpisode) => (
@@ -172,16 +190,16 @@ export function ProgramDetails() {
                   <p>Published: {episode.publishdateutc ? episode.publishdateutc : 'No publish date available'}</p>
                   {episode.url ? <a href={episode.url}>Listen</a> : null}
                   {episode.imageurl ? <img src={episode.imageurl} alt={episode.title ? episode.title : 'No title available'} /> : null}
-                  {episode.broadcastfiles && episode.broadcastfiles[0] && episode.broadcastfiles[0].url ? (
+                  {episode.listenpodfile && episode.listenpodfile.url ? (
                     <audio controls>
-                      <source src={episode.broadcastfiles[0].url} type="audio/mpeg" />
+                      <source src={episode.listenpodfile.url} type="audio/mpeg" />
                       Your browser does not support the audio element.
                     </audio>
                   ) : (
                     <p>No audio file available</p>
                   )}
-                  {episode.broadcastfiles && episode.broadcastfiles[0] && episode.broadcastfiles[0].url ? <a href={episode.broadcastfiles[0].url}>Download</a> : null}
-                  <p>Episode Group: {episode.episodegroup ? episode.episodegroup : 'No episode group available'}</p>
+                  {episode.downloadpodfile && episode.downloadpodfile.url ? <a href={episode.downloadpodfile.url}>Download</a> : <p>No download file available</p>}
+                  <p>Episode Group: {episode.episodegroups && episode.episodegroups.length > 0 ? episode.episodegroups[0].name : 'No episode group available'}</p>
                   <p>Available Until: {episode.availableuntilutc ? episode.availableuntilutc : 'No available until date available'}</p>
                 </li>
               ))
@@ -191,18 +209,6 @@ export function ProgramDetails() {
           </ul>
 
 
-          {episodes && episodes.length > 0 ? (
-            episodes.map((episode: IEpisode) => {
-              console.log(episode);
-              return (
-                <li key={episode.id ? episode.id : 'No ID'}>
-                  {/* ...rest of your code... */}
-                </li>
-              );
-            })
-          ) : (
-            <p className='no-files'>No episodes available</p>
-          )}
         </TabPanel>
 
       </Tabs>
