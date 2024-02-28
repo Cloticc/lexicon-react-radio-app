@@ -1,7 +1,7 @@
 import '../styles/Program.css';
 
 import { ChangeEvent, useState } from 'react';
-import { Program, ProgramCategory } from '../interface/Interface';
+import { IProgram, IProgramCategory } from '../interface/Interface';
 
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -17,7 +17,7 @@ export const ProgramComponent: React.FC = () => {
   const fetchProgramCategories = async () => {
     let page = 1;
     let totalPages = 1;
-    let programCategories: ProgramCategory[] = [];
+    let programCategories: IProgramCategory[] = [];
 
     while (page <= totalPages) {
       const response = await fetch(`http://api.sr.se/api/v2/programcategories?format=json&page=${page}`);
@@ -49,7 +49,7 @@ const { data: programCategories, isLoading, error } = useQuery({
     if (selectedCategory !== null) {
       let page = 1;
       let totalPages = 1;
-      let allPrograms: Program[] = [];
+      let allPrograms: IProgram[] = [];
 
       while (page <= totalPages) {
         const response = await fetch(`https://api.sr.se/api/v2/programs/index?programcategoryid=${selectedCategory}&format=json&page=${page}`);
@@ -77,7 +77,7 @@ const { data: programCategories, isLoading, error } = useQuery({
 
   
   // Social platforms list 
-  const socialMediaPlatforms = (program: Program) => {
+  const socialMediaPlatforms = (program: IProgram) => {
     return program.socialmediaplatforms.map(platform => (
       <li className='social-li' key={platform.platform}>
         <a href={platform.platformurl} target="_blank" rel="noreferrer">{platform.platform}</a>
