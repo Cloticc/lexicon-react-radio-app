@@ -1,67 +1,17 @@
 import '../styles/Program.css';
 
 import { ChangeEvent, useEffect, useState } from 'react';
+import { Program, ProgramCategory } from '../interface/Interface';
 
 import { Link } from 'react-router-dom';
 import { fetchData } from '../api/fetchData';
-
-// import React from 'react';
-
-
-
-// interface Pagination {
-//   page: number;
-//   size: number;
-//   totalhits: number;
-//   totalpages: number;
-//   nextpage: string;
-// }
-
-interface SocialMediaPlatform {
-  platform: string;
-  platformurl: string;
-}
-
-interface ProgramCategory {
-  id: string;
-  name: string;
-}
-
-interface Channel {
-  id: string;
-  name: string;
-}
-
-interface Program {
-  id: string;
-  name: string;
-  description: string;
-  programcategory: ProgramCategory;
-  payoff: string;
-  broadcastinfo: string;
-  email: string;
-  phone: string;
-  programurl: string;
-  programimage: string;
-  programimagetemplate: string;
-  programimagewide: string;
-  programimagetemplatewide: string;
-  socialimage: string;
-  socialimagetemplate: string;
-  socialmediaplatforms: SocialMediaPlatform[];
-  channel: Channel;
-  archived: boolean;
-  hasondemand: boolean;
-  haspod: boolean;
-  responsibleeditor: string;
-}
 
 // interface Sr {
 //   copyright: string;
 //   pagination: Pagination;
 //   programs: Program[];
 // }
-export const Program: React.FC = () => {
+export const ProgramComponent: React.FC = () => {
   const [programCategories, setProgramCategories] = useState<ProgramCategory[]>([]);
   const [programs, setPrograms] = useState<Program[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -234,3 +184,5 @@ export const Program: React.FC = () => {
     </div>
   );
 };
+
+export { Program };

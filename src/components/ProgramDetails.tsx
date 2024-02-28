@@ -3,29 +3,9 @@ import 'react-tabs/style/react-tabs.css'; // Import the styles
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { useEffect, useState } from 'react';
 
+import { Program } from '../interface/Interface';
 import { fetchData } from '../api/fetchData';
 import { useParams } from 'react-router-dom';
-
-interface Program {
-  id: string;
-  name: string;
-  description: string;
-  payoff: string;
-  broadcastinfo: string;
-  email: string;
-  phone: string;
-  programurl: string;
-  programimage: string;
-  programimagetemplate: string;
-  programimagewide: string;
-  programimagetemplatewide: string;
-  socialimage: string;
-  socialimagetemplate: string;
-  archived: boolean;
-  hasondemand: boolean;
-  haspod: boolean;
-  responsibleeditor: string;
-}
 
 export function ProgramDetails() {
   const { id } = useParams();
