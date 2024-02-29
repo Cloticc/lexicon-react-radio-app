@@ -2,138 +2,51 @@ import 'react-tabs/style/react-tabs.css'; // Import the styles
 
 import { IEpisode, IPodFile } from '../interface/Interface';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import { useEffect, useState } from 'react';
+import { useEpisodeDetails, useEpisodes, usePodFiles, useProgramDetails } from '../api/Episode';
 
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 
 export function ProgramDetails() {
-  const { id } = useParams();
+  const { id: idString } = useParams<{ id: string }>();
+  const id = Number(idString);
   const [page, setPage] = useState(1);
+  const [tabIndex, setTabIndex] = useState(0);
 
-  // this is for details
-  const fetchProgramDataDetails = async () => {
-    const response = await fetch(`https://api.sr.se/api/v2/programs/${id}?format=json`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    if (data) {
-      return data.program;
-    }
-    throw new Error('No program found');
-  }
+  const { data: program, isLoading: programLoading, error: programError } = useProgramDetails(id);
+  const { data: podFiles, isLoading: podFilesLoading, error: podFilesError } = usePodFiles(id);
+  const { isLoading: episodeLoading, error: episodeError } = useEpisodeDetails(id);
+  // const { data: episode, isLoading: episodeLoading, error: episodeError } = useEpisodeDetails(id);
+  const { data: episodes, isLoading: episodesLoading, error: episodesError } = useEpisodes(id, page);
 
-  const { data: program, isLoading, error } = useQuery({
-    queryKey: ['program', id],
-    queryFn: fetchProgramDataDetails
-  });
-
-
-
-
-  //   const fetchBroadCasts = async () => {
-  //     const response = await fetch(`https://api.sr.se/api/v2/broadcasts/?programid=${id}&format=json`);
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! status: ${response.status}`);
-  //     }
-  //     const data = await response.json();
-  // console.log(data)
-  //     if (data) {
-  //       return data.broadcasts;
-  //     }
-  //     throw new Error('No broadcasts found');
-  //   }
-
-  //   const { data: broadcasts, isLoading: isLoadingBroadcasts, error: errorBroadcasts } = useQuery({
-  //     queryKey: ['broadcasts', id],
-  //     queryFn: fetchBroadCasts
-  //   });
-
-  const fetchPodFiles = async () => {
-    console.log(`Program ID: ${id}`); // Log the program ID
-    const response = await fetch(`https://api.sr.se/api/v2/podfiles?programid=${id}&format=json`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-
-    if (data) {
-      return data.podfiles;
-    }
-    throw new Error('No pod files found');
-  }
-
-  const { data: podFiles, isLoading: isLoadingPodFiles, error: errorPodFiles } = useQuery({
-    queryKey: ['podfiles', id],
-    queryFn: fetchPodFiles
-  });
-
-  const fetchEpisodeDetails = async (episodeId: number) => {
-    const response = await fetch(`https://api.sr.se/api/v2/episodes/get?id=${episodeId}&format=json`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-
-    if (data) {
-      return data.episode;
-    }
-    throw new Error('No episode details found');
-  }
-
-
-  const fetchEpisodes = async (page: number) => {
-    const twoDaysAgo = new Date();
-    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-    const twoDaysAgoStr = `${twoDaysAgo.getFullYear()}-${String(twoDaysAgo.getMonth() + 1).padStart(2, '0')}-${String(twoDaysAgo.getDate()).padStart(2, '0')}`;
-
-    const startDateStr = '2010-01-01';
-
-    const response = await fetch(`https://api.sr.se/api/v2/episodes/index?programid=${id}&fromdate=${startDateStr}&todate=${twoDaysAgoStr}&audioquality=hi&format=json&page=${page}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    if (data && data.episodes && data.episodes.length > 0) {
-      const episodesWithDetails = await Promise.all(
-        data.episodes.map(async (episode: IEpisode) => {
-          const episodeDetails = await fetchEpisodeDetails(Number(episode.id));
-          console.log(episodeDetails);
-
-          return { ...episode, ...episodeDetails };
-        })
-      );
-      return episodesWithDetails;
+  useEffect(() => {
+    if (localStorage.getItem('isRefreshed')) {
+      console.log('The page was refreshed');
     } else {
-      throw new Error('No episodes found');
+      localStorage.setItem('isRefreshed', 'true');
     }
+
+
+    return () => {
+      localStorage.removeItem('isRefreshed');
+    };
+  }, []);
+
+  if (programLoading || podFilesLoading || episodeLoading || episodesLoading) {
+    return <div>Loading...</div>;
   }
 
-  const { data: episodes, isLoading: isLoadingEpisodes, error: errorEpisodes } = useQuery({
-    queryKey: ['episodes', id, page],
-    queryFn: () => fetchEpisodes(page)
-  });
-
-  const isError = error || errorPodFiles || errorEpisodes;
-  const isLoadingAll = isLoading || isLoadingPodFiles || isLoadingEpisodes;
-
-
-
-  if (isLoadingAll) {
-    return <p>Loading...</p>;
+  if (programError || podFilesError || episodeError || episodesError) {
+    return <div>Error: {programError?.message || podFilesError?.message || episodeError?.message || episodesError?.message}</div>;
   }
 
-  if (isError) {
-    return <p>Error</p>;
-  }
+
 
 
   return (
     <div className='flex flex-col w-full '>
       <h1 className=''>{program?.name}</h1>
-      <Tabs>
+      <Tabs selectedIndex={tabIndex} onSelect={index => setTabIndex(index)}>
         <TabList>
           <Tab>Details</Tab>
           <Tab>Broadcasts</Tab>
@@ -141,13 +54,15 @@ export function ProgramDetails() {
           <Tab>episode</Tab>
         </TabList>
         <TabPanel>
-          {/* Render details here */}
-          <h1>{program?.name}</h1>
-          <p>{program?.broadcastinfo}</p>
-          <p>{program?.description}</p>
-          <img src={program?.programimage} alt={program?.name} />
-          <a href={program?.programurl}>Visit Site</a>
 
+
+          <div className="space-y-4 bg-white shadow-sm rounded-lg p-6">
+            <h1 className="text-2xl font-bold">{program?.name}</h1>
+            <p className="text-gray-600">{program?.broadcastinfo}</p>
+            <p className="text-gray-600">{program?.description}</p>
+            <img className="w-1/6 h-full  rounded-md" src={program?.programimage} alt={program?.name} />
+            <a className="text-blue-500 hover:underline" href={program?.programurl}>Visit Site</a>
+          </div>
 
         </TabPanel>
         <TabPanel>
@@ -156,12 +71,13 @@ export function ProgramDetails() {
           <h1>whatis this</h1>
         </TabPanel>
         <TabPanel>
+          {/* Pods */}
           <h1>Test</h1>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2'>
             {podFiles && podFiles.length > 0 ? (
               podFiles.map((pod: IPodFile) => (
-                <div key={pod.id} className='max-w-xs w-full lg:max-w-xs lg:flex p-2 border rounded shadow'>
+                <div key={pod.id} className='max-w-xs w-full lg:max-w-xs lg:flex p-2  '>
                   <div className='border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-2 flex flex-col justify-between leading-normal'>
                     <div className='mb-4'>
                       <div className='text-gray-900 font-bold text-sm mb-1'>{pod.title}</div>
@@ -216,6 +132,7 @@ export function ProgramDetails() {
 
           <div className="flex justify-center mt-4">
             <button
+              type="button"
               onClick={() => setPage(old => Math.max(old - 1, 1))}
               disabled={page === 1}
               className={`px-4 py-2 rounded-lg mr-2 ${page === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-700'}`}
@@ -223,12 +140,15 @@ export function ProgramDetails() {
               Previous Page
             </button>
             <button
+              type="button"
               onClick={() => setPage(old => old + 1)}
               disabled={episodes && episodes.length === 0}
               className={`px-4 py-2 rounded-lg ${episodes && episodes.length === 0 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-700'}`}
             >
               Next Page
             </button>
+
+
           </div>
 
         </TabPanel>
@@ -238,3 +158,4 @@ export function ProgramDetails() {
     </div>
   );
 }
+
