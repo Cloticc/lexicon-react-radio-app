@@ -126,9 +126,9 @@ export function ProgramDetails() {
                     </div>
                     {episode.broadcast ? <audio controls src={episode.broadcast.broadcastfiles[0].url} /> : null}
                     <div className='flex items-center'>
-                      {episode.broadcast && episode.broadcast.broadcastfiles[0].url ? <a href={episode.broadcast.broadcastfiles[0].url} className='text-blue-500'>Listen</a> : null}
+                      {episode.url && episode.url ? <a href={episode.url} className='text-blue-500'>Epiisode url</a> : null}
 
-                      {episode.url && episode.url ? <a href={episode.url} className='text-blue-500'>Download</a> : <p className='text-red-500'>No download file available</p>}
+                   {episode.url && episode.url ? <a href={episode.url} download className='text-blue-500'>Download</a> : <p className='text-red-500'>No download file available</p>}
                       <p className='text-sm text-gray-500'>Episode Group: {episode.audiopreference ? episode.audiopreference : 'No audio preference available'}</p>
                       <p className='text-sm text-gray-500'>Available Until: {episode.publishdateutc ? episode.publishdateutc : 'No available until date available'}</p>
                     </div>
