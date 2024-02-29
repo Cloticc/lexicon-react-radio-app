@@ -1,23 +1,31 @@
-
-// interface Pagination {
-//   page: number;
-//   size: number;
-//   totalhits: number;
-//   totalpages: number;
-//   nextpage: string;
-// }
 export interface ISocialMediaPlatform {
   platform: string;
   platformurl: string;
 }
+
 export interface IProgramCategory {
   id: string;
   name: string;
 }
+
 export interface IChannel {
   id: string;
   name: string;
+  image: string;
+  tagline: string;
+  siteurl: string;
+  liveaudio: ILiveAudio;
+  scheduleurl: string;
+  channeltype: string;
+  xmltvid: string;
 }
+
+export interface ILiveAudio {
+  id: string;
+  url: string;
+  statkey: string;
+}
+
 export interface IProgram {
   id: string;
   name: string;
@@ -42,11 +50,18 @@ export interface IProgram {
   responsibleeditor: string;
 }
 
-
-export interface ISr {
-  copyright: string;
-  episode: IEpisode;
+export interface IPodFile {
+  id: string;
+  url: string;
+  statkey: string;
+  duration: number;
+  publishdateutc: string;
+  title: string;
+  description: string;
+  filesizeinbytes: number;
+  program: IProgram;
 }
+
 export interface IEpisode {
   id: number;
   title: string;
@@ -89,92 +104,12 @@ export interface IEpisode {
   };
 }
 
-// interface IEpisode {
-//   id: number;
-//   title: string;
-//   description: string;
-//   url: string;
-//   program: {
-//     id: number;
-//     name: string;
-//   };
-//   audioPreference: string;
-//   audioPriority: string;
-//   audioPresentation: string;
-//   publishDateUTC: string;
-//   imageUrl: string;
-//   imageUrlTemplate: string;
-//   photographer: string;
-//   broadcastTime: {
-//     startTimeUTC: string;
-//     endTimeUTC: string;
-//   };
-//   listenPodfile: {
-//     id: number;
-//     url: string;
-//     statKey: string;
-//     duration: number;
-//     publishDateUTC: string;
-//     title: string;
-//     description: string;
-//     fileSizeInBytes: number;
-//     program: {
-//       id: number;
-//       name: string;
-//     };
-//     availableFromUTC: string;
-//   };
-//   downloadPodfile: {
-//     id: number;
-//     url: string;
-//     statKey: string;
-//     duration: number;
-//     publishDateUTC: string;
-//     title: string;
-//     description: string;
-//     fileSizeInBytes: number;
-//     program: {
-//       id: number;
-//       name: string;
-//     };
-//     availableFromUTC: string;
-//   };
-// }
-
-
-export interface IPodFile {
-  id: string;
-  url: string;
-  statkey: string;
-  duration: number;
-  publishdateutc: string;
-  title: string;
-  description: string;
-  filesizeinbytes: number;
-  program: IProgram;
+export interface ISr {
+  copyright: string;
+  episode: IEpisode;
 }
+
 export interface IEpisodeGroup {
   id: string;
   name: string;
 }
-
-
-export interface ILiveAudio {
-  id: string;
-  url: string;
-  statkey: string;
-}
-
-export interface IChannel {
-  id: string;
-  name: string;
-  image: string;
-  tagline: string;
-  siteurl: string;
-  liveaudio: ILiveAudio;
-  scheduleurl: string;
-  channeltype: string;
-  xmltvid: string;
-}
-
-
