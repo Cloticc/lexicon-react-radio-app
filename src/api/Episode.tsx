@@ -59,32 +59,68 @@ export const usePodFiles = (id: number) => {
 //   });
 // }
 
-export const useEpisodes = (id: number, page: number) => {
-  const fetchEpisodes = async () => {
-    // const response = await fetch(`https://api.sr.se/api/v2/episodes/index?format=json&page=${page}`);
+// export const useEpisodes = (id: number, page: number) => {
+//   const fetchEpisodes = async () => {
+//     // const response = await fetch(`https://api.sr.se/api/v2/episodes/index?format=json&page=${page}`);
+//     const twoDaysAgo = new Date();
+//     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+//     const twoDaysAgoStr = `${twoDaysAgo.getFullYear()}-${String(twoDaysAgo.getMonth() + 1).padStart(2, '0')}-${String(twoDaysAgo.getDate()).padStart(2, '0')}`;
+
+//     const startDateStr = '2010-01-01';
+//     const response = await fetch(`https://api.sr.se/api/v2/episodes/index?programid=${id}&fromdate=${startDateStr}&todate=${twoDaysAgoStr}&audioquality=hi&format=json&page=${page}`);
+//     // const response = await fetch(`https://api.sr.se/v2/episodes/index?programid=${id}&format=json`);
+
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! status: ${response.status}`);
+//     }
+//     const data = await response.json();
+
+//     if (data) {
+//       return data.episodes;
+//     }
+//     throw new Error('No episodes found');
+//   }
+
+//   return useQuery({
+//     queryKey: ['episodes', page],
+//     queryFn: fetchEpisodes
+//   });
+// }
+
+
+
+
+
+export const useEpisodes = (id: number) => {
+  const fetchEpisodes = async ({ pageParam = 1 }) => {
     const twoDaysAgo = new Date();
     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
     const twoDaysAgoStr = `${twoDaysAgo.getFullYear()}-${String(twoDaysAgo.getMonth() + 1).padStart(2, '0')}-${String(twoDaysAgo.getDate()).padStart(2, '0')}`;
 
     const startDateStr = '2010-01-01';
-    const response = await fetch(`https://api.sr.se/api/v2/episodes/index?programid=${id}&fromdate=${startDateStr}&todate=${twoDaysAgoStr}&audioquality=hi&format=json&page=${page}`);
-    // const response = await fetch(`https://api.sr.se/v2/episodes/index?programid=${id}&format=json`);
+    const response = await fetch(`https://api.sr.se/api/v2/episodes/index?programid=${id}&fromdate=${startDateStr}&todate=${twoDaysAgoStr}&audioquality=hi&format=json&page=${pageParam}`);
+
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
+console.log(data.episodes);
 
     if (data) {
-      return data.episodes;
+      return { data: data.episodes, nextPage: pageParam + 1 };
     }
     throw new Error('No episodes found');
   }
 
-  return useQuery({
-    queryKey: ['episodes', page],
-    queryFn: fetchEpisodes
+  return useInfiniteQuery({
+    queryKey: ['episodes', id],
+    queryFn: fetchEpisodes,
+  initialPageParam: 1,
+  getNextPageParam: (lastPage) => lastPage.nextPage,
+
   });
 }
 
-
+// setup const for other file
+// const { data: episodes, isLoading: episodesLoading, error: episodesError } = useEpisodes(id, page);
