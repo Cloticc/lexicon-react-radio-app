@@ -1,5 +1,3 @@
-import '../styles/Program.css';
-
 import { ChangeEvent, useState } from 'react';
 import { IProgram, IProgramCategory } from '../interface/Interface';
 
@@ -20,7 +18,7 @@ export const ProgramComponent: React.FC = () => {
     let programCategories: IProgramCategory[] = [];
 
     while (page <= totalPages) {
-      const response = await fetch(`http://api.sr.se/api/v2/programcategories?format=json&page=${page}`);
+      const response = await fetch(`https://api.sr.se/api/v2/programcategories?format=json&page=${page}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

@@ -1,4 +1,4 @@
-import '../styles/MyPage.css'
+
 
 export const MyPage = () => {
   return (

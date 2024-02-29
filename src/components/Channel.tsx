@@ -1,5 +1,3 @@
-import '../styles/Channel.css';
-
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { IChannel } from '../interface/Interface';

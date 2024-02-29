@@ -21,16 +21,16 @@ export function App() {
     <BrowserRouter>
       <Navbar />
       <LissenDirectly />
-        <QueryClientProvider client={queryClient}>
-      <Routes>
+      <QueryClientProvider client={queryClient}>
+        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Channel" element={<Channel />} />
           <Route path="/program/:id" element={<ProgramDetails />} />
           <Route path="/Program" element={<ProgramComponent />} />
           <Route path="/MyPage" element={<MyPage />} />
           <Route path="/Login" element={<LoginForm />} />
-      </Routes>
-        </QueryClientProvider>
+        </Routes>
+      </QueryClientProvider>
     </BrowserRouter>
   );
 }
