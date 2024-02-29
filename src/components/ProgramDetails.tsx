@@ -3,7 +3,7 @@ import 'react-tabs/style/react-tabs.css'; // Import the styles
 import { IEpisode, IPodFile } from '../interface/Interface';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { useEffect, useState } from 'react';
-import { useEpisodeDetails, useEpisodes, usePodFiles, useProgramDetails } from '../api/Episode';
+import { useEpisodes, usePodFiles, useProgramDetails } from '../api/Episode';
 
 import { useParams } from 'react-router-dom';
 
@@ -15,8 +15,7 @@ export function ProgramDetails() {
 
   const { data: program, isLoading: programLoading, error: programError } = useProgramDetails(id);
   const { data: podFiles, isLoading: podFilesLoading, error: podFilesError } = usePodFiles(id);
-  const { isLoading: episodeLoading, error: episodeError } = useEpisodeDetails(id);
-  // const { data: episode, isLoading: episodeLoading, error: episodeError } = useEpisodeDetails(id);
+  // const { isLoading: episodeLoading, error: episodeError } = useEpisodeDetails(id);
   const { data: episodes, isLoading: episodesLoading, error: episodesError } = useEpisodes(id, page);
 
   useEffect(() => {
@@ -32,16 +31,23 @@ export function ProgramDetails() {
     };
   }, []);
 
-  if (programLoading || podFilesLoading || episodeLoading || episodesLoading) {
+  if (programLoading || podFilesLoading || episodesLoading) {
     return <div>Loading...</div>;
   }
 
-  if (programError || podFilesError || episodeError || episodesError) {
-    return <div>Error: {programError?.message || podFilesError?.message || episodeError?.message || episodesError?.message}</div>;
+  if (programError || podFilesError || episodesError) {
+    return <div>Error: {programError?.message || podFilesError?.message || episodesError?.message}</div>;
   }
 
 
-
+  // console.log('episodes', episodes);
+//   episodes.forEach((episode: any) => {
+//     episode.broadcast?.broadcastfiles?.forEach(file => {
+//         const listenUrl = file.url;
+//         console.log(listenUrl);
+//         // Use listenUrl as needed (e.g., play audio)
+//     });
+// });
 
   return (
     <div className='flex flex-col w-full '>
@@ -101,7 +107,7 @@ export function ProgramDetails() {
         </TabPanel>
         <TabPanel>
           {/* Render episode here */}
-          <h1>Test</h1>
+
 
           <ul className='space-y-4 '>
             {episodes && episodes.length > 0 ? (
@@ -116,11 +122,12 @@ export function ProgramDetails() {
                       <p className='text-gray-700 text-base'>{episode.description ? episode.description : 'No description available'}</p>
                       <p className='text-sm text-gray-500'>Published: {episode.publishdateutc ? episode.publishdateutc : 'No publish date available'}</p>
                     </div>
+                    {episode.listenpodfile ? <audio controls src={episode.listenpodfile.url}></audio> : <p className='text-red-500'>No audio available</p>}
                     <div className='flex items-center'>
-                      {episode.url ? <a href={episode.url} className='text-blue-500'>Listen</a> : null}
+                      {episode.listenpodfile && episode.listenpodfile.url ? <a href={episode.listenpodfile.url} className='text-blue-500'>Listen</a> : null}
                       {episode.downloadpodfile && episode.downloadpodfile.url ? <a href={episode.downloadpodfile.url} className='text-blue-500'>Download</a> : <p className='text-red-500'>No download file available</p>}
                       <p className='text-sm text-gray-500'>Episode Group: {episode.episodegroups && episode.episodegroups.length > 0 ? episode.episodegroups[0].name : 'No episode group available'}</p>
-                      <p className='text-sm text-gray-500'>Available Until: {episode.availableuntilutc ? episode.availableuntilutc : 'No available until date available'}</p>
+                      <p className='text-sm text-gray-500'>Available Until: {episode.publishdateutc ? episode.publishdateutc : 'No available until date available'}</p>
                     </div>
                   </div>
                 </li>

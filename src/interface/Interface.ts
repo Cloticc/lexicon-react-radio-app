@@ -47,30 +47,100 @@ export interface ISr {
   copyright: string;
   episode: IEpisode;
 }
-
-export interface IEpisode {
-  broadcastfiles: any;
-  episodegroup: any;
-  availableuntilutc: any;
-  id: string;
+interface IEpisode {
+  id: number;
   title: string;
   description: string;
-  text: string;
   url: string;
-  program: IProgram;
+  program: {
+      id: number;
+      name: string;
+  };
+  audiopreference: string;
+  audiopresentation: string;
+  audiopriority: string;
   publishdateutc: string;
   imageurl: string;
   imageurltemplate: string;
-  listenpodfile: IPodFile;
-  downloadpodfile: IPodFile;
-  relatedepisodes: any; 
-  episodegroups: IEpisodeGroup[];
+  photographer: string;
+  broadcasttime: {
+      starttimeutc: string;
+      endtimeutc: string;
+  };
+  broadcast: {
+      availablestoputc: string;
+      broadcastfiles: {
+          duration: number;
+          publishdateutc: string;
+          id: number;
+          url: string;
+          statkey: string;
+      }[];
+      playlist: {
+          duration: number;
+          publishdateutc: string;
+          title: string;
+          url: string;
+      };
+      channelid: number;
+      description: string;
+      publishdateutc: string;
+      title: string;
+  };
 }
 
-export interface IProgram {
-  id: string;
-  name: string;
-}
+// interface IEpisode {
+//   id: number;
+//   title: string;
+//   description: string;
+//   url: string;
+//   program: {
+//     id: number;
+//     name: string;
+//   };
+//   audioPreference: string;
+//   audioPriority: string;
+//   audioPresentation: string;
+//   publishDateUTC: string;
+//   imageUrl: string;
+//   imageUrlTemplate: string;
+//   photographer: string;
+//   broadcastTime: {
+//     startTimeUTC: string;
+//     endTimeUTC: string;
+//   };
+//   listenPodfile: {
+//     id: number;
+//     url: string;
+//     statKey: string;
+//     duration: number;
+//     publishDateUTC: string;
+//     title: string;
+//     description: string;
+//     fileSizeInBytes: number;
+//     program: {
+//       id: number;
+//       name: string;
+//     };
+//     availableFromUTC: string;
+//   };
+//   downloadPodfile: {
+//     id: number;
+//     url: string;
+//     statKey: string;
+//     duration: number;
+//     publishDateUTC: string;
+//     title: string;
+//     description: string;
+//     fileSizeInBytes: number;
+//     program: {
+//       id: number;
+//       name: string;
+//     };
+//     availableFromUTC: string;
+//   };
+// }
+
 
 export interface IPodFile {
   id: string;
@@ -83,7 +153,6 @@ export interface IPodFile {
   filesizeinbytes: number;
   program: IProgram;
 }
-
 export interface IEpisodeGroup {
   id: string;
   name: string;
