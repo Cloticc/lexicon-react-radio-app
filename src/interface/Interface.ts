@@ -47,14 +47,14 @@ export interface ISr {
   copyright: string;
   episode: IEpisode;
 }
-interface IEpisode {
+export interface IEpisode {
   id: number;
   title: string;
   description: string;
   url: string;
   program: {
-      id: number;
-      name: string;
+    id: number;
+    name: string;
   };
   audiopreference: string;
   audiopresentation: string;
@@ -64,28 +64,28 @@ interface IEpisode {
   imageurltemplate: string;
   photographer: string;
   broadcasttime: {
-      starttimeutc: string;
-      endtimeutc: string;
+    starttimeutc: string;
+    endtimeutc: string;
   };
   broadcast: {
-      availablestoputc: string;
-      broadcastfiles: {
-          duration: number;
-          publishdateutc: string;
-          id: number;
-          url: string;
-          statkey: string;
-      }[];
-      playlist: {
-          duration: number;
-          publishdateutc: string;
-          title: string;
-          url: string;
-      };
-      channelid: number;
-      description: string;
+    availablestoputc: string;
+    broadcastfiles: {
+      duration: number;
+      publishdateutc: string;
+      id: number;
+      url: string;
+      statkey: string;
+    }[];
+    playlist: {
+      duration: number;
       publishdateutc: string;
       title: string;
+      url: string;
+    };
+    channelid: number;
+    description: string;
+    publishdateutc: string;
+    title: string;
   };
 }
 
