@@ -107,41 +107,45 @@ export function ProgramDetails() {
         </TabPanel>
         <TabPanel>
           {/* Render episode here */}
-          <div className='grid grid-cols-2 gap-4'>
-            {episodes && episodes.length > 0 ? (
-              episodes.map((episode: IEpisode) => (
-                <div key={episode.id ? episode.id : 'No ID'} className='max-w-sm w-full lg:max-w-full lg:flex'>
-                  {episode.imageurl ? (
-                    <div className='h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden'
-                      style={{
-                        backgroundImage: `url(${episode.imageurl})`,
-                        backgroundPosition: 'center'
-                      }}
-                      title={episode.title ? episode.title : 'No title available'}
-                    />
-                  ) : null}
-                  <div className='border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal'>
-                    <div className='mb-8'>
-                      <div className='text-gray-900 font-bold text-xl mb-2'>{episode.title ? episode.title : 'No title available'}</div>
-                      <p className='text-gray-700 text-base'>{episode.description ? episode.description : 'No description available'}</p>
-                      <p className='text-sm text-gray-500'>
-                        Published: {episode.publishdateutc ? new Date(Number(episode.publishdateutc.replace(/\/Date\((\d+)\)\//, '$1'))).toLocaleDateString('en-GB') : 'No publish date available'}
-                      </p>
-                    </div>
-                    {episode.broadcast ? <audio controls src={episode.broadcast.broadcastfiles[0].url} className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/3" /> : null}
+          <div className='flex justify-center items-center'>
+            <div className='grid grid-cols-2 gap-4'>
+              {episodes && episodes.length > 0 ? (
+                episodes.map((episode: IEpisode) => (
+                  <div key={episode.id ? episode.id : 'No ID'} className='max-w-sm w-full lg:max-w-full lg:flex'>
+                    {episode.imageurl ? (
+                      <div className='h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden'
+                        style={{
+                          backgroundImage: `url(${episode.imageurl})`,
+                          backgroundPosition: 'center'
+                        }}
+                        title={episode.title ? episode.title : 'No title available'}
+                      />
+                    ) : null}
+                    <div className='border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal'>
+                      <div className='mb-8'>
+                        <div className='text-gray-900 font-bold text-xl mb-2'>{episode.title ? episode.title : 'No title available'}</div>
+                        <p className='text-gray-700 text-base'>{episode.description ? episode.description : 'No description available'}</p>
+                        <p className='text-sm text-gray-500'>
+                          Published: {episode.publishdateutc ? new Date(Number(episode.publishdateutc.replace(/\/Date\((\d+)\)\//, '$1'))).toLocaleDateString('en-GB') : 'No publish date available'}
+                        </p>
+                      </div>
+                      {episode.broadcast ? <audio controls src={episode.broadcast.broadcastfiles[0].url} className='w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/3' /> : null}
 
-                    <div className='flex items-center justify-between'>
-                      {episode.url && episode.url ? <a href={episode.url} className='text-blue-500'>url</a> : null}
-                      {episode.url && episode.url ? <a href={episode.url} download className='text-blue-500'>Download</a> : <p className='text-red-500'>No download file available</p>}
+                      <div className='flex items-center justify-between'>
+                        {episode.url && episode.url ? <a href={episode.url} className='text-blue-500'>url</a> : null}
+                        {episode.url && episode.url ? <a href={episode.url} download className='text-blue-500'>Download</a> : <p className='text-red-500'>No download file available</p>}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            ) : (
-              <p className='text-center text-red-500'>No episodes available</p>
-            )}
+                ))
+              ) : (
+
+                <p className='text-red-500 text-2xl'>No episodes available</p>
+              )}
+            </div>
           </div>
-          <div className="flex justify-center mt-4">
+
+          <div className='flex justify-center mt-4'>
             <button
               type="button"
               onClick={() => setPage(old => Math.max(old - 1, 1))}
@@ -166,7 +170,7 @@ export function ProgramDetails() {
 
 
       </Tabs>
-    </div>
+    </div >
   );
 }
 
