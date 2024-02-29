@@ -190,7 +190,7 @@ export function ProgramDetails() {
           <ul className='space-y-4 '>
             {episodes && episodes.length > 0 ? (
               episodes.map((episode: IEpisode) => (
-                <li key={episode.id ? episode.id : 'No ID'} className='max-w-sm w-full lg:max-w-full lg:flex p-4 border rounded shadow'>
+                <li key={episode.id ? episode.id : 'No ID'} className='max-w-sm w-full lg:max-w-full lg:flex'>
                   {episode.imageurl ? (
                     <div className='h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden' style={{ backgroundImage: `url(${episode.imageurl})` }} title={episode.title ? episode.title : 'No title available'} />
                   ) : null}
