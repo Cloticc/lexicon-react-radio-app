@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 export const useProgramDetails = (id: number) => {
   const fetchProgramDataDetails = async () => {
@@ -19,26 +19,25 @@ export const useProgramDetails = (id: number) => {
   });
 }
 
-
 export const usePodFiles = (id: number) => {
-  const fetchPodFiles = async () => {
-    const response = await fetch(`https://api.sr.se/api/v2/podfiles?programid=${id}&format=json`);
+  const fetchPodFiles = async ({ pageParam = 1 }) => {
+    const response = await fetch(`https://api.sr.se/api/v2/podfiles?programid=${id}&page=${pageParam}&format=json`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-
-    if (data) {
-      return data.podfiles;
-    }
-    throw new Error('No pod files found');
+    return { data: data.podfiles, nextPage: data.podfiles.length > 0 ? pageParam + 1 : undefined };
   }
 
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['podfiles', id],
-    queryFn: fetchPodFiles
+    queryFn: fetchPodFiles,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+    initialPageParam: 1,
   });
 }
+// const { data: podFiles, isLoading: podFilesLoading, error: podFilesError } = usePodFiles(id);
+// const { data: podFiles, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = usePodFiles(id);
 
 // export const useEpisodeDetails = (episodeId: number) => {
 //   const fetchEpisodeDetails = async () => {
