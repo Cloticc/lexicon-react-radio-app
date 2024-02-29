@@ -40,14 +40,14 @@ export function ProgramDetails() {
   }
 
 
-  // console.log('episodes', episodes);
-//   episodes.forEach((episode: any) => {
-//     episode.broadcast?.broadcastfiles?.forEach(file => {
-//         const listenUrl = file.url;
-//         console.log(listenUrl);
-//         // Use listenUrl as needed (e.g., play audio)
-//     });
-// });
+  console.log('episodes', episodes);
+  //   episodes.forEach((episode: any) => {
+  //     episode.broadcast?.broadcastfiles?.forEach(file => {
+  //         const listenUrl = file.url;
+  //         console.log(listenUrl);
+  //         // Use listenUrl as needed (e.g., play audio)
+  //     });
+  // });
 
   return (
     <div className='flex flex-col w-full '>
@@ -57,7 +57,7 @@ export function ProgramDetails() {
           <Tab>Details</Tab>
           <Tab>Broadcasts</Tab>
           <Tab>Pods</Tab>
-          <Tab>episode</Tab>
+          <Tab>Episodes</Tab>
         </TabList>
         <TabPanel>
 
@@ -120,13 +120,16 @@ export function ProgramDetails() {
                     <div className='mb-8'>
                       <div className='text-gray-900 font-bold text-xl mb-2'>{episode.title ? episode.title : 'No title available'}</div>
                       <p className='text-gray-700 text-base'>{episode.description ? episode.description : 'No description available'}</p>
-                      <p className='text-sm text-gray-500'>Published: {episode.publishdateutc ? episode.publishdateutc : 'No publish date available'}</p>
+                      <p className='text-sm text-gray-500'>
+                        Published: {episode.publishdateutc ? new Date(Number(episode.publishdateutc.replace(/\/Date\((\d+)\)\//, '$1'))).toLocaleDateString() : 'No publish date available'}
+                      </p>
                     </div>
-                    {episode.listenpodfile ? <audio controls src={episode.listenpodfile.url}></audio> : <p className='text-red-500'>No audio available</p>}
+                    {episode.broadcast ? <audio controls src={episode.broadcast.broadcastfiles[0].url} /> : null}
                     <div className='flex items-center'>
-                      {episode.listenpodfile && episode.listenpodfile.url ? <a href={episode.listenpodfile.url} className='text-blue-500'>Listen</a> : null}
-                      {episode.downloadpodfile && episode.downloadpodfile.url ? <a href={episode.downloadpodfile.url} className='text-blue-500'>Download</a> : <p className='text-red-500'>No download file available</p>}
-                      <p className='text-sm text-gray-500'>Episode Group: {episode.episodegroups && episode.episodegroups.length > 0 ? episode.episodegroups[0].name : 'No episode group available'}</p>
+                      {episode.broadcast && episode.broadcast.broadcastfiles[0].url ? <a href={episode.broadcast.broadcastfiles[0].url} className='text-blue-500'>Listen</a> : null}
+
+                      {episode.url && episode.url ? <a href={episode.url} className='text-blue-500'>Download</a> : <p className='text-red-500'>No download file available</p>}
+                      <p className='text-sm text-gray-500'>Episode Group: {episode.audiopreference ? episode.audiopreference : 'No audio preference available'}</p>
                       <p className='text-sm text-gray-500'>Available Until: {episode.publishdateutc ? episode.publishdateutc : 'No available until date available'}</p>
                     </div>
                   </div>
