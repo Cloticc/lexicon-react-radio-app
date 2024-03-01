@@ -37,11 +37,11 @@ export function App() {
       <Broadcasts />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Channel" element={<Channel />} />
+          <Route path="/channel" element={<Channel />} />
           <Route path="/program" element={<ProgramComponent />} />
           <Route path="/program/:id" element={<ProgramDetails />} />
-          <Route path="/MyPage" element={<MyPage />} />
-          <Route path="/Login" element={<LoginForm />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/login" element={<LoginForm />} />
         </Routes>
       </QueryClientProvider>
     </BrowserRouter>
