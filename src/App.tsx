@@ -31,7 +31,7 @@ const queryClient = new QueryClient()
 
 export function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>  
+    <BrowserRouter>
       <Navbar />
       <LissenDirectly />
       <QueryClientProvider client={queryClient}>
