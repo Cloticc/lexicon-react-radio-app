@@ -45,7 +45,7 @@ export const getProgramsByCategory = async (selectedCategory: null | undefined) 
       /* TODO: Fix size thing use oberserver */
       const response = await fetch(`https://api.sr.se/api/v2/programs/index?programcategoryid=${selectedCategory}&format=json&page=${page}&size=1000`);
       const data = await response.json();
-      console.log(data.programs);
+      // console.log(data.programs);
       
       if (data) {
         allPrograms = allPrograms.concat(data.programs);

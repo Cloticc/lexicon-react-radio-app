@@ -17,7 +17,7 @@ export const getChannel = async () => {
       throw new Error('No channels found');
     }
 
-    console.log(allChannels);
+    // console.log(allChannels);
     
     page++;
   }
