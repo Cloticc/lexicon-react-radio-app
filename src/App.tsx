@@ -1,48 +1,49 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider, } from '@tanstack/react-query'
 
+import { Channel } from "./components/Channel";
+import { Home } from './components/Home';
 import { LissenDirectly } from "./components/LissenDirectly";
+import { LoginForm } from "./components/LoginForm";
+import { MyPage } from "./components/MyPage";
 import { Navbar } from "./components/Navbar";
-import { Outlet } from 'react-router-dom';
+import { ProgramComponent } from "./components/Program";
+import { ProgramDetails } from './components/ProgramDetails';
 
-// import { Channel } from "./components/Channel";
-// import { Home } from './components/Home';
+// import { Outlet } from 'react-router-dom';
 
-// import { LoginForm } from "./components/LoginForm";
-// import { MyPage } from "./components/MyPage";
 
-// import { ProgramComponent } from "./components/Program";
-// import { ProgramDetails } from './components/ProgramDetails';
+
+// export function App() {
+//   return (
+//     <>
+//       <Navbar />
+//       <LissenDirectly />
+
+//       <QueryClientProvider client={queryClient}>
+//       <Outlet />
+//       </QueryClientProvider>
+//     </>
+//   );
+// }
 
 const queryClient = new QueryClient()
 
 export function App() {
-
   return (
-    <>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>  
       <Navbar />
       <LissenDirectly />
-
       <QueryClientProvider client={queryClient}>
-      <Outlet />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Channel" element={<Channel />} />
+          <Route path="/program/:id" element={<ProgramDetails />} />
+          <Route path="/Program" element={<ProgramComponent />} />
+          <Route path="/MyPage" element={<MyPage />} />
+          <Route path="/Login" element={<LoginForm />} />
+        </Routes>
       </QueryClientProvider>
-    </>
+    </BrowserRouter>
   );
 }
-
-
-
-
-{/* <BrowserRouter>
-    <Navbar />
-    <LissenDirectly />
-    <QueryClientProvider client={queryClient}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Channel" element={<Channel />} />
-        <Route path="/program/:id" element={<ProgramDetails />} />
-        <Route path="/Program" element={<ProgramComponent />} />
-        <Route path="/MyPage" element={<MyPage />} />
-        <Route path="/Login" element={<LoginForm />} />
-      </Routes>
-    </QueryClientProvider>
-  </BrowserRouter> */}
