@@ -92,9 +92,9 @@ export const Channel = () => {
               </button>
             </div>
 
-            <Link className="text-blue-500 hover:underline " to={`/program/${channel.id}`}>
-              Jump to details
-            </Link>
+            {/* <Link className="text-blue-500 hover:underline " to={`/program/${channel.id}`}>
+              Go to details
+            </Link> */}
           </div>
 
 
