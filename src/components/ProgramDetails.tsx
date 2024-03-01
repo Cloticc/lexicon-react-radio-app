@@ -15,9 +15,10 @@ export function ProgramDetails() {
 
   const { id: idString } = useParams<{ id: string }>();
   const id = Number(idString);
+
   // const [page, setPage] = useState(1);
   const [tabIndex, setTabIndex] = useState(0);
-
+  const [playingAudio, setPlayingAudio] = useState<HTMLAudioElement | null>(null);
   const { data: program, isLoading: programLoading, error: programError } = useProgramDetails(id);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -199,10 +200,21 @@ export function ProgramDetails() {
                         <p className='text-xs text-gray-500'>Duration: {Math.round(pod.duration / 60)} minutes</p>
                       </div>
                       <div className='flex items-center'>
-                        <audio controls>
+                        <audio
+                          controls
+                          onPlay={(event) => {
+                            const audio = event.currentTarget;
+                            if (playingAudio && playingAudio !== audio) {
+                              playingAudio.pause();
+                            }
+                            setPlayingAudio(audio);
+                          }}
+                        >
                           <source src={pod.url} type="audio/mpeg" />
                           Your browser does not support the audio element.
                         </audio>
+
+
                       </div>
                     </div>
                     {/* </motion.div> */}
