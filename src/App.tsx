@@ -38,8 +38,8 @@ export function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Channel" element={<Channel />} />
-          <Route path="/Program/:id" element={<ProgramDetails />} />
-          <Route path="/Program" element={<ProgramComponent />} />
+          <Route path="/program" element={<ProgramComponent />} />
+          <Route path="/program/:id" element={<ProgramDetails />} />
           <Route path="/MyPage" element={<MyPage />} />
           <Route path="/Login" element={<LoginForm />} />
         </Routes>
