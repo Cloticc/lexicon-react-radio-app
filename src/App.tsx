@@ -21,6 +21,7 @@ export function App() {
     <>
       <Navbar />
       <LissenDirectly />
+
       <QueryClientProvider client={queryClient}>
       <Outlet />
       </QueryClientProvider>
