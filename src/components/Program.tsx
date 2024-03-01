@@ -78,7 +78,7 @@ export const ProgramComponent: React.FC = () => {
 
         <aside className='mt-4 grid grid-cols-3 gap-4'>
           {programs?.map((program, index) => (
-            <li key={`${program.id}-${index}`} className='p-4 border rounded-lg shadow-lg bg-white'>
+          <li key={`${program.id}-${index}`} className='p-4 border rounded-lg shadow-lg bg-white list-none'>
               <img className="w-full h-64 object-cover mt-2 rounded" src={program.programimage} alt={program.name} />
               <div className="p-4">
                 <h3 className="text-lg font-semibold mt-2">{program.name}</h3>
