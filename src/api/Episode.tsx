@@ -36,6 +36,45 @@ export const usePodFiles = (id: number) => {
     initialPageParam: 1,
   });
 }
+
+export const useEpisodes = (id: number) => {
+  const fetchEpisodes = async ({ pageParam = 1 }) => {
+    const twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    const twoDaysAgoStr = `${twoDaysAgo.getFullYear()}-${String(twoDaysAgo.getMonth() + 1).padStart(2, '0')}-${String(twoDaysAgo.getDate()).padStart(2, '0')}`;
+
+    const startDateStr = '2010-01-01';
+    const response = await fetch(`https://api.sr.se/api/v2/episodes/index?programid=${id}&fromdate=${startDateStr}&todate=${twoDaysAgoStr}&audioquality=hi&format=json&page=${pageParam}`);
+
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data.episodes);
+
+    if (data) {
+      return { data: data.episodes, nextPage: pageParam + 1 };
+    }
+    throw new Error('No episodes found');
+  }
+
+  return useInfiniteQuery({
+    queryKey: ['episodes', id],
+    queryFn: fetchEpisodes,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+
+  });
+}
+
+
+
+
+
+
+
+
 // const { data: podFiles, isLoading: podFilesLoading, error: podFilesError } = usePodFiles(id);
 // const { data: podFiles, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = usePodFiles(id);
 
@@ -86,41 +125,3 @@ export const usePodFiles = (id: number) => {
 //     queryFn: fetchEpisodes
 //   });
 // }
-
-
-
-
-
-export const useEpisodes = (id: number) => {
-  const fetchEpisodes = async ({ pageParam = 1 }) => {
-    const twoDaysAgo = new Date();
-    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-    const twoDaysAgoStr = `${twoDaysAgo.getFullYear()}-${String(twoDaysAgo.getMonth() + 1).padStart(2, '0')}-${String(twoDaysAgo.getDate()).padStart(2, '0')}`;
-
-    const startDateStr = '2010-01-01';
-    const response = await fetch(`https://api.sr.se/api/v2/episodes/index?programid=${id}&fromdate=${startDateStr}&todate=${twoDaysAgoStr}&audioquality=hi&format=json&page=${pageParam}`);
-
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-console.log(data.episodes);
-
-    if (data) {
-      return { data: data.episodes, nextPage: pageParam + 1 };
-    }
-    throw new Error('No episodes found');
-  }
-
-  return useInfiniteQuery({
-    queryKey: ['episodes', id],
-    queryFn: fetchEpisodes,
-  initialPageParam: 1,
-  getNextPageParam: (lastPage) => lastPage.nextPage,
-
-  });
-}
-
-// setup const for other file
-// const { data: episodes, isLoading: episodesLoading, error: episodesError } = useEpisodes(id, page);
