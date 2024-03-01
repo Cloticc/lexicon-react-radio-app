@@ -102,10 +102,10 @@ const { data: programCategories, isLoading, error } = useQuery({
   }
 
   return (
-    <div className="Program">
-      <h2>Programs</h2>
-      <>
-        <select value={selectedCategory?.toString()} onChange={handleCategoryChange}>
+    <div className="flex flex-col items-center">
+      <h2 className="text-2xl font-bold mb-4">Programs</h2>
+      <div>
+        <select className="form-select block w-full mt-1" value={selectedCategory?.toString()} onChange={handleCategoryChange}>
           <option value="">Select a category</option>
           {programCategories?.map(category => (
             <option key={category.id} value={category.id}>
@@ -114,25 +114,27 @@ const { data: programCategories, isLoading, error } = useQuery({
           ))}
         </select>
 
-        <aside className='program-channels-wrapper'>
+        <aside className='mt-4 grid grid-cols-3 gap-4'>
           {programs?.map((program, index) => (
-            <li key={`${program.id}-${index}`} className='program-card'>
-              <Link to={`/program/${program.id}`}>
-                <h2>{program.name} HUGE</h2>
+            <li key={`${program.id}-${index}`} className='p-4 border rounded-lg shadow-lg bg-white'>
+              <Link className="text-blue-500 hover:underline" to={`/program/${program.id}`}>
+                <h2 className="text-xl font-bold">{program.name} HUGE</h2>
               </Link>
-              <img src={program.programimage} alt={program.name} />
-              <h3>{program.channel.name}</h3>
-              <p>{program.description}</p>
-              <p>{program.broadcastinfo}</p>
-              <p>Program URL: {program.programurl}</p>
-              <ul className='social-ul'>
-                {socialMediaPlatforms(program)}
-              </ul>
-              <p>Archived: {program.archived ? 'Yes' : 'No'}</p>
+              <img className="w-full h-64 object-cover mt-2 rounded" src={program.programimage} alt={program.name} />
+              <div className="p-4">
+                <h3 className="text-lg font-semibold mt-2">{program.channel.name}</h3>
+                <p className="mt-2">{program.description}</p>
+                <p className="mt-2">{program.broadcastinfo}</p>
+                <p className="mt-2">Program URL: <a className="text-blue-500 hover:underline" href={program.programurl}>{program.programurl}</a></p>
+                <ul className='mt-2'>
+                  {socialMediaPlatforms(program)}
+                </ul>
+                <p className="mt-2">Archived: <span className="font-bold">{program.archived ? 'Yes' : 'No'}</span></p>
+              </div>
             </li>
           ))}
         </aside>
-      </>
+      </div>
     </div>
   );
 };
