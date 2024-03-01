@@ -17,8 +17,8 @@ export const Router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route index path="/" element={<Home />} />
       <Route path="Channel" element={<Channel />} />
-      <Route path="program/:id" element={<ProgramDetails />} />
       <Route path="Program" element={<ProgramComponent />} />
+      <Route path="program/:id" element={<ProgramDetails />} />
       <Route path="MyPage" element={<MyPage />} />
       <Route path="Login" element={<LoginForm />} />
     </Route>
