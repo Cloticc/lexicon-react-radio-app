@@ -80,24 +80,18 @@ export const Channel = () => {
       </button>
 
       {channels?.map((channel: IChannel, index: number) => (
-        <div ref={index === channels.length - 1 ? lastChannelElementRef : null} key={`${channel.id}-${channel.name}-${index}`} className="card border rounded-lg overflow-hidden shadow-md bg-white">
+        <div ref={index === channels.length - 1 ? lastChannelElementRef : null} key={`${channel.id}-${channel.name}-${index}`} className="card border rounded-lg overflow-hidden shadow-md bg-white relative">
           <img src={channel.image} alt={channel.name} className="w-full h-64 object-cover-fill" />
           <div className="p-4">
             <h2 className="text-xl mb-2">{channel.name}</h2>
             <p className="text-gray-700 mb-2">{channel.tagline}</p>
             <a href={channel.siteurl} className="text-blue-500 hover:underline mb-2 block">Visit Site</a>
-            <div>
-              <button onClick={() => setCurrentAudioUrl(channel.liveaudio.url)}>
-                <FontAwesomeIcon icon={faPlay} />
-              </button>
-            </div>
-
-            {/* <Link className="text-blue-500 hover:underline " to={`/program/${channel.id}`}>
-              Go to details
-            </Link> */}
           </div>
-
-
+          <div className="absolute bottom-0 right-0 m-2">
+            <button onClick={() => setCurrentAudioUrl(channel.liveaudio.url)}>
+              <FontAwesomeIcon icon={faPlay} />
+            </button>
+          </div>
         </div>
       ))}
       {isVisible && (
