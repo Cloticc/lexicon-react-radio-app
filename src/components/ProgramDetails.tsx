@@ -5,7 +5,7 @@ import { IEpisode, IPodFile, ISocialMediaPlatform } from '../interface/Interface
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useEpisodes, usePodFiles, useProgramDetails } from '../api/Episode';
+import { useEpisodes, usePodFiles, useProgramDetails } from '../api/apiEpisode';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
@@ -119,7 +119,7 @@ export function ProgramDetails() {
   });
 
 
-  if (programLoading || !program) {
+  if (programLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <p>Loading...</p>
@@ -170,6 +170,7 @@ export function ProgramDetails() {
 
         </TabPanel>
         <TabPanel>
+          {/* BroadCast */}
           <h1>BroadCast</h1>
 
 

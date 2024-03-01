@@ -49,6 +49,22 @@ export interface IProgram {
   haspod: boolean;
   responsibleeditor: string;
 }
+interface Publisher {
+  id: string;
+  name: string;
+}
+export interface IBroadcast {
+  id: string;
+  name: string;
+  sport: boolean;
+  description: string;
+  localstarttime: string;
+  localstoptime: string;
+  publisher: Publisher;
+  channel: IChannel;
+  liveaudio: ILiveAudio;
+  mobileliveaudio: ILiveAudio;
+}
 
 export interface IPodFile {
   id: string;

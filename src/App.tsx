@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import { Broadcasts } from "./components/Broadcasts";
 import { Channel } from "./components/Channel";
 import { Home } from './components/Home';
 import { LoginForm } from "./components/LoginForm";
@@ -8,7 +9,6 @@ import { MyPage } from "./components/MyPage";
 import { Navbar } from "./components/Navbar";
 import { ProgramComponent } from "./components/Program";
 import { ProgramDetails } from './components/ProgramDetails';
-import { ScheduleEpisode } from "./components/ScheduleEpisode";
 
 // import { Outlet } from 'react-router-dom';
 
@@ -34,7 +34,7 @@ export function App() {
     <BrowserRouter>
       <Navbar />
       <QueryClientProvider client={queryClient}>
-      <ScheduleEpisode />
+      <Broadcasts />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Channel" element={<Channel />} />
