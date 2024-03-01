@@ -1,5 +1,6 @@
 import 'react-tabs/style/react-tabs.css'; // Import the styles
 
+import { AnimatePresence, motion } from 'framer-motion';
 import { IEpisode, IPodFile } from '../interface/Interface';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -24,8 +25,8 @@ export function ProgramDetails() {
 
 
   const { data: podFiles, fetchNextPage: fetchNextPodPage, hasNextPage: hasNextPodPage } = usePodFiles(id);
+  // const { data: episodes, fetchNextPage: fetchNextEpisodePage, hasNextPage: hasNextEpisodePage } = useEpisodes(id);
   const { data: episodes, fetchNextPage: fetchNextEpisodePage, hasNextPage: hasNextEpisodePage } = useEpisodes(id);
-
 
 
   const episodeObserver = useRef<IntersectionObserver | null>(null);
@@ -67,6 +68,8 @@ export function ProgramDetails() {
       localStorage.removeItem('isRefreshed');
     };
   }, []);
+
+
 
   if (programLoading || !program) {
     return (
@@ -156,55 +159,63 @@ export function ProgramDetails() {
           {/* Render episode here */}
           <div className='flex justify-center items-center'>
             <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
-              {episodes && episodes.pages.length > 0 ? (
-                episodes.pages.map((page, pageIndex) => (
-                  page.data.map((episode: IEpisode, episodeIndex: number) => (
-                    <div
-                      key={episode.id ? episode.id : 'No ID'}
-                      ref={pageIndex === episodes.pages.length - 1 && episodeIndex === page.data.length - 1 ? lastEpisodeElementRef : null}
-                      className='shadow-md rounded-lg  bg-white'
-                    >
-                      <div key={episode.id ? episode.id : 'No ID'} className='shadow-md rounded-lg  bg-white'>
-                        {episode.imageurl ? (
-                          <div
-                            className='h-48 bg-cover bg-center'
-                            style={{
-                              backgroundImage: `url(${episode.imageurl})`
-                            }}
-                            title={episode.title ? episode.title : 'No title available'}
-                          />
-                        ) : null}
-                        <div className='px-6 py-4'>
-                          <div className='font-bold text-xl mb-2'>{episode.title ? episode.title : 'No title available'}</div>
-                          <p className='text-gray-700 text-base'>{episode.description ? episode.description : 'No description available'}</p>
-                          <p className='text-sm text-gray-500 mt-2'>
-                            Published: {episode.publishdateutc ? new Date(Number(episode.publishdateutc.replace(/\/Date\((\d+)\)\//, '$1'))).toLocaleDateString('en-GB') : 'No publish date available'}
-                          </p>
-                        </div>
-                        {episode.broadcast ? (
-                          <div className='px-6 pb-4'>
-                            <audio controls src={episode.broadcast.broadcastfiles[0].url} className='w-full' />
+              <AnimatePresence>
+                {episodes && episodes.pages.length > 0 ? (
+                  episodes.pages.map((page, pageIndex) => (
+                    page.data.map((episode: IEpisode, episodeIndex: number) => (
+                      <motion.div
+                        // <div
+                        key={episode.id ? episode.id : 'No ID'}
+                        ref={pageIndex === episodes.pages.length - 1 && episodeIndex === page.data.length - 1 ? lastEpisodeElementRef : null}
+                        className='shadow-md rounded-lg  bg-white'
+                        initial={{ opacity: 0, y: 50 }} // Initial state of the component
+                        animate={{ opacity: 1, y: 0 }} // Final state of the component
+                        exit={{ opacity: 0, y: 50 }} // State of the component when it's unmounting
+                        transition={{ duration: 0.3 }}// Animation duration
+                      >
+                        <div key={episode.id ? episode.id : 'No ID'} className='shadow-md rounded-lg  bg-white'>
+                          {episode.imageurl ? (
+                            <div
+                              className='h-48 bg-cover bg-center'
+                              style={{
+                                backgroundImage: `url(${episode.imageurl})`
+                              }}
+                              title={episode.title ? episode.title : 'No title available'}
+                            />
+                          ) : null}
+                          <div className='px-6 py-4'>
+                            <div className='font-bold text-xl mb-2'>{episode.title ? episode.title : 'No title available'}</div>
+                            <p className='text-gray-700 text-base'>{episode.description ? episode.description : 'No description available'}</p>
+                            <p className='text-sm text-gray-500 mt-2'>
+                              Published: {episode.publishdateutc ? new Date(Number(episode.publishdateutc.replace(/\/Date\((\d+)\)\//, '$1'))).toLocaleDateString('en-GB') : 'No publish date available'}
+                            </p>
                           </div>
-                        ) : null}
-                        <div className='px-6 py-4 flex justify-between'>
-                          {episode.url && episode.url ? (
-                            <a href={episode.url} className='text-blue-500'>URL</a>
-                          ) : (
-                            <p className='text-red-500'>No URL available</p>
-                          )}
-                          {episode.url && episode.url ? (
-                            <a href={episode.url} download className='text-blue-500'>Download</a>
-                          ) : (
-                            <p className='text-red-500'>No download file available</p>
-                          )}
+                          {episode.broadcast ? (
+                            <div className='px-6 pb-4'>
+                              <audio controls src={episode.broadcast.broadcastfiles[0].url} className='w-full' />
+                            </div>
+                          ) : null}
+                          <div className='px-6 py-4 flex justify-between'>
+                            {episode.url && episode.url ? (
+                              <a href={episode.url} className='text-blue-500'>URL</a>
+                            ) : (
+                              <p className='text-red-500'>No URL available</p>
+                            )}
+                            {episode.url && episode.url ? (
+                              <a href={episode.url} download className='text-blue-500'>Download</a>
+                            ) : (
+                              <p className='text-red-500'>No download file available</p>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    </div>
+                        {/* </div> */}
+                      </motion.div>
+                    ))
                   ))
-                ))
-              ) : (
-                <p className='text-red-500 text-2xl'>No episodes available</p>
-              )}
+                ) : (
+                  <p className='text-red-500 text-2xl'>No episodes available</p>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 
