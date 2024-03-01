@@ -49,10 +49,7 @@ export interface IProgram {
   haspod: boolean;
   responsibleeditor: string;
 }
-interface Publisher {
-  id: string;
-  name: string;
-}
+
 export interface IBroadcast {
   id: string;
   name: string;
@@ -60,10 +57,24 @@ export interface IBroadcast {
   description: string;
   localstarttime: string;
   localstoptime: string;
-  publisher: Publisher;
-  channel: IChannel;
-  liveaudio: ILiveAudio;
-  mobileliveaudio: ILiveAudio;
+  publisher: {
+    id: string;
+    name: string;
+  };
+  channel: {
+    id: string;
+    name: string;
+  };
+  liveaudio: {
+    id: string;
+    url: string;
+    statkey: string;
+  };
+  mobileliveaudio: {
+    id: string;
+    url: string;
+    statkey: string;
+  };
 }
 
 export interface IPodFile {
@@ -128,4 +139,18 @@ export interface ISr {
 export interface IEpisodeGroup {
   id: string;
   name: string;
+}
+
+
+export interface CombinedInterfaces {
+  socialMediaPlatform: ISocialMediaPlatform;
+  programCategory: IProgramCategory;
+  channel: IChannel;
+  liveAudio: ILiveAudio;
+  program: IProgram;
+  broadcast: IBroadcast;
+  podFile: IPodFile;
+  episode: IEpisode;
+  sr: ISr;
+  episodeGroup: IEpisodeGroup;
 }
