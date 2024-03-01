@@ -11,8 +11,9 @@ export const Channel = () => {
   const [currentAudioUrl, setCurrentAudioUrl] = useState<string | null>(null);
   const [isPlayerVisible, setPlayerVisible] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
-  const { data: channels, isLoading, isError } = useChannel(); // use the hook
+  const { data: channels, isLoading, isError } = useChannel();
   const observer = useRef<IntersectionObserver | null>(null);
+
   const lastChannelElementRef = useCallback((node: HTMLDivElement | null) => {
     if (isLoading) return;
     if (observer.current) observer.current.disconnect();
@@ -43,7 +44,7 @@ export const Channel = () => {
       top: 0,
       behavior: 'smooth'
     });
-  };  
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -77,7 +78,7 @@ export const Channel = () => {
       >
         {isPlayerVisible ? 'Hide' : 'Show'}
       </button>
-      <h1 className="col-span-full text-2xl mb-4">Channel</h1>
+
       {channels?.map((channel: IChannel, index: number) => (
         <div ref={index === channels.length - 1 ? lastChannelElementRef : null} key={`${channel.id}-${channel.name}-${index}`} className="card border rounded-lg overflow-hidden shadow-md bg-white">
           <img src={channel.image} alt={channel.name} className="w-full h-64 object-cover-fill" />
@@ -86,16 +87,17 @@ export const Channel = () => {
             <p className="text-gray-700 mb-2">{channel.tagline}</p>
             <a href={channel.siteurl} className="text-blue-500 hover:underline mb-2 block">Visit Site</a>
             <div>
-
               <button onClick={() => setCurrentAudioUrl(channel.liveaudio.url)}>
                 <FontAwesomeIcon icon={faPlay} />
               </button>
-
             </div>
+
             <Link className="text-blue-500 hover:underline " to={`/program/${channel.id}`}>
               Jump to details
             </Link>
           </div>
+
+
         </div>
       ))}
       {isVisible && (
