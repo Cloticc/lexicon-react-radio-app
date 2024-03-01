@@ -2,15 +2,18 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IChannel } from '../interface/Interface';
-import { Link } from 'react-router-dom';
 import { faPause } from '@fortawesome/free-solid-svg-icons/faPause';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useChannel } from '../api/apiChannel';
 
+// import { Link } from 'react-router-dom';
+
+
+
+
 export const Channel = () => {
   const [playingAudio, setPlayingAudio] = useState<HTMLAudioElement | null>(null);
   const [currentAudioUrl, setCurrentAudioUrl] = useState<string | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlayerVisible, setPlayerVisible] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
