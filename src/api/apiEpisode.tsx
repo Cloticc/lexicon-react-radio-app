@@ -2,11 +2,15 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 export const useProgramDetails = (id: number) => {
   const fetchProgramDataDetails = async () => {
+    console.log(id);
+
     const response = await fetch(`https://api.sr.se/api/v2/programs/${id}?format=json`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
+    console.log(data.program);
+
     if (data) {
       return data.program;
     }
@@ -18,6 +22,9 @@ export const useProgramDetails = (id: number) => {
     queryFn: fetchProgramDataDetails
   });
 }
+
+
+
 
 export const usePodFiles = (id: number) => {
   const fetchPodFiles = async ({ pageParam = 1 }) => {
