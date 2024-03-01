@@ -5,6 +5,7 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useEpisodes, usePodFiles, useProgramDetails } from '../api/Episode';
 
+import { Spinner } from 'flowbite-react';
 import { useParams } from 'react-router-dom';
 
 export function ProgramDetails() {
@@ -68,7 +69,11 @@ export function ProgramDetails() {
   }, []);
 
   if (programLoading || !program) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner color="blue" size="lg" />
+      </div>
+    );
   }
 
   if (programError) {
@@ -129,7 +134,7 @@ export function ProgramDetails() {
                       <div className='mb-4'>
                         <div className='text-gray-900 font-bold text-sm mb-1'>{pod.title}</div>
                         <p className='text-gray-700 text-xs'>{pod.description}</p>
-                       <p className='text-xs text-gray-500'>Duration: {Math.round(pod.duration / 60)} minutes</p>
+                        <p className='text-xs text-gray-500'>Duration: {Math.round(pod.duration / 60)} minutes</p>
                       </div>
                       <div className='flex items-center'>
                         <audio controls>
