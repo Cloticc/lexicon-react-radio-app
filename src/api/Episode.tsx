@@ -51,7 +51,7 @@ export const useEpisodes = (id: number) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    console.log(data.episodes);
+    // console.log(data.episodes);
 
     if (data) {
       return { data: data.episodes, nextPage: pageParam + 1 };
