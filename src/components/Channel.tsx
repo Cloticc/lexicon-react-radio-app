@@ -1,9 +1,8 @@
+import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IChannel } from '../interface/Interface';
-import { faPause } from '@fortawesome/free-solid-svg-icons/faPause';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useChannel } from '../api/apiChannel';
 
 // import { Link } from 'react-router-dom';
@@ -18,6 +17,11 @@ export const Channel = () => {
   const [isPlayerVisible, setPlayerVisible] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const { data: channels, isLoading, isError } = useChannel();
+  const [playingChannelId, setPlayingChannelId] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [playPromise, setPlayPromise] = useState<Promise<void> | null>(null);
+
+
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastChannelElementRef = useCallback((node: HTMLDivElement | null) => {
@@ -52,20 +56,37 @@ export const Channel = () => {
     });
   };
 
+  useEffect(() => {
+    let isCancelled = false;
+    if (currentAudioUrl) {
+      const audio = new Audio(currentAudioUrl);
+      setPlayingAudio(audio);
 
-  // useEffect(() => {
-  //   if (currentAudioUrl) {
-  //     setAudio(new Audio(currentAudioUrl));
-  //   }
-  // }, [currentAudioUrl]);
+      const handlePlay = () => setIsPlaying(true);
+      const handlePause = () => setIsPlaying(false);
+
+      audio.addEventListener('play', handlePlay);
+      audio.addEventListener('pause', handlePause);
 
 
-  // useEffect(() => {
-  //   if (audio) {
-  //     audio.play();
-  //   }
-  // }, [audio]);
+      const promise = audio.play();
+      setPlayPromise(promise);
+      if (promise !== undefined) {
+        promise.then(() => {
+          if (!isCancelled) {
+            setIsPlaying(true);
+          }
+        }).catch(error => console.log(error));
+      }
 
+      return () => {
+        isCancelled = true;
+        audio.removeEventListener('play', handlePlay);
+        audio.removeEventListener('pause', handlePause);
+        audio.pause();
+      };
+    }
+  }, [currentAudioUrl]);
 
 
   if (isLoading) {
@@ -111,13 +132,31 @@ export const Channel = () => {
             <a href={channel.siteurl} className="text-blue-500 hover:underline mb-2 block">Visit Site</a>
           </div>
           <div className="absolute bottom-0 right-0 m-2">
-            <button onClick={() => {
-              setCurrentAudioUrl(channel.liveaudio.url);
-              if (audioRef.current) {
-                audioRef.current.play();
-              }
-            }}>
-              <FontAwesomeIcon icon={faPlay} />
+
+
+            <button
+              onClick={async () => {
+                if (isPlaying && playingChannelId === channel.id) {
+                  // Wait for the play promise to resolve before pausing
+                  if (playPromise) {
+                    await playPromise;
+                  }
+                  playingAudio?.pause();
+                  setIsPlaying(false);
+                } else {
+                  if (playingAudio) {
+                    // Wait for the play promise to resolve before pausing
+                    if (playPromise) {
+                      await playPromise;
+                    }
+                    playingAudio.pause();
+                  }
+                  setCurrentAudioUrl(channel.liveaudio.url);
+                  setPlayingChannelId(channel.id);
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={isPlaying && playingChannelId === channel.id ? faPause : faPlay} color={playingChannelId === channel.id ? 'green' : 'black'} />
             </button>
           </div>
         </div>
