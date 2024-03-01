@@ -43,7 +43,7 @@ export const Channel = () => {
       top: 0,
       behavior: 'smooth'
     });
-  };
+  };  
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -92,7 +92,7 @@ export const Channel = () => {
               </button>
 
             </div>
-            <Link className="text-blue-500 hover:underline " to={`/Program/${channel.id}`}>
+            <Link className="text-blue-500 hover:underline " to={`/program/${channel.id}`}>
               Jump to details
             </Link>
           </div>
