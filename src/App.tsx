@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { QueryClient, QueryClientProvider, } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { Channel } from "./components/Channel";
 import { Home } from './components/Home';
