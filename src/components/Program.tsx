@@ -1,88 +1,28 @@
 import { ChangeEvent, useState } from 'react';
-import { IProgram, IProgramCategory } from '../interface/Interface';
+import { useProgramCategories, useProgramsByCategory } from '../api/apiProgram';
 
+import { IProgram } from '../interface/Interface';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 
 export const ProgramComponent: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-
-  const handleCategoryChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const selectedCategory = Number(event.target.value);
-    setSelectedCategory(selectedCategory);
-  };
-
-  const fetchProgramCategories = async () => {
-    let page = 1;
-    let totalPages = 1;
-    let programCategories: IProgramCategory[] = [];
-
-    while (page <= totalPages) {
-      const response = await fetch(`https://api.sr.se/api/v2/programcategories?format=json&page=${page}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-
-      if (data) {
-        programCategories = [...programCategories, ...data.programcategories];
-        totalPages = data.pagination.totalpages;
-      } else {
-        throw new Error('No program categories found');
-      }
-
-      page++;
-    }
-
-    return programCategories;
-  };
-
+  const [selectedCategory, setSelectedCategory] = useState<number | null | undefined>(null);
+  const { data: programCategories, isLoading, error } = useProgramCategories(1);
+  const { data: programs, isLoading: programsLoading, error: programsError } = useProgramsByCategory(selectedCategory);
   
-const { data: programCategories, isLoading, error } = useQuery({
-  queryKey: ['programCategories'],
-  queryFn: fetchProgramCategories
-});
-
-  const fetchPrograms = async () => {
-    if (selectedCategory !== null) {
-      let page = 1;
-      let totalPages = 1;
-      let allPrograms: IProgram[] = [];
-
-      while (page <= totalPages) {
-        const response = await fetch(`https://api.sr.se/api/v2/programs/index?programcategoryid=${selectedCategory}&format=json&page=${page}`);
-        const data = await response.json();
-        if (data) {
-          allPrograms = allPrograms.concat(data.programs);
-          totalPages = data.pagination.totalpages;
-        } else {
-          throw new Error('No programs found for this category');
-        }
-
-        page++;
-      }
-
-      return allPrograms;
-    }
-  };
-
-
-  const { data: programs, isLoading: programsLoading, error: programsError } = useQuery({
-    queryKey: ['programs', selectedCategory],
-    queryFn: fetchPrograms,
-    enabled: !!selectedCategory
-  });
-
   
-  // Social platforms list 
-  const socialMediaPlatforms = (program: IProgram) => {
-    return program.socialmediaplatforms.map(platform => (
-      <li className='social-li' key={platform.platform}>
-        <a href={platform.platformurl} target="_blank" rel="noreferrer">{platform.platform}</a>
-      </li>
-    ));
-  }
-
+    const handleCategoryChange = (event: ChangeEvent<HTMLSelectElement>) => {
+      const selectedCategory: number | null = Number(event.target.value);
+      setSelectedCategory(selectedCategory ? selectedCategory : null);
+    };
+  
+    // Social platforms list 
+    const socialMediaPlatforms = (program: IProgram) => {
+      return program.socialmediaplatforms.map(platform => (
+        <li className='social-li' key={platform.platform}>
+          <a href={platform.platformurl} target="_blank" rel="noreferrer">{platform.platform}</a>
+        </li>
+      ));
+    }
   if (isLoading || programsLoading) {
     return (
       <div className="Program">
@@ -100,7 +40,6 @@ const { data: programCategories, isLoading, error } = useQuery({
       </div>
     );
   }
-
   return (
     <div className="flex flex-col items-center">
       <h2 className="text-2xl font-bold mb-4">Programs</h2>
