@@ -117,7 +117,7 @@ export const Channel = () => {
                 audioRef.current.play();
               }
             }}>
-              <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+              <FontAwesomeIcon icon={faPlay} />
             </button>
           </div>
         </div>
