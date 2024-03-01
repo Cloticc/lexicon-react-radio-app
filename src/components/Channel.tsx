@@ -3,12 +3,15 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IChannel } from '../interface/Interface';
 import { Link } from 'react-router-dom';
+import { faPause } from '@fortawesome/free-solid-svg-icons/faPause';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useChannel } from '../api/apiChannel';
 
 export const Channel = () => {
   const [playingAudio, setPlayingAudio] = useState<HTMLAudioElement | null>(null);
   const [currentAudioUrl, setCurrentAudioUrl] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlayerVisible, setPlayerVisible] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const { data: channels, isLoading, isError } = useChannel();
@@ -46,6 +49,22 @@ export const Channel = () => {
     });
   };
 
+
+  // useEffect(() => {
+  //   if (currentAudioUrl) {
+  //     setAudio(new Audio(currentAudioUrl));
+  //   }
+  // }, [currentAudioUrl]);
+
+
+  // useEffect(() => {
+  //   if (audio) {
+  //     audio.play();
+  //   }
+  // }, [audio]);
+
+
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -58,9 +77,10 @@ export const Channel = () => {
     <div className="channel grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
       {currentAudioUrl && isPlayerVisible && (
         <audio
+          ref={audioRef}
           controls
           src={currentAudioUrl}
-          className={`fixed bottom-0 w-6/12 left-24 transition-all duration-500 ${isPlayerVisible ? 'bottom-0' : '-bottom-32'} ${isPlayerVisible ? '' : 'hidden'}`}
+          className={`fixed z-50 bottom-0 w-6/12 left-24 transition-all duration-500 ${isPlayerVisible ? 'bottom-0' : '-bottom-32'} ${isPlayerVisible ? '' : 'hidden'}`}
           onPlay={(event) => {
             const audio = event.currentTarget;
             if (playingAudio && playingAudio !== audio) {
@@ -73,10 +93,10 @@ export const Channel = () => {
         </audio>
       )}
       <button
-        className="fixed bottom-4 left-4 w-11 h-11 rounded-full bg-blue-500 text-white flex items-center justify-center"
+        className="fixed z-50 bottom-4 left-4 w-11 h-11 rounded-full bg-blue-500 text-white flex items-center justify-center"
         onClick={() => setPlayerVisible(!isPlayerVisible)}
       >
-        {isPlayerVisible ? 'Hide' : 'Show'}
+        {isPlayerVisible ? 'Close' : 'Show'}
       </button>
 
       {channels?.map((channel: IChannel, index: number) => (
@@ -88,14 +108,19 @@ export const Channel = () => {
             <a href={channel.siteurl} className="text-blue-500 hover:underline mb-2 block">Visit Site</a>
           </div>
           <div className="absolute bottom-0 right-0 m-2">
-            <button onClick={() => setCurrentAudioUrl(channel.liveaudio.url)}>
-              <FontAwesomeIcon icon={faPlay} />
+            <button onClick={() => {
+              setCurrentAudioUrl(channel.liveaudio.url);
+              if (audioRef.current) {
+                audioRef.current.play();
+              }
+            }}>
+              <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
             </button>
           </div>
         </div>
       ))}
       {isVisible && (
-        <div onClick={scrollToTop} className='scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
+        <div onClick={scrollToTop} className='scroll-to-top z-50 cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
           ↑
         </div>
       )}
