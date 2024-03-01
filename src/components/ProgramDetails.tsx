@@ -1,11 +1,13 @@
 import 'react-tabs/style/react-tabs.css'; // Import the styles
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { IEpisode, IPodFile } from '../interface/Interface';
+import { IEpisode, IPodFile, ISocialMediaPlatform } from '../interface/Interface';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useEpisodes, usePodFiles, useProgramDetails } from '../api/Episode';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Spinner } from 'flowbite-react';
 import { useParams } from 'react-router-dom';
 
@@ -90,6 +92,33 @@ export function ProgramDetails() {
     });
   };
 
+
+
+  const socialMedia = program?.socialmediaplatforms.map((platform: ISocialMediaPlatform) => {
+    let icon;
+    switch (platform.platform.toLowerCase()) {
+      case 'facebook':
+        icon = faFacebook;
+        break;
+      case 'twitter':
+        icon = faTwitter;
+        break;
+      case 'instagram':
+        icon = faInstagram;
+        break;
+      default:
+        icon = null;
+    }
+
+    return (
+      <a key={platform.platform} href={platform.platformurl} target="_blank" rel="noreferrer" className="text-blue-500 hover:underline">
+        {icon && <FontAwesomeIcon icon={icon} className="mr-1" />}
+        {platform.platform}
+      </a>
+    );
+  });
+
+
   if (programLoading || !program) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -126,12 +155,17 @@ export function ProgramDetails() {
         <TabPanel>
 
 
-          <div className="space-y-4 bg-white shadow-sm rounded-lg p-6">
-            <h1 className="text-2xl font-bold">{program?.name}</h1>
-            <p className="text-gray-600">{program?.broadcastinfo}</p>
-            <p className="text-gray-600">{program?.description}</p>
-            <img className="w-1/6 h-full  rounded-md" src={program?.programimage} alt={program?.name} />
-            <a className="text-blue-500 hover:underline" href={program?.programurl}>Visit Site</a>
+          <div className='space-y-4 bg-white shadow-lg rounded-lg p-6'>
+            <h1 className='text-3xl font-bold text-gray-800'>{program?.name}</h1>
+            <p className='text-gray-600'>{program?.broadcastinfo}</p>
+            <p className='text-gray-600'>{program?.description}</p>
+            <div className='flex flex-col space-y-4'>
+              <img className='w-1/6 h-full rounded-md object-cover' src={program?.programimage} alt={program?.name} />
+              <a className='text-blue-500 hover:underline' href={program?.programurl}>Visit Site</a>
+            </div>
+            <div className='flex space-x-4 mt-4'>
+              {socialMedia}
+            </div>
           </div>
 
         </TabPanel>
@@ -179,7 +213,7 @@ export function ProgramDetails() {
               )}
             </AnimatePresence>
             {isVisible && (
-              <div onClick={scrollToTop} className="scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center">
+              <div onClick={scrollToTop} className='scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
                 ↑
               </div>
             )}
@@ -252,7 +286,7 @@ export function ProgramDetails() {
           </div>
 
           {isVisible && (
-            <div onClick={scrollToTop} className="scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center">
+            <div onClick={scrollToTop} className='scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
               ↑
             </div>
           )}
