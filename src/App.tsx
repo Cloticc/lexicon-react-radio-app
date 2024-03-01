@@ -3,12 +3,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { Channel } from "./components/Channel";
 import { Home } from './components/Home';
-import { LissenDirectly } from "./components/LissenDirectly";
 import { LoginForm } from "./components/LoginForm";
 import { MyPage } from "./components/MyPage";
 import { Navbar } from "./components/Navbar";
 import { ProgramComponent } from "./components/Program";
 import { ProgramDetails } from './components/ProgramDetails';
+import { ScheduleEpisode } from "./components/ScheduleEpisode";
 
 // import { Outlet } from 'react-router-dom';
 
@@ -33,8 +33,8 @@ export function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <LissenDirectly />
       <QueryClientProvider client={queryClient}>
+      <ScheduleEpisode />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Channel" element={<Channel />} />
