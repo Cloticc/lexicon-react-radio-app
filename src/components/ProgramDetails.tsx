@@ -18,7 +18,7 @@ export function ProgramDetails() {
   const [tabIndex, setTabIndex] = useState(0);
 
   const { data: program, isLoading: programLoading, error: programError } = useProgramDetails(id);
-
+  const [isVisible, setIsVisible] = useState(false);
 
   // const { isLoading: episodeLoading, error: episodeError } = useEpisodeDetails(id);
   // const { data: episodes, isLoading: episodesLoading, error: episodesError } = useEpisodes(id, page);
@@ -69,7 +69,26 @@ export function ProgramDetails() {
     };
   }, []);
 
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
 
+    window.addEventListener('scroll', toggleVisibility);
+
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   if (programLoading || !program) {
     return (
@@ -117,40 +136,52 @@ export function ProgramDetails() {
 
         </TabPanel>
         <TabPanel>
-          <h1>Test</h1>
-          {/* broadcast describe('first', () => { second }) */}
-          <h1>whatis this</h1>
+          <h1>BroadCast</h1>
+
+
+
         </TabPanel>
         <TabPanel>
           {/* Pods */}
 
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2'>
-            {podFiles && podFiles.pages.length > 0 ? (
-              podFiles.pages.map((page, pageIndex) => (
-                page.data.map((pod: IPodFile, podIndex: number) => (
-                  <div
-                    key={pod.id}
-                    ref={pageIndex === podFiles.pages.length - 1 && podIndex === page.data.length - 1 ? lastPodFileElementRef : null}
-                    className='max-w-xs w-full lg:max-w-xs lg:flex p-2  '
-                  >
-                    <div className='border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-2 flex flex-col justify-between leading-normal'>
-                      <div className='mb-4'>
-                        <div className='text-gray-900 font-bold text-sm mb-1'>{pod.title}</div>
-                        <p className='text-gray-700 text-xs'>{pod.description}</p>
-                        <p className='text-xs text-gray-500'>Duration: {Math.round(pod.duration / 60)} minutes</p>
+            <AnimatePresence>
+              {podFiles && podFiles.pages.length > 0 ? (
+                podFiles.pages.map((page, pageIndex) => (
+                  page.data.map((pod: IPodFile, podIndex: number) => (
+                    <motion.div
+                      key={pod.id}
+                      ref={pageIndex === podFiles.pages.length - 1 && podIndex === page.data.length - 1 ? lastPodFileElementRef : null}
+                      className='max-w-xs w-full lg:max-w-xs lg:flex p-2'
+                      initial={{ opacity: 0, y: 50 }} // Initial state of the component
+                      animate={{ opacity: 1, y: 0 }} // Final state of the component
+                      exit={{ opacity: 0, y: 50 }} // State of the component when it's unmounting
+                      transition={{ duration: 0.3 }} // Animation duration
+                    >
+                      <div className='border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-2 flex flex-col justify-between leading-normal'>
+                        <div className='mb-4'>
+                          <div className='text-gray-900 font-bold text-sm mb-1'>{pod.title}</div>
+                          <p className='text-gray-700 text-xs'>{pod.description}</p>
+                          <p className='text-xs text-gray-500'>Duration: {Math.round(pod.duration / 60)} minutes</p>
+                        </div>
+                        <div className='flex items-center'>
+                          <audio controls>
+                            <source src={pod.url} type="audio/mpeg" />
+                            Your browser does not support the audio element.
+                          </audio>
+                        </div>
                       </div>
-                      <div className='flex items-center'>
-                        <audio controls>
-                          <source src={pod.url} type="audio/mpeg" />
-                          Your browser does not support the audio element.
-                        </audio>
-                      </div>
-                    </div>
-                  </div>
+                    </motion.div>
+                  ))
                 ))
-              ))
-            ) : (
-              <p className='text-red-500 text-2xl'>No pods available</p>
+              ) : (
+                <p className='text-red-500 text-2xl'>No pods available</p>
+              )}
+            </AnimatePresence>
+            {isVisible && (
+              <div onClick={scrollToTop} className="scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center">
+                ↑
+              </div>
             )}
           </div>
 
@@ -217,14 +248,20 @@ export function ProgramDetails() {
                 )}
               </AnimatePresence>
             </div>
+
           </div>
 
-
+          {isVisible && (
+            <div onClick={scrollToTop} className="scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center">
+              ↑
+            </div>
+          )}
 
         </TabPanel>
 
 
       </Tabs>
+
     </div >
   );
 }
