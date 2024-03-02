@@ -19,7 +19,7 @@ export interface IChannel {
   scheduleurl: string;
   channeltype: string;
   xmltvid: string;
-  favoirte: boolean;
+  favorite: boolean;
 }
 
 export interface ILiveAudio {
@@ -50,7 +50,7 @@ export interface IProgram {
   hasondemand: boolean;
   haspod: boolean;
   responsibleeditor: string;
-  favoirte: boolean;
+  favorite: boolean;
 }
 
 export interface IBroadcast {
