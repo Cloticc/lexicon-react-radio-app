@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IChannel } from '../interface/Interface';
+import { Link } from 'react-router-dom';
 import { useChannel } from '../api/apiChannel';
 
 // import { Link } from 'react-router-dom';
@@ -130,7 +131,13 @@ export const Channel = () => {
           <div className="p-4">
             <h2 className="text-xl mb-2">{channel.name}</h2>
             <p className="text-gray-700 mb-2">{channel.tagline}</p>
+            {/* <a href={channel.siteurl} className="text-blue-500 hover:underline mb-2 block">Visit Site</a> */}
             <a href={channel.siteurl} className="text-blue-500 hover:underline mb-2 block">Visit Site</a>
+            <Link className="text-blue-500 hover:underline" to={`/channels/channel/${channel.id}`}>
+              <h2 className="text-xl font-bold">Link to details</h2>
+            </Link>
+
+
           </div>
           <div className="absolute bottom-0 right-0 m-2">
 

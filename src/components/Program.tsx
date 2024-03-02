@@ -91,7 +91,7 @@ export const ProgramComponent: React.FC = () => {
                 </ul>
                 <p className="mt-2">Archived: <span className="font-bold">{program.archived ? 'Yes' : 'No'}</span></p>
               </div>
-              <Link className="text-blue-500 hover:underline" to={`/program/${program.id}`}>
+              <Link className="text-blue-500 hover:underline" to={`/programs/program/${program.id}`}>
                 <h2 className="text-xl font-bold">Link to details</h2>
               </Link>
             </li>

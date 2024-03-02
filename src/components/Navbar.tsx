@@ -3,10 +3,10 @@ import { useState } from 'react';
 
 const links = [
   { to: "/", label: "Home" },
-  { to: "/Channel", label: "Channel" },
-  { to: "/Program", label: "Program" },
-  { to: "/MyPage", label: "My Page" },
-  { to: "/Login", label: "Sign in" },
+  { to: "/channels", label: "Channel" },
+  { to: "/programs", label: "Program" },
+  { to: "/myPage", label: "My Page" },
+  { to: "/login", label: "Sign in" },
 ];
 
 export function Navbar() {
