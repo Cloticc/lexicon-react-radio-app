@@ -22,6 +22,7 @@ export const Channel = () => {
   const [playPromise, setPlayPromise] = useState<Promise<void> | null>(null);
 
 
+
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastChannelElementRef = useCallback((node: HTMLDivElement | null) => {
@@ -96,7 +97,6 @@ export const Channel = () => {
   if (isError) {
     return <div>Error fetching channels</div>;
   }
-
   return (
     <div className="channel grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
       {currentAudioUrl && isPlayerVisible && (
@@ -125,6 +125,7 @@ export const Channel = () => {
 
       {channels?.map((channel: IChannel, index: number) => (
         <div ref={index === channels.length - 1 ? lastChannelElementRef : null} key={`${channel.id}-${channel.name}-${index}`} className="card border rounded-lg overflow-hidden shadow-md bg-white relative">
+
           <img src={channel.image} alt={channel.name} className="w-full h-64 object-cover-fill" />
           <div className="p-4">
             <h2 className="text-xl mb-2">{channel.name}</h2>
@@ -132,7 +133,6 @@ export const Channel = () => {
             <a href={channel.siteurl} className="text-blue-500 hover:underline mb-2 block">Visit Site</a>
           </div>
           <div className="absolute bottom-0 right-0 m-2">
-
 
             <button
               onClick={async () => {
@@ -156,6 +156,7 @@ export const Channel = () => {
                 }
               }}
             >
+
               <FontAwesomeIcon icon={isPlaying && playingChannelId === channel.id ? faPause : faPlay} color={playingChannelId === channel.id ? 'green' : 'black'} />
             </button>
           </div>
