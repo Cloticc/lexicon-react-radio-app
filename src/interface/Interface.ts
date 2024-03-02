@@ -9,7 +9,7 @@ export interface IProgramCategory {
 }
 
 export interface IChannel {
-  program: any;
+  program: string;
   id: string;
   name: string;
   image: string;
