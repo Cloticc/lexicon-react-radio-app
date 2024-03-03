@@ -47,27 +47,18 @@ export const ProgramComponent: React.FC = () => {
     });
   }
   if (isLoading || programsLoading) {
-    return (
-      <div className="Program">
-        <h2>Programs</h2>
-        <p>Loading...</p>
-      </div>
-    );
+    return <div>Loading...</div>;
   }
 
   if (error || programsError) {
-    return (
-      <div className="Program">
-        <h2>Programs</h2>
-        <p>{error?.message || programsError?.message}</p>
-      </div>
-    );
+    return <div>Error fetching data</div>;
   }
+
+
   return (
-    <div className="flex flex-col items-center">
-      <h2 className="text-2xl font-bold mb-4">Programs</h2>
-      <div>
-        <select className="form-select block w-full mt-1" value={selectedCategory?.toString()} onChange={handleCategoryChange}>
+    <div className="flex flex-col items-center space-y-4">
+      <div className="space-y-4">
+        <select className="form-select w-full" value={selectedCategory?.toString()} onChange={handleCategoryChange}>
           <option value="">Select a category</option>
           {programCategories?.map(category => (
             <option key={category.id} value={category.id}>
@@ -76,23 +67,23 @@ export const ProgramComponent: React.FC = () => {
           ))}
         </select>
 
-        <aside className='mt-4 grid grid-cols-3 gap-4'>
+        <aside className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
           {programs?.map((program, index) => (
-          <li key={`${program.id}-${index}`} className='p-4 border rounded-lg shadow-lg bg-white list-none'>
+            <li key={`${program.id}-${index}`} className='border rounded-lg shadow-lg bg-white list-none p-4 space-y-4'>
               <img className="w-full h-64 object-cover mt-2 rounded" src={program.programimage} alt={program.name} />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold mt-2">{program.name}</h3>
-                <p className="mt-2">{program.description}</p>
-                <p className="mt-2">{program.broadcastinfo}</p>
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold">{program.name}</h3>
+                <p>{program.description}</p>
+                <p>{program.broadcastinfo}</p>
 
-                <p className="mt-2">SR Url: <a className="font-bold" href={program.programurl}>Link</a></p>
-                <ul className='mt-2'>
+                <p>SR Url: <a className="font-bold  text-blue-500" href={program.programurl}>Link</a></p>
+                <ul className='space-y-2 text-blue-500'>
                   {socialMediaPlatforms(program)}
                 </ul>
-                <p className="mt-2">Archived: <span className="font-bold">{program.archived ? 'Yes' : 'No'}</span></p>
+                <p>Arkiverad: <span className="font-bold">{program.archived ? 'Ja' : 'Nej'}</span></p>
               </div>
               <Link className="text-blue-500 hover:underline" to={`/programs/program/${program.id}`}>
-                <h2 className="text-xl font-bold">Link to details</h2>
+                <h2 className="text-xl font-bold">Länk till detaljer</h2>
               </Link>
             </li>
           ))}
