@@ -38,18 +38,19 @@ export const ChannelDetails = () => {
             return (
               <div key={episode.id} className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-auto">
                 <div>
-                  <img className="h-48 w-full object-cover" src={episode.imageurl} alt={episode.title} />
+                  <img className="h-48 w-full object-cover" src={episode.imageurl || ""} alt={episode.title || "No title"} />
                 </div>
                 <div className="p-8">
-                  <h3 className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{episode.title}</h3>
-                  <p className="mt-2 text-gray-500">{episode.description}</p>
+                  <h3 className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{episode.title || "No title"}</h3>
+                  <p className="mt-2 text-gray-500">{episode.description || "No description"}</p>
                   <p className="mt-2 text-gray-500">
-                    Published on: {new Date(parseInt(episode.publishdateutc?.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB')}
+
+                    Publicerad på: {episode.publishdateutc ? new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB') : "No publish date"}
                   </p>
                   <p>
-                    Broadcast Time: {new Date(parseInt(episode.broadcasttime?.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - {new Date(parseInt(episode.broadcasttime?.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}
+                    Sändning tid: {episode.broadcasttime ? `${new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - ${new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}` : "Igen sändning tid"}
                   </p>
-                  <a href={episode.url} className="mt-2 text-indigo-500 hover:underline">{episode.program?.name} Link</a>
+                  <a href={episode.url || "#"} className="mt-2 text-indigo-500 hover:underline">{episode.program?.name || "No program name"} Link</a>
                 </div>
               </div>
             );
