@@ -178,78 +178,60 @@ export function ProgramDetails() {
       <TabPanel>
         {/* Pods */}
 
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2'>
-          {/* <AnimatePresence> */}
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2'>
           {podFiles && podFiles.pages.length > 0 ? (
             podFiles.pages.map((page, pageIndex) => (
-              page.data.map((pod: IPodFile, podIndex: number) => (
+              page.data.sort((a: { publishdateutc: string | number | Date; }, b: { publishdateutc: string | number | Date; }) => new Date(b.publishdateutc).getTime() - new Date(a.publishdateutc).getTime()).map((pod: IPodFile, podIndex: number) => (
+
                 <div
-                  // <motion.div
                   key={pod.id}
                   ref={pageIndex === podFiles.pages.length - 1 && podIndex === page.data.length - 1 ? lastPodFileElementRef : null}
-                // className='max-w-xs w-full lg:max-w-xs lg:flex p-2'
-                // initial={{ opacity: 0, y: 50 }} // Initial state of the component
-                // animate={{ opacity: 1, y: 0 }} // Final state of the component
-                // exit={{ opacity: 0, y: 50 }} // State of the component when it's unmounting
-                // transition={{ duration: 0.3 }} // Animation duration
+                  className='rounded overflow-hidden shadow-lg m-2 bg-slate-600 text-white'
                 >
-                  <div className='border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-2 flex flex-col justify-between leading-normal'>
-                    <div className='mb-4'>
-                      <div className='text-gray-900 font-bold text-sm mb-1'>{pod.title}</div>
-                      <p className='text-gray-700 text-xs'>{pod.description}</p>
-                      <p className='text-xs text-gray-500'>Duration: {Math.round(pod.duration / 60)} minutes</p>
-                    </div>
-                    <div className='flex items-center'>
-                      <audio
-                        controls
-                        onPlay={(event) => {
-                          const audio = event.currentTarget;
-                          if (playingAudio && playingAudio !== audio) {
-                            playingAudio.pause();
-                          }
-                          setPlayingAudio(audio);
-                        }}
-                      >
-                        <source src={pod.url} type="audio/mpeg" />
-                        Your browser does not support the audio element.
-                      </audio>
-
-
-                    </div>
+                  <div className='px-6 py-4'>
+                    <div className='font-bold text-xl mb-2'>{pod.title}</div>
+                    <p className='text-gray-100 text-base'>{pod.description}</p>
+                    <p className='text-gray-200 text-xs'>Duration: {Math.round(pod.duration / 60)} minutes</p>
+                    <p className='text-gray-200 text-xs'>Published on: {new Date(parseInt(pod.publishdateutc.substring(6, pod.publishdateutc.length - 2))).toLocaleDateString('en-GB')}</p>
                   </div>
-                  {/* </motion.div> */}
+                  <div className='px-6 py-4'>
+                    <audio
+                      controls
+                      onPlay={(event) => {
+                        const audio = event.currentTarget;
+                        if (playingAudio && playingAudio !== audio) {
+                          playingAudio.pause();
+                        }
+                        setPlayingAudio(audio);
+                      }}
+                    >
+                      <source src={pod.url} type="audio/mpeg" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </div>
                 </div>
               ))
             ))
           ) : (
             <p className='text-red-500 text-2xl'>No pods available</p>
           )}
-          {/* </AnimatePresence> */}
           {isVisible && (
             <div onClick={scrollToTop} className='scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
               ↑
             </div>
           )}
         </div>
-
       </TabPanel>
       <TabPanel>
-        {/* Render episode here */}
         <div className='flex justify-center items-center'>
           <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
-            {/* <AnimatePresence> */}
             {episodes && episodes.pages.length > 0 ? (
               episodes.pages.map((page, pageIndex) => (
                 page.data.map((episode: IEpisode, episodeIndex: number) => (
-                  // <motion.div
                   <div
                     key={episode.id ? episode.id : 'No ID'}
                     ref={pageIndex === episodes.pages.length - 1 && episodeIndex === page.data.length - 1 ? lastEpisodeElementRef : null}
                     className='shadow-md rounded-lg  bg-white'
-                  // initial={{ opacity: 0, y: 50 }} // Initial state of the component
-                  // animate={{ opacity: 1, y: 0 }} // Final state of the component
-                  // exit={{ opacity: 0, y: 50 }} // State of the component when it's unmounting
-                  // transition={{ duration: 0.3 }}// Animation duration
                   >
                     <div key={episode.id ? episode.id : 'No ID'} className='shadow-md rounded-lg  bg-white'>
                       {episode.imageurl ? (
@@ -290,14 +272,12 @@ export function ProgramDetails() {
                         )}
                       </div>
                     </div>
-                    {/* </motion.div> */}
                   </div>
                 ))
               ))
             ) : (
               <p className='text-red-500 text-2xl'>No episodes available</p>
             )}
-            {/* </AnimatePresence> */}
           </div>
 
         </div>
