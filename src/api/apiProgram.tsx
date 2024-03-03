@@ -69,3 +69,24 @@ export const useProgramsByCategory = (selectedCategory: null | undefined | numbe
     enabled: !!selectedCategory
   });
 };
+
+export const getProgram = async (id: number) => {
+  const response = await fetch(`https://api.sr.se/api/v2/programs/${id}?format=json`);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  const data = await response.json();
+
+  if (data) {
+    return data.program;
+  }
+  throw new Error('No program found');
+}
+
+export const useProgram = (id: number) => {
+  return useQuery({
+    queryKey: ['program', id],
+    queryFn: () => getProgram(id)
+  });
+}
+
