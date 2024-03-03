@@ -271,7 +271,7 @@ export function ProgramDetails() {
                         </div>
                         {episode.broadcast ? (
                           <div className='px-6 pb-4'>
-                            <audio controls src={episode.broadcast.broadcastfiles[0].url} className='w-full' />
+                            <audio controls src={episode.broadcast.broadcastfiles.broadcastfile[0].url} />
                           </div>
                         ) : null}
                         <div className='px-6 py-4 flex justify-between'>
