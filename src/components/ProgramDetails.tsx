@@ -151,7 +151,7 @@ export function ProgramDetails() {
         <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Pods</Tab>
         <Tab className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Episodes</Tab>
       </TabList>
-      <TabPanel>
+      <TabPanel> 
         {/* Details */}
         <div className='space-y-4 bg-white shadow-lg rounded-lg p-6'>
           <h1 className='text-3xl font-bold text-gray-800'>{program?.name}</h1>
@@ -212,7 +212,7 @@ export function ProgramDetails() {
               ))
             ))
           ) : (
-            <p className='text-red-500 text-2xl'>No pods available</p>
+            <p className='text-red-500 text-2xl'>Inga poddar tillgängliga</p>
           )}
           {isVisible && (
             <div onClick={scrollToTop} className='scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
