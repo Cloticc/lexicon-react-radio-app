@@ -2,14 +2,14 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 export const useProgramDetails = (id: number) => {
   const fetchProgramDataDetails = async () => {
-    console.log(id);
+    // console.log(id);
 
-    const response = await fetch(`https://api.sr.se/api/v2/programs/${id}?format=json`);
+    const response = await fetch(`https://api.sr.se/api/v2/programs/${id}?format=json&size=1000`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    console.log(data.program);
+    // console.log(data.program);
 
     if (data) {
       return data.program;
@@ -78,13 +78,13 @@ export const useEpisodes = (id: number) => {
 
 export const useSearchEpisodes = (search: string) => {
   const fetchSearchEpisodes = async () => {
-    const response = await fetch(`https://api.sr.se/api/v2/episodes/search/?query=${search}&format=json`);
+    const response = await fetch(`https://api.sr.se/api/v2/episodes/search/?query=${search}&format=json&size=1000`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
     // console.log(data.episodes);
-    
+
     return data.episodes;
   }
 
