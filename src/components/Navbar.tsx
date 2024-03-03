@@ -14,17 +14,17 @@ export function Navbar() {
 
 
 
-  
+
   return (
-    <nav className="bg-blue-600 p-6 flex items-center justify-between">
-      <div className="flex items-center space-x-2">
+    <nav className="bg-blue-600 p-6 flex flex-col sm:flex-row items-center justify-between">
+      <div className="flex items-center space-x-2 mb-4 sm:mb-0">
         <img src="https://upload.wikimedia.org/wikipedia/commons/d/d2/Logo-de-World-Hits-Radio.png" alt="Radio logo" className="h-8 w-8" />
         <span className="text-white text-xl font-semibold tracking-tight">Sveriges Radio</span>
       </div>
-      <div className="flex items-center space-x-4">
+      <div className="flex flex-col sm:flex-row items-center space-x-4">
         <div className="space-x-4">
           {links.map((link) => (
-            <Link to={link.to} className="text-white hover:text-blue-300" key={link.to}>
+            <Link to={link.to} className="text-white hover:text-blue-300 mb-2 sm:mb-0" key={link.to}>
               {link.label}
             </Link>
           ))}
