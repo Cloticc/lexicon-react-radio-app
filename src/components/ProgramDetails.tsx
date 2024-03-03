@@ -233,24 +233,25 @@ export function ProgramDetails() {
                     className='shadow-md rounded-lg  bg-white'
                   >
                     <div key={episode.id ? episode.id : 'No ID'} className='shadow-md rounded-lg  bg-white'>
-                      {episode.imageurl ? (
+                      {/* {episode.imageurl ? (
                         <div
-                          className='h-48 bg-cover bg-center'
+                          className='w-full h-64 bg-cover bg-center'
                           style={{
                             backgroundImage: `url(${episode.imageurl})`
                           }}
-                          title={episode.title ? episode.title : 'No title available'}
+                          title={episode.title ? episode.title : 'Ingen titel tillgänglig'}
                         />
-                      ) : null}
+                      ) : null} */}
+                      <img className="w-full object-contain" src={episode.imageurl || ""} alt={episode.title || "No title"} />
                       <div className='px-6 py-4'>
-                        <div className='font-bold text-xl mb-2'>{episode.title ? episode.title : 'No title available'}</div>
-                        <p className='text-gray-700 text-base'>{episode.description ? episode.description : 'No description available'}</p>
+                        <div className='font-bold text-xl mb-2'>{episode.title ? episode.title : 'Ingen titel tillgänglig'}</div>
+                        <p className='text-gray-700 text-base'>{episode.description ? episode.description : 'Ingen beskrivning finns tillgänglig'}</p>
 
                         <p className="mt-2 text-gray-500">
-                          Published on: {new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB')}
+                          Publicerad vid: {new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB')}
                         </p>
                         <p>
-                          Broadcast Time: {new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - {new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}
+                          Sändningstid: {new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - {new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}
                         </p>
                       </div>
                       {episode.broadcast ? (
@@ -260,14 +261,14 @@ export function ProgramDetails() {
                       ) : null}
                       <div className='px-6 py-4 flex justify-between'>
                         {episode.url && episode.url ? (
-                          <a href={episode.url} className='text-blue-500'>URL</a>
+                          <a href={episode.url} className='text-blue-500'>Webbadress</a>
                         ) : (
-                          <p className='text-red-500'>No URL available</p>
+                          <p className='text-red-500'>Ingen webbadress tillgänglig</p>
                         )}
                         {episode.url && episode.url ? (
-                          <a href={episode.url} download className='text-blue-500'>Download</a>
+                          <a href={episode.url} download className='text-blue-500'>Ladda ner</a>
                         ) : (
-                          <p className='text-red-500'>No download file available</p>
+                          <p className='text-red-500'>Ingen nedladdningsfil tillgänglig</p>
                         )}
                       </div>
                     </div>
@@ -275,7 +276,7 @@ export function ProgramDetails() {
                 ))
               ))
             ) : (
-              <p className='text-red-500 text-2xl'>No episodes available</p>
+              <p className='text-red-500 text-2xl'>Inga avsnitt tillgängliga</p>
             )}
           </div>
 
