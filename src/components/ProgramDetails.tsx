@@ -185,7 +185,7 @@ export function ProgramDetails() {
                 <div
                   key={pod.id}
                   ref={pageIndex === podFiles.pages.length - 1 && podIndex === page.data.length - 1 ? lastPodFileElementRef : null}
-                  className='rounded overflow-hidden shadow-lg m-2 bg-slate-600 text-white'
+                  className='rounded overflow-hidden shadow-lg m-4 bg-gray-500 text-white'
                 >
                   <div className='px-6 py-4'>
                     <div className='font-bold text-xl mb-2'>{pod.title}</div>
