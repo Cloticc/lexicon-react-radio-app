@@ -15,10 +15,12 @@ const queryClient = new QueryClient()
 
 export function App() {
 
+
   return (
-    <BrowserRouter>
-      <Navbar />
-      <QueryClientProvider client={queryClient}>
+
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Navbar />
         <Broadcasts />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -29,7 +31,8 @@ export function App() {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/login" element={<LoginForm />} />
         </Routes>
-      </QueryClientProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </QueryClientProvider>
+
   );
 }
