@@ -157,3 +157,46 @@ export interface CombinedInterfaces {
   sr: ISr;
   episodeGroup: IEpisodeGroup;
 }
+
+
+
+interface Program {
+  id: number;
+  name: string;
+}
+
+interface Podfile {
+  availablefromutc: string;
+  description: string;
+  duration: number;
+  filesizeinbytes: number;
+  id: number;
+  program: Program;
+  publishdateutc: string;
+  statkey: string;
+  title: string;
+  url: string;
+}
+
+interface BroadcastTime {
+  endtimeutc: string;
+  starttimeutc: string;
+}
+
+export interface ISearchEpisode {
+  audiopreference: string;
+  audiopresentation: string;
+  audiopriority: string;
+  broadcasttime: BroadcastTime;
+  channelid: number;
+  description: string;
+  downloadpodfile: Podfile;
+  id: number;
+  imageurl: string;
+  imageurltemplate: string;
+  listenpodfile: Podfile;
+  program: Program;
+  publishdateutc: string;
+  title: string;
+  url: string;
+}
