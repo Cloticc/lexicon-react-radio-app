@@ -30,11 +30,9 @@ export const ChannelDetails = () => {
       <Tabs>
         <TabList>
           <Tab>BroadCasts</Tab>
-
-
-
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {searchEpisode?.map((episode: ISearchEpisode) => {
+            {searchEpisode?.sort((a, b) => parseInt(b.publishdateutc.substring(6, b.publishdateutc.length - 2)) - parseInt(a.publishdateutc.substring(6, a.publishdateutc.length - 2))).map((episode: ISearchEpisode) => {
               return (
                 <div key={episode.id} className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-auto">
                   <div>
@@ -49,12 +47,14 @@ export const ChannelDetails = () => {
                     <p>
                       Broadcast Time: {new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - {new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}
                     </p>
-
                     <a href={episode.url} className="mt-2 text-indigo-500 hover:underline">{episode.program.name}</a>
                   </div>
                 </div>
               );
             })}
+
+
+
           </div>
         </TabList>
         <TabPanel>
