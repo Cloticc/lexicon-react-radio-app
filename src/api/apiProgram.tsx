@@ -71,12 +71,12 @@ export const useProgramsByCategory = (selectedCategory: null | undefined | numbe
 };
 
 export const getProgram = async (id: number) => {
-  const response = await fetch(`https://api.sr.se/api/v2/programs/index?channelid=${id}&format=json`);
+  const response = await fetch(`https://api.sr.se/api/v2/programs/index?channelid=${id}&format=json&size=1000`);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   const data = await response.json();
-  console.log(data.programs); 
+  // console.log(data.programs); 
 
   if (data) {
     return data.programs; 
