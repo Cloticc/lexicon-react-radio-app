@@ -56,17 +56,23 @@ export const ProgramComponent: React.FC = () => {
 
 
   return (
-    <div className="flex flex-col items-center space-y-4">
-      <div className="space-y-4">
-        <select className="form-select w-full" value={selectedCategory?.toString()} onChange={handleCategoryChange}>
-          <option value="">Select a category</option>
-          {programCategories?.map(category => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-
+    <>
+      <div className=" items-center justify-center space-y-4 ">
+        <div className="space-y-4">
+          <div className="w-64 mx-auto mt-4">
+            <select className="form-select w-full h-10 text-base bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" value={selectedCategory?.toString()} onChange={handleCategoryChange}>
+              <option value="">Select a category</option>
+              {programCategories?.map(category => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <div className='container mx-auto p-4'>
         <aside className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
           {programs?.map((program, index) => (
             <li key={`${program.id}-${index}`} className='border rounded-lg shadow-lg bg-white list-none p-4 space-y-4'>
@@ -89,6 +95,10 @@ export const ProgramComponent: React.FC = () => {
           ))}
         </aside>
       </div>
-    </div>
+
+
+
+    </>
+
   );
 };
