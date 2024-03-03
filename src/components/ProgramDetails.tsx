@@ -152,8 +152,7 @@ export function ProgramDetails() {
         <Tab className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Episodes</Tab>
       </TabList>
       <TabPanel>
-
-
+        {/* Details */}
         <div className='space-y-4 bg-white shadow-lg rounded-lg p-6'>
           <h1 className='text-3xl font-bold text-gray-800'>{program?.name}</h1>
           <p className='text-gray-600'>{program?.broadcastinfo}</p>
