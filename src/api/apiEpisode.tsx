@@ -76,8 +76,25 @@ export const useEpisodes = (id: number) => {
 }
 
 
+export const useSearchEpisodes = (search: string) => {
+  // http://api.sr.se/api/v2/episodes/search/?query=tankesmedjan
+  const fetchSearchEpisodes = async () => {
+    const response = await fetch(`https://api.sr.se/api/v2/episodes/search/?query=${search}&format=json`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data.episodes);
+    
+    return data.episodes;
+  }
 
+  return useQuery({
+    queryKey: ['search', search],
+    queryFn: fetchSearchEpisodes
+  });
 
+}
 
 
 
