@@ -39,7 +39,7 @@ export const ChannelDetails = () => {
               return (
                 <div key={episode.id} className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-auto">
                   <div>
-                    <img className="h-48 w-full object-fill" src={episode.imageurl || ""} alt={episode.title || "No title"} />
+                    <img className="w-full object-contain" src={episode.imageurl || ""} alt={episode.title || "No title"} />
                   </div>
                   <div className="p-8">
                     <h3 className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{episode.title || "No title"}</h3>
