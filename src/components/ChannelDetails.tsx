@@ -34,28 +34,34 @@ export const ChannelDetails = () => {
       </TabList>
       <TabPanel>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
-          {searchEpisode?.sort((a: { publishdateutc: string; }, b: { publishdateutc: string; }) => parseInt(b.publishdateutc.substring(6, b.publishdateutc.length - 2)) - parseInt(a.publishdateutc.substring(6, a.publishdateutc.length - 2))).map((episode: ISearchEpisode) => {
-            return (
-              <div key={episode.id} className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-auto">
-                <div>
-                  <img className="h-48 w-full object-cover" src={episode.imageurl || ""} alt={episode.title || "No title"} />
-                </div>
-                <div className="p-8">
-                  <h3 className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{episode.title || "No title"}</h3>
-                  <p className="mt-2 text-gray-500">{episode.description || "No description"}</p>
-                  <p className="mt-2 text-gray-500">
+          {searchEpisode && searchEpisode.length > 0 ? (
+            searchEpisode.sort((a: { publishdateutc: string; }, b: { publishdateutc: string; }) => parseInt(b.publishdateutc.substring(6, b.publishdateutc.length - 2)) - parseInt(a.publishdateutc.substring(6, a.publishdateutc.length - 2))).map((episode: ISearchEpisode) => {
+              return (
+                <div key={episode.id} className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-auto">
+                  <div>
+                    <img className="h-48 w-full object-fill" src={episode.imageurl || ""} alt={episode.title || "No title"} />
+                  </div>
+                  <div className="p-8">
+                    <h3 className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{episode.title || "No title"}</h3>
+                    <p className="mt-2 text-gray-500">{episode.description || "No description"}</p>
+                    <p className="mt-2 text-gray-500">
 
-                    Publicerad på: {episode.publishdateutc ? new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB') : "No publish date"}
-                  </p>
-                  <p>
-                    Sändning tid: {episode.broadcasttime ? `${new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - ${new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}` : "Igen sändning tid"}
-                  </p>
-                  <a href={episode.url || "#"} className="mt-2 text-indigo-500 hover:underline">{episode.program?.name || "No program name"} Link</a>
+                      Publicerad på: {episode.publishdateutc ? new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB') : "No publish date"}
+                    </p>
+                    <p>
+                      Sändningstid: {episode.broadcasttime ? `${new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - ${new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}` : "Igen sändningstid"}
+                    </p>
+                    <a href={episode.url || "#"} className="mt-2 text-indigo-500 hover:underline">{episode.program?.name || "No program name"} Link</a>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            }
+            )
+          ) : (
+            <div>Inga avsnitt tillgängliga</div>
+          )}
         </div>
+
       </TabPanel>
       <TabPanel>
         {/* program related to the channel */}
