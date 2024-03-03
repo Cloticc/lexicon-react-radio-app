@@ -1,17 +1,15 @@
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import { useProgramDetails, useSearchEpisodes } from "../api/apiEpisode";
 
-import { Broadcasts } from "./Broadcasts";
 import { ISearchEpisode } from "../interface/Interface";
-import React from "react";
-import { useBroadcasts } from "../api/apiBroadcasts";
 import { useParams } from "react-router-dom";
+import { useSearchEpisodes } from "../api/apiEpisode";
 
 export const ChannelDetails = () => {
-  // const { id } = useParams<{ id: string }>();
+
   const { name } = useParams<{ name: string }>();
 
   const { data: searchEpisode, isLoading: searchEpisodeLoading, error: searchEpisodeError } = useSearchEpisodes(name || "");
+
 
 
   if (searchEpisodeLoading) {
@@ -19,7 +17,7 @@ export const ChannelDetails = () => {
   }
 
   if (searchEpisodeError) {
-    return <div>Error: {searchEpisodeError.message}</div>;
+    return <div>Error fetching data</div>;
   }
 
 
@@ -57,7 +55,7 @@ export const ChannelDetails = () => {
       </TabPanel>
       <TabPanel>
         <h2 className="text-xl font-bold mb-2">Program</h2>
-        <p className="text-gray-700">Program</p>
+
       </TabPanel>
     </Tabs>
 
