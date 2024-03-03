@@ -133,7 +133,7 @@ export const Channel = () => {
             <p className="text-gray-700 mb-2">{channel.tagline}</p>
             {/* <a href={channel.siteurl} className="text-blue-500 hover:underline mb-2 block">Visit Site</a> */}
             <a href={channel.siteurl} className="text-blue-500 hover:underline mb-2 block">Visit Site</a>
-            <Link className="text-blue-500 hover:underline" to={`/channels/channel/${channel.name}`}>
+            <Link className="text-blue-500 hover:underline" to={`/channels/channel/${channel.name}/${channel.id}`}>
               <h2 className="text-xl font-bold">Link to details</h2>
             </Link>
 
