@@ -46,7 +46,7 @@ export const getProgramsByCategory = async (selectedCategory: null | undefined) 
       const response = await fetch(`https://api.sr.se/api/v2/programs/index?programcategoryid=${selectedCategory}&format=json&page=${page}&size=1000`);
       const data = await response.json();
       // console.log(data.programs);
-      
+
       if (data) {
         allPrograms = allPrograms.concat(data.programs);
         totalPages = data.pagination.totalpages;
@@ -71,22 +71,23 @@ export const useProgramsByCategory = (selectedCategory: null | undefined | numbe
 };
 
 export const getProgram = async (id: number) => {
-  const response = await fetch(`https://api.sr.se/api/v2/programs/${id}?format=json`);
+  const response = await fetch(`https://api.sr.se/api/v2/programs/index?channelid=${id}&format=json`);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   const data = await response.json();
+  console.log(data.programs); 
 
   if (data) {
-    return data.program;
+    return data.programs; 
   }
-  throw new Error('No program found');
+  return [];
 }
 
 export const useProgram = (id: number) => {
   return useQuery({
     queryKey: ['program', id],
-    queryFn: () => getProgram(id)
+    queryFn: () => id ? getProgram(id) : Promise.resolve({}),
+    enabled: !!id,
   });
 }
-
