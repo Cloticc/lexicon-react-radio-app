@@ -1,5 +1,7 @@
+import React, { useState } from 'react';
+
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { SearchComponent } from './SearchComponent';
 
 const links = [
   { to: "/", label: "Home" },
@@ -10,9 +12,16 @@ const links = [
 ];
 
 export function Navbar() {
-  const [search, setSearch] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
+  // const handleSearch = (query: string) => {
+  //   console.log('Search query:', query);
+ 
+  // };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
 
 
   return (
@@ -30,13 +39,23 @@ export function Navbar() {
           ))}
         </div>
         <div>
+          {/* <input
+            type="text"
+            placeholder="Sök på Sveriges Radio..."
+            className="rounded py-2 px-4 text-gray-700 bg-white border-2 border-gray-200 focus:outline-none focus:bg-white focus:border-blue-500"
+            // onChange={(event) => setSearch(event.target.value)}
+            onChange={handleSearchChange}
+            onKeyDown={handleKeyDown}
+          /> */}
+          {/* <SearchComponent onSearch={handleSearch} /> */}
           <input
             type="text"
             placeholder="Sök på Sveriges Radio..."
             className="rounded py-2 px-4 text-gray-700 bg-white border-2 border-gray-200 focus:outline-none focus:bg-white focus:border-blue-500"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            value={searchQuery}
+            onChange={handleSearchChange}
           />
+          <SearchComponent searchQuery={searchQuery} />
         </div>
       </div>
     </nav>
