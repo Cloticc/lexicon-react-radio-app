@@ -23,7 +23,7 @@ export function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/channels" element={<Channel />} />
-          <Route path="/channels/channel/:name" element={<ChannelDetails />} />
+          <Route path="/channels/channel/:name/:channelId" element={<ChannelDetails />} />
           <Route path="/programs" element={<ProgramComponent />} />
           <Route path="/programs/program/:id" element={<ProgramDetails />} />
           <Route path="/mypage" element={<MyPage />} />
