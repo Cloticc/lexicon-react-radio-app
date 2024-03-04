@@ -1,15 +1,11 @@
 import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
+import { FavoriteContext } from '../context/ContexProvider'; // Adjust the path to match your project structure
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IChannel } from '../interface/Interface';
 import { Link } from 'react-router-dom';
 import { useChannel } from '../api/apiChannel';
-
-// import { Link } from 'react-router-dom';
-
-
-
 
 export const Channel = () => {
   const [playingAudio, setPlayingAudio] = useState<HTMLAudioElement | null>(null);
@@ -22,6 +18,9 @@ export const Channel = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playPromise, setPlayPromise] = useState<Promise<void> | null>(null);
 
+
+
+  const { addFavorite } = useContext(FavoriteContext);
 
 
   const observer = useRef<IntersectionObserver | null>(null);
@@ -137,6 +136,8 @@ export const Channel = () => {
               <h2 className="text-xl font-bold">Link to details</h2>
             </Link>
 
+
+            <button onClick={() => addFavorite(channel)} className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2">Add to favorite</button>
 
           </div>
           <div className="absolute bottom-0 right-0 m-2">
