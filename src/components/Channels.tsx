@@ -24,7 +24,7 @@ export const Channel = () => {
   const { addFavorite } = useContext(FavoriteContext);
 
   useEffect(() => {
-    // This code will run whenever `favorites` changes
+// Just to show message so dumb
   }, [addFavorite]);
   
   const observer = useRef<IntersectionObserver | null>(null);
