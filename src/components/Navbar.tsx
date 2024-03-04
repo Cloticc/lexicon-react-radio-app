@@ -5,10 +5,10 @@ import { SearchComponent } from './SearchComponent';
 
 const links = [
   { to: "/", label: "Home" },
-  { to: "/channels", label: "Channel" },
+  { to: "/channels", label: "Kanal" },
   { to: "/programs", label: "Program" },
-  { to: "/myPage", label: "My Page" },
-  { to: "/login", label: "Sign in" },
+  { to: "/myPage", label: "Min Sida" },
+  { to: "/login", label: "Logga in" },
 ];
 
 export function Navbar() {
