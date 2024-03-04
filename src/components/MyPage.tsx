@@ -13,9 +13,9 @@ export const MyPage = () => {
   const { favorites, removeFavorite } = useContext(FavoriteContext);
 
   useEffect(() => {
-    //will update
-    console.log(favorites);
-    console.log(favorites.filter(favorite => favorite.type === 'channel'));
+    //will update the favorites state
+    // console.log(favorites);
+    // console.log(favorites.filter(favorite => favorite.type === 'channel'));
 
 
   }, [favorites]);
