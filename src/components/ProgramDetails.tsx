@@ -190,8 +190,8 @@ export function ProgramDetails() {
                   <div className='px-6 py-4'>
                     <div className='font-bold text-xl mb-2'>{pod.title}</div>
                     <p className='text-gray-100 text-base'>{pod.description}</p>
-                    <p className='text-gray-200 text-xs'>Duration: {Math.round(pod.duration / 60)} minutes</p>
-                    <p className='text-gray-200 text-xs'>Published on: {new Date(parseInt(pod.publishdateutc.substring(6, pod.publishdateutc.length - 2))).toLocaleDateString('en-GB')}</p>
+                    <p className='text-gray-200 text-xs'>Varaktighet: {Math.round(pod.duration / 60)} minutes</p>
+                    <p className='text-gray-200 text-xs'>Publicerad: {new Date(parseInt(pod.publishdateutc.substring(6, pod.publishdateutc.length - 2))).toLocaleDateString('en-GB')}</p>
                   </div>
                   <div className='px-6 py-4'>
                     <audio
