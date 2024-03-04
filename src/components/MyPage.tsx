@@ -1,30 +1,54 @@
-import 'react-tabs/style/react-tabs.css'; // Import the styles
+import 'react-tabs/style/react-tabs.css';
 
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
+import { FavoriteContext } from '../context/ContexProvider'; // Adjust the path to match your project structure
+import { IChannel } from '../interface/Interface';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+
 export const MyPage = () => {
+  const { favorites, removeFavorite } = useContext(FavoriteContext);
+
   return (
-    <div className="myPage">
-      <h1>Favorit Page</h1>
-
-
+    <div className="myPage bg-gray-100 p-4 rounded-md shadow-lg">
+      <h1 className="text-2xl font-bold mb-4">Favorite Page</h1>
       <Tabs>
-        <TabList>
-          <Tab>Favorite Channel</Tab>
-          <Tab>Favorite program</Tab>
+        <TabList className="flex border-b">
+          <Tab className="mr-1 py-2 px-4 font-semibold text-gray-800 bg-white rounded-t-lg">Favorite Channel</Tab>
+          <Tab className="mr-1 py-2 px-4 font-semibold text-gray-800 bg-white rounded-t-lg">Favorite program</Tab>
         </TabList>
-        <TabPanel>
-          <h2>Favorite Channel</h2>
-          <p>No Favorite Channel</p>
+        <TabPanel className="p-4 bg-white rounded-b-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {favorites.map((favorite: IChannel) => (
+          <div key={favorite.id} className="rounded overflow-hidden shadow-lg m-2 bg-white">
+            <img className="w-full h-64 object-cover" src={favorite.image} alt={favorite.name} />
+            <div className="px-6 py-4">
+              <div className="font-bold text-xl mb-2">{favorite.name}</div>
+              <p className="text-gray-700 text-base">{favorite.tagline}</p>
+            </div>
+            <div className="px-6 pt-4 pb-2">
+              {/* <a href={favorite.siteurl} className="inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">Visit Site</a>
+              <Link className="inline-block bg-blue-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2" to={`/channels/favorite/${favorite.name}/${favorite.id}`}>
+                Link to details
+              </Link> */}
+                 <a href={favorite.siteurl} className="text-blue-500 hover:underline mb-2 block">Visit Site</a>
+            <Link className="text-blue-500 hover:underline" to={`/channels/channel/${favorite.name}/${favorite.id}`}>
+              <h2 className="text-xl font-bold">Link to details</h2>
+            </Link>
+            </div>
+            <div className="px-6 pt-4 pb-2">
+              <button onClick={() => removeFavorite(favorite)} className="inline-block bg-red-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">Remove</button>
+            </div>
+          </div>
+        ))}
+      </div>
         </TabPanel>
-        <TabPanel>
-          <h2>Favorite program</h2>
-          <p>No Favorite program</p>
+        <TabPanel className="p-4 bg-white rounded-b-lg">
+          <h2 className="text-xl font-semibold mb-2">Favorite program</h2>
+          <p className="text-gray-600">No Favorite program</p>
         </TabPanel>
       </Tabs>
     </div>
-
-
-
-  )
-}
+  );
+};
