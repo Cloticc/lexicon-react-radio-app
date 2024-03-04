@@ -1,3 +1,5 @@
+
+
 export interface ISocialMediaPlatform {
   platform: string;
   platformurl: string;
@@ -8,7 +10,16 @@ export interface IProgramCategory {
   name: string;
 }
 
-export interface IChannel {
+export interface IFavoriteItem {
+  id: string;
+  name: string;
+  favorite: boolean;
+type: string;
+
+}
+
+export interface IChannel extends IFavoriteItem {
+  type: 'channel';
   program: string;
   id: string;
   name: string;
@@ -22,13 +33,8 @@ export interface IChannel {
   favorite: boolean;
 }
 
-export interface ILiveAudio {
-  id: string;
-  url: string;
-  statkey: string;
-}
-
-export interface IProgram {
+export interface IProgram extends IFavoriteItem {
+  type: 'program';
   id: string;
   name: string;
   description: string;
@@ -52,7 +58,13 @@ export interface IProgram {
   responsibleeditor: string;
   favorite: boolean;
 }
+export type FavoriteItem = IChannel | IProgram;
 
+export interface ILiveAudio {
+  id: string;
+  url: string;
+  statkey: string;
+}
 export interface IBroadcast {
   id: string;
   name: string;
@@ -200,4 +212,5 @@ export interface ISearchEpisode {
   title: string;
   url: string;
 }
+
 
