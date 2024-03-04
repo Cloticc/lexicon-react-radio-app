@@ -1,11 +1,10 @@
+import { FavoriteItem, IFavoriteItem } from "../interface/Interface";
 import { ReactElement, ReactNode, createContext, useEffect, useState } from "react";
 
-import { IChannel } from "../interface/Interface";
-
 interface IContext {
-  favorites: IChannel[];
-  addFavorite: (props: IChannel) => void;
-  removeFavorite: (props: IChannel) => void;
+  favorites: IFavoriteItem[];
+  addFavorite: (item: FavoriteItem) => void;
+  removeFavorite: (item: FavoriteItem) => void;
 
 
 }
@@ -16,20 +15,20 @@ interface IFavoriteProviderProps {
 }
 
 
+
 export const FavoriteContext = createContext({} as IContext);
 
 export function FavoriteProvider({ children }: IFavoriteProviderProps): ReactElement {
-  const [favorites, setFavorites] = useState<IChannel[]>([]);
+  const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
   const [notification, setNotification] = useState<{ type: 'success' | 'error', message: string } | null>(null);
 
-  const addFavorite = (props: IChannel) => {
-
-    const isExist = favorites.find((favorite) => favorite.id === props.id);
+  const addFavorite = (item: FavoriteItem) => {
+    const isExist = favorites.find((favorite) => favorite.id === item.id);
     if (isExist) return;
-    const newFavoriteList = [...favorites, props];
+    const newFavoriteList = [...favorites, item];
     setFavorites(newFavoriteList);
-
-    if  (newFavoriteList.length > favorites.length) {
+console.log(newFavoriteList);
+    if (newFavoriteList.length > favorites.length) {
       setNotification({ type: 'success', message: 'Channel added to favorites!' });
     } else {
       setNotification({ type: 'error', message: 'Failed to add channel to favorites.' });
@@ -37,9 +36,9 @@ export function FavoriteProvider({ children }: IFavoriteProviderProps): ReactEle
 
   }
 
-  const removeFavorite = (props: IChannel) => {
+  const removeFavorite = (item: FavoriteItem) => {
 
-    const newFavoriteList = favorites.filter((favorite) => favorite.id !== props.id);
+    const newFavoriteList = favorites.filter((favorite) => favorite.id !== item.id);
     setFavorites(newFavoriteList);
 
 
@@ -55,7 +54,7 @@ export function FavoriteProvider({ children }: IFavoriteProviderProps): ReactEle
       const timer = setTimeout(() => {
         setNotification(null);
       }, 2000); // 2000 milliseconds = 2 seconds
-  
+
       // Clean up function
       return () => clearTimeout(timer);
     }
