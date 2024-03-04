@@ -17,8 +17,8 @@ export const MyPage = () => {
       <h1 className="text-2xl font-bold mb-4">Favorite Page</h1>
       <Tabs>
         <TabList className="flex border-b">
-          <Tab className="mr-1 py-2 px-4 font-semibold text-gray-800 bg-white rounded-t-lg">Favorite Channel</Tab>
-          <Tab className="mr-1 py-2 px-4 font-semibold text-gray-800 bg-white rounded-t-lg">Favorite program</Tab>
+          <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Favorite Channel</Tab>
+          <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Favorite program</Tab>
         </TabList>
         <TabPanel className="p-4 bg-white rounded-b-lg">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
