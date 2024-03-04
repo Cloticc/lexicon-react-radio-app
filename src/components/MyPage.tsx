@@ -45,7 +45,7 @@ export const MyPage = () => {
                         <h2 className="text-xl font-bold">Länk till detaljer</h2>
                       </Link>
                       <button onClick={() => removeFavorite(channel)} className="absolute top-0 right-0 m-2">
-                        <FontAwesomeIcon icon={faStar} color="red"/>
+                        <FontAwesomeIcon icon={faStar} color="yellow"/>
                       </button>
                     </div>
                   </div>
@@ -72,7 +72,7 @@ export const MyPage = () => {
                     <h2 className="text-xl font-bold">Länk till detaljer</h2>
                     </Link>
                     <button onClick={() => removeFavorite(program)} className="absolute top-0 right-0 m-2">
-                    <FontAwesomeIcon icon={faStar} color="red" />
+                    <FontAwesomeIcon icon={faStar} color="yellow" />
                     </button>
                   </div>
                   </div>

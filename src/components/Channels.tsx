@@ -143,7 +143,7 @@ export const Channel = () => {
 
             {/* <button onClick={() => addFavorite(channel)} className="absolute top-0 right-0 m-2 ">Add to favorite</button> */}
             <button onClick={() => addFavorite({ ...channel, type: 'channel' })} className="absolute top-0 right-0 m-2">
-              <FontAwesomeIcon icon={faStar} />
+              <FontAwesomeIcon icon={faStar} color="yellow" />
             </button>
 
           </div>
