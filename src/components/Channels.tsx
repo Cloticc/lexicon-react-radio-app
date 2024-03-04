@@ -24,9 +24,9 @@ export const Channel = () => {
   const { addFavorite } = useContext(FavoriteContext);
 
   useEffect(() => {
-// Just to show message so dumb
+    // Just to show message so dumb
   }, [addFavorite]);
-  
+
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastChannelElementRef = useCallback((node: HTMLDivElement | null) => {
@@ -142,7 +142,7 @@ export const Channel = () => {
 
 
             {/* <button onClick={() => addFavorite(channel)} className="absolute top-0 right-0 m-2 ">Add to favorite</button> */}
-            <button onClick={() => addFavorite(channel)} className="absolute top-0 right-0 m-2">
+            <button onClick={() => addFavorite({ ...channel, type: 'channel' })} className="absolute top-0 right-0 m-2">
               <FontAwesomeIcon icon={faStar} />
             </button>
 
