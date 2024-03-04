@@ -1,16 +1,18 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { useProgramCategories, useProgramsByCategory } from '../api/apiProgram';
 
+import { FavoriteContext } from '../context/ContexProvider'; // Adjust the path to match your project structure
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IProgram } from '../interface/Interface';
 import { Link } from 'react-router-dom';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 export const ProgramComponent: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<number | null | undefined>(null);
   const { data: programCategories, isLoading, error } = useProgramCategories(1);
   const { data: programs, isLoading: programsLoading, error: programsError } = useProgramsByCategory(selectedCategory);
-
+  const { addFavorite } = useContext(FavoriteContext);
 
   const handleCategoryChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedCategory: number | null = Number(event.target.value);
@@ -91,6 +93,9 @@ export const ProgramComponent: React.FC = () => {
               <Link className="text-blue-500 hover:underline" to={`/programs/program/${program.id}`}>
                 <h2 className="text-xl font-bold">Länk till detaljer</h2>
               </Link>
+              <button onClick={() => addFavorite(program)} className="absolute top-0 right-0 m-2">
+              <FontAwesomeIcon icon={faStar} />
+            </button>
             </li>
           ))}
         </aside>
