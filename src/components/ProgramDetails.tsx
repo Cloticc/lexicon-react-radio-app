@@ -151,7 +151,7 @@ export function ProgramDetails() {
         <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Pods</Tab>
         <Tab className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Episodes</Tab>
       </TabList>
-      <TabPanel> 
+      <TabPanel>
         {/* Details */}
         <div className='space-y-4 bg-white shadow-lg rounded-lg p-6'>
           <h1 className='text-3xl font-bold text-gray-800'>{program?.name}</h1>
@@ -251,7 +251,7 @@ export function ProgramDetails() {
                           Publicerad vid: {new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB')}
                         </p>
                         <p>
-                          Broadcast Time: {episode.broadcasttime ? `${new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - ${new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}` : "No broadcast"}
+                          Sändningstid: {episode.broadcasttime ? `${new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - ${new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}` : "No broadcast"}
                         </p>
                       </div>
                       {episode.broadcast ? (
