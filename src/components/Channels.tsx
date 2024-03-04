@@ -1,7 +1,7 @@
 import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
-import { FavoriteContext } from '../context/ContexProvider'; // Adjust the path to match your project structure
+import { FavoriteContext } from '../context/ContexProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IChannel } from '../interface/Interface';
 import { Link } from 'react-router-dom';
