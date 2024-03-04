@@ -5,6 +5,7 @@ import { FavoriteContext } from '../context/ContexProvider'; // Adjust the path 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IChannel } from '../interface/Interface';
 import { Link } from 'react-router-dom';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { useChannel } from '../api/apiChannel';
 
 export const Channel = () => {
@@ -22,7 +23,10 @@ export const Channel = () => {
 
   const { addFavorite } = useContext(FavoriteContext);
 
-
+  useEffect(() => {
+    // This code will run whenever `favorites` changes
+  }, [addFavorite]);
+  
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastChannelElementRef = useCallback((node: HTMLDivElement | null) => {
@@ -137,7 +141,10 @@ export const Channel = () => {
             </Link>
 
 
-            <button onClick={() => addFavorite(channel)} className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2">Add to favorite</button>
+            {/* <button onClick={() => addFavorite(channel)} className="absolute top-0 right-0 m-2 ">Add to favorite</button> */}
+            <button onClick={() => addFavorite(channel)} className="absolute top-0 right-0 m-2">
+              <FontAwesomeIcon icon={faStar} />
+            </button>
 
           </div>
           <div className="absolute bottom-0 right-0 m-2">
