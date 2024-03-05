@@ -148,17 +148,20 @@ export function ProgramDetails() {
         <Tab className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Avsnitt</Tab>
       </TabList>
       <TabPanel>
-        {/* Details */}
-        <div className='space-y-4 bg-white shadow-lg rounded-lg p-6'>
-          <h1 className='text-3xl font-bold text-gray-800'>{program?.name}</h1>
-          <p className='text-gray-600'>{program?.broadcastinfo}</p>
-          <p className='text-gray-600'>{program?.description}</p>
-          <div className='flex flex-col space-y-4'>
-            <img className='w-1/6 h-full rounded-md object-cover' src={program?.programimage} alt={program?.name} />
-            <a className='text-blue-500 hover:underline' href={program?.programurl}>Visit Site</a>
+
+        <div className="space-y-4 bg-white shadow-lg rounded-lg p-6 flex items-start gap-6">
+          <div className="w-1/6 rounded-md overflow-hidden">
+            <img className="h-full object-cover" src={program?.programimage} alt={program?.name} />
           </div>
-          <div className='flex space-x-4 mt-4'>
-            {socialMedia}
+
+          <div className="flex-grow">
+            <h2 className='text-3xl font-bold text-gray-800'>{program?.name}</h2>
+            <p className='text-gray-600'>{program?.broadcastinfo}</p>
+            <p className='text-gray-600'>{program?.description}</p>
+            <a className='text-blue-500 hover:underline' href={program?.programurl}>Visit Site</a>
+            <div className='flex space-x-4 mt-4'>
+              {socialMedia}
+            </div>
           </div>
         </div>
 
