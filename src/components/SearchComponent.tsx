@@ -33,7 +33,7 @@ export const SearchComponent: React.FC<{ searchQuery: string }> = ({ searchQuery
   // function handleEpisodeClick(episode: IEpisode): void {
   //   console.log(episode);
   // }
-  console.log('Programs:', programs);
+  // console.log('Programs:', programs);
   // console.log('Episodes:', episodes);
 
   if (isLoading || !searchQuery) {
