@@ -7,7 +7,7 @@ export const getChannel = async () => {
   let allChannels: IChannel[] = [];
 
   while (page <= totalPages) {
-    const response = await fetch(`https://api.sr.se/api/v2/channels?page=${page}&format=json&size=1000`);
+    const response = await fetch(`https://api.sr.se/api/v2/channels?page=${page}&format=json&size=100`);
     const data = await response.json();
 
     if (data) {
