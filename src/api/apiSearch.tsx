@@ -50,6 +50,6 @@ export const useSearchPrograms = (name: string) => {
   return useQuery({
     queryKey: ['searchPrograms', name],
     queryFn: () => getPrograms().then(programs => programs.filter((program: { name: string; }) => program.name.toLowerCase().includes(name.toLowerCase()))),
-    // staleTime: 0, //disable cache
+    staleTime: 300000, // cache for 5 minutes
   });
 };
