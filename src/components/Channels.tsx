@@ -102,7 +102,7 @@ export const Channel = () => {
     return <div>Error fetching channels</div>;
   }
   return (
-    <div className="channel grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
+    <div className="channel flex flex-wrap justify-center gap-4 p-4">
       {currentAudioUrl && isPlayerVisible && (
         <audio
           ref={audioRef}
@@ -128,31 +128,42 @@ export const Channel = () => {
       </button>
 
       {channels?.map((channel: IChannel, index: number) => (
-        <div ref={index === channels.length - 1 ? lastChannelElementRef : null} key={`${channel.id}-${channel.name}-${index}`} className="card border rounded-lg overflow-hidden shadow-md bg-white relative">
-
-          <img src={channel.image} alt={channel.name} className="w-full h-64 object-cover-fill" />
-          <div className="p-4">
+        <div
+          ref={index === channels.length - 1 ? lastChannelElementRef : null}
+          key={`${channel.id}-${channel.name}-${index}`}
+          className="bg-white rounded-lg overflow-hidden shadow-md flex flex-col w-full sm:w-1/2 md:w-1/3 lg:w-1/6"
+        >
+          <img
+            src={channel.image}
+            alt={channel.name}
+            className="w-full h-40 object-cover"
+          />
+          <div className="p-4 flex-grow">
             <h2 className="text-xl mb-2">{channel.name}</h2>
             <p className="text-gray-700 mb-2">{channel.tagline}</p>
-            {/* <a href={channel.siteurl} className="text-blue-500 hover:underline mb-2 block">Visit Site</a> */}
-            <a href={channel.siteurl} className="text-blue-500 hover:underline mb-2 block">Besök sida</a>
-            <Link className="text-blue-500 hover:underline" to={`/channels/channel/${channel.name}/${channel.id}`}>
+            <a
+              href={channel.siteurl}
+              className="text-blue-500 hover:underline mb-2 block"
+            >
+              Besök sida
+            </a>
+            <Link
+              className="text-blue-500 hover:underline"
+              to={`/channels/channel/${channel.name}/${channel.id}`}
+            >
               <h2 className="text-xl font-bold">Länk till detaljer</h2>
             </Link>
-
-
-            {/* <button onClick={() => addFavorite(channel)} className="absolute top-0 right-0 m-2 ">Add to favorite</button> */}
-            <button onClick={() => addFavorite({ ...channel, type: 'channel' })} className="absolute top-0 right-0 m-2">
+          </div>
+          <div className="p-4 flex justify-between">
+            <button
+              onClick={() => addFavorite({ ...channel, type: 'channel' })}
+              className="m-2"
+            >
               <FontAwesomeIcon icon={faStar} color="yellow" />
             </button>
-
-          </div>
-          <div className="absolute bottom-0 right-0 m-2">
-
             <button
               onClick={async () => {
                 if (isPlaying && playingChannelId === channel.id) {
-                  // Wait for the play promise to resolve before pausing
                   if (playPromise) {
                     await playPromise;
                   }
@@ -160,7 +171,6 @@ export const Channel = () => {
                   setIsPlaying(false);
                 } else {
                   if (playingAudio) {
-                    // Wait for the play promise to resolve before pausing
                     if (playPromise) {
                       await playPromise;
                     }
@@ -171,8 +181,10 @@ export const Channel = () => {
                 }
               }}
             >
-
-              <FontAwesomeIcon icon={isPlaying && playingChannelId === channel.id ? faPause : faPlay} color={playingChannelId === channel.id ? 'green' : 'black'} />
+              <FontAwesomeIcon
+                icon={isPlaying && playingChannelId === channel.id ? faPause : faPlay}
+                color={playingChannelId === channel.id ? 'green' : 'black'}
+              />
             </button>
           </div>
         </div>
@@ -183,5 +195,6 @@ export const Channel = () => {
         </div>
       )}
     </div>
+
   );
 };
