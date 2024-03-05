@@ -173,23 +173,22 @@ export function ProgramDetails() {
       <TabPanel>
         {/* Pods */}
 
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2'>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {podFiles && podFiles.pages.length > 0 ? (
             podFiles.pages.map((page, pageIndex) => (
               page.data.sort((a: { publishdateutc: string | number | Date; }, b: { publishdateutc: string | number | Date; }) => new Date(b.publishdateutc).getTime() - new Date(a.publishdateutc).getTime()).map((pod: IPodFile, podIndex: number) => (
-
                 <div
                   key={pod.id}
                   ref={pageIndex === podFiles.pages.length - 1 && podIndex === page.data.length - 1 ? lastPodFileElementRef : null}
-                  className='rounded overflow-hidden shadow-lg m-4 bg-gray-500 text-white'
+                  className="rounded-lg overflow-hidden shadow-md bg-white"
                 >
-                  <div className='px-6 py-4'>
-                    <div className='font-bold text-xl mb-2'>{pod.title}</div>
-                    <p className='text-gray-100 text-base'>{pod.description}</p>
-                    <p className='text-gray-200 text-xs'>Varaktighet: {Math.round(pod.duration / 60)} minutes</p>
-                    <p className='text-gray-200 text-xs'>Publicerad: {new Date(parseInt(pod.publishdateutc.substring(6, pod.publishdateutc.length - 2))).toLocaleDateString('en-GB')}</p>
+                  <div className="p-6">
+                    <h2 className="text-xl font-bold mb-2">{pod.title}</h2>
+                    <p className="text-gray-700 mb-4">{pod.description}</p>
+                    <p className="text-gray-600 text-xs">Varaktighet: {Math.round(pod.duration / 60)} minutes</p>
+                    <p className="text-gray-600 text-xs">Publicerad: {new Date(parseInt(pod.publishdateutc.substring(6, pod.publishdateutc.length - 2))).toLocaleDateString('en-GB')}</p>
                   </div>
-                  <div className='px-6 py-4'>
+                  <div className="px-6 py-4">
                     <audio
                       controls
                       onPlay={(event) => {
@@ -208,74 +207,62 @@ export function ProgramDetails() {
               ))
             ))
           ) : (
-            <p className='text-red-500 text-2xl'>Inga poddar tillgängliga</p>
+            <p className="text-red-500 text-2xl">Inga poddar tillgängliga</p>
           )}
           {isVisible && (
-            <div onClick={scrollToTop} className='scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
+            <div onClick={scrollToTop} className="scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center">
               ↑
             </div>
           )}
         </div>
+
       </TabPanel>
       <TabPanel>
-        <div className='flex justify-center items-center'>
-          <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
+        <div className="flex justify-center items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-6 gap-4">
             {episodes && episodes.pages.length > 0 ? (
               episodes.pages.map((page, pageIndex) => (
                 page.data.map((episode: IEpisode, episodeIndex: number) => (
                   <div
                     key={episode.id ? episode.id : 'No ID'}
                     ref={pageIndex === episodes.pages.length - 1 && episodeIndex === page.data.length - 1 ? lastEpisodeElementRef : null}
-                    className='shadow-md rounded-lg  bg-white'
+                    className="shadow-md rounded-lg bg-white"
                   >
-                    <div key={episode.id ? episode.id : 'No ID'} className='shadow-md rounded-lg  bg-white'>
-                      {/* {episode.imageurl ? (
-                        <div
-                          className='w-full h-64 bg-cover bg-center'
-                          style={{
-                            backgroundImage: `url(${episode.imageurl})`
-                          }}
-                          title={episode.title ? episode.title : 'Ingen titel tillgänglig'}
-                        />
-                      ) : null} */}
-                      <img className="w-full object-contain" src={episode.imageurl || ""} alt={episode.title || "No title"} />
-                      <div className='px-6 py-4'>
-                        <div className='font-bold text-xl mb-2'>{episode.title ? episode.title : 'Ingen titel tillgänglig'}</div>
-                        <p className='text-gray-700 text-base'>{episode.description ? episode.description : 'Ingen beskrivning finns tillgänglig'}</p>
-
-                        <p className="mt-2 text-gray-500">
-                          Publicerad vid: {new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB')}
-                        </p>
-                        <p>
-                          Sändningstid: {episode.broadcasttime ? `${new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - ${new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}` : "No broadcast"}
-                        </p>
+                    <img className="w-full h-44 object-cover" src={episode.imageurl || ""} alt={episode.title || "No title"} />
+                    <div className="px-6 py-4">
+                      <div className="font-bold text-xl mb-2">{episode.title || 'Ingen titel tillgänglig'}</div>
+                      <p className="text-gray-700 text-base">{episode.description || 'Ingen beskrivning finns tillgänglig'}</p>
+                      <p className="mt-2 text-gray-500">
+                        Publicerad vid: {new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB')}
+                      </p>
+                      <p>
+                        Sändningstid: {episode.broadcasttime ? `${new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - ${new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}` : "No broadcast"}
+                      </p>
+                    </div>
+                    {episode.broadcast ? (
+                      <div className="px-6 pb-4">
+                        <audio controls src={episode.broadcast.broadcastfiles.length > 0 ? episode.broadcast.broadcastfiles[0].url : ''} />
                       </div>
-                      {episode.broadcast ? (
-                        <div className='px-6 pb-4'>
-                          <audio controls src={episode.broadcast.broadcastfiles.length > 0 ? episode.broadcast.broadcastfiles[0].url : ''} />
-                        </div>
-                      ) : null}
-                      <div className='px-6 py-4 flex justify-between'>
-                        {episode.url && episode.url ? (
-                          <a href={episode.url} className='text-blue-500'>Webbadress</a>
-                        ) : (
-                          <p className='text-red-500'>Ingen webbadress tillgänglig</p>
-                        )}
-                        {episode.url && episode.url ? (
-                          <a href={episode.url} download className='text-blue-500'>Ladda ner</a>
-                        ) : (
-                          <p className='text-red-500'>Ingen nedladdningsfil tillgänglig</p>
-                        )}
-                      </div>
+                    ) : null}
+                    <div className="px-6 py-4 flex justify-between">
+                      {episode.url && episode.url ? (
+                        <a href={episode.url} className="text-blue-500">Webbadress</a>
+                      ) : (
+                        <p className="text-red-500">Ingen webbadress tillgänglig</p>
+                      )}
+                      {episode.url && episode.url ? (
+                        <a href={episode.url} download className="text-blue-500">Ladda ner</a>
+                      ) : (
+                        <p className="text-red-500">Ingen nedladdningsfil tillgänglig</p>
+                      )}
                     </div>
                   </div>
                 ))
               ))
             ) : (
-              <p className='text-red-500 text-2xl'>Inga avsnitt tillgängliga</p>
+              <p className="text-red-500 text-2xl">Inga avsnitt tillgängliga</p>
             )}
           </div>
-
         </div>
 
         {isVisible && (
