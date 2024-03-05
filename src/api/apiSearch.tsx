@@ -37,7 +37,7 @@ export const getPrograms = async () => {
     if (cachedData) {
       data = JSON.parse(cachedData);
     } else {
-      const response = await fetch(`http://api.sr.se/api/v2/programs?format=json&size=1000`);
+      const response = await fetch(`https://api.sr.se/api/v2/programs?format=json&size=1000`);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
