@@ -31,14 +31,21 @@ export const useSearchEpisodes = (query: string) => {
 
 export const getPrograms = async () => {
   try {
-    const response = await fetch(`http://api.sr.se/api/v2/programs?format=json&size=1000`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
+    let data;
+
+    const cachedData = localStorage.getItem('programs');
+    if (cachedData) {
+      data = JSON.parse(cachedData);
+    } else {
+      const response = await fetch(`http://api.sr.se/api/v2/programs?format=json&size=1000`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+
+      data = await response.json();
+      localStorage.setItem('programs', JSON.stringify(data));
     }
 
-    const data = await response.json();
-    // console.log('Data:', data);
-    
     return data.programs;
   } catch (error) {
     console.error('Error fetching data:', error);
