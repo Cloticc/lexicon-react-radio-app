@@ -12,10 +12,21 @@ export const SearchComponent: React.FC<{ searchQuery: string }> = ({ searchQuery
 
 
 
-  function handleProgramClick(program: IProgram): void {
+  function handleProgramClick() {
     // console.log(program);
 
-     
+
+    const searchResults = document.querySelector('.absolute');
+    if (searchResults) {
+      searchResults.classList.add('hidden');
+    }
+    // clear search input
+    const searchInput = document.querySelector('input');
+    if (searchInput) {
+      searchInput.value = '';
+    }
+    
+    //quick fix
 
   }
 
@@ -39,11 +50,11 @@ export const SearchComponent: React.FC<{ searchQuery: string }> = ({ searchQuery
     <div>
       <div className="absolute bg-white rounded border mt-2 z-50 max-h-64 overflow-auto">
         {programs.map((program: IProgram) => (
-        <Link 
-            key={program.id} 
-            to={`/programs/program/${program.id}`} 
-            className="p-2 hover:bg-gray-200 cursor-pointer block"
-            onClick={() => handleProgramClick(program)}
+          <Link
+            key={program.id}
+            to={`/programs/program/${program.id}`}
+            className="p-2 hover:bg-gray-200 focus:outline-none cursor-pointer block"
+            onClick={() => handleProgramClick()}
           >
             {program.name}
           </Link>
