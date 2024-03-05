@@ -9,12 +9,9 @@ interface IContext {
 
 }
 
-
 interface IFavoriteProviderProps {
   children: ReactNode;
 }
-
-
 
 export const FavoriteContext = createContext({} as IContext);
 
@@ -27,7 +24,7 @@ export function FavoriteProvider({ children }: IFavoriteProviderProps): ReactEle
     if (isExist) return;
     const newFavoriteList = [...favorites, item];
     setFavorites(newFavoriteList);
-console.log(newFavoriteList);
+    console.log(newFavoriteList);
     if (newFavoriteList.length > favorites.length) {
       setNotification({ type: 'success', message: 'Channel added to favorites!' });
     } else {
