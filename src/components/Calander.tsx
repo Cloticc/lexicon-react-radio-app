@@ -10,6 +10,8 @@ export function Calander({ broadcasts }: CalanderProps) {
 
   const [currentDate, setCurrentDate] = useState(new Date());
 
+/* The `useEffect` hook in the provided code is responsible for updating the `currentDate` state at
+midnight each day. Here's a breakdown of what the `useEffect` block is doing: */
   useEffect(() => {
     const now = new Date();
     const nextDay = new Date(now);
@@ -68,12 +70,15 @@ export function Calander({ broadcasts }: CalanderProps) {
     rows.push(<tr key={key++} className="text-center h-20">{cells}</tr>);
   }
 
+  const days = ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'];
+  const shortDays = ['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör'];
+
   return (
     <div className="bg-gray-200">
       <div className="wrapper bg-white rounded shadow w-full ">
         <div className="header flex justify-between border-b p-2">
-          <span className="text-lg font-bold">
-            {currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}
+          <span className="text-lg font-bold uppercase">
+            {currentDate.toLocaleString('sv-SE', { month: 'long' })} {currentDate.getFullYear()}
           </span>
           <div className="buttons">
           </div>
@@ -81,43 +86,21 @@ export function Calander({ broadcasts }: CalanderProps) {
         <table className="w-full">
           <thead>
             <tr>
-              <th className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                <span className="xl:block lg:block md:block sm:block hidden">Sunday</span>
-                <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Sun</span>
-              </th>
-              <th className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                <span className="xl:block lg:block md:block sm:block hidden">Monday</span>
-                <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Mon</span>
-              </th>
-              <th className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                <span className="xl:block lg:block md:block sm:block hidden">Tuesday</span>
-                <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Tue</span>
-              </th>
-              <th className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                <span className="xl:block lg:block md:block sm:block hidden">Wednesday</span>
-                <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Wed</span>
-              </th>
-              <th className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                <span className="xl:block lg:block md:block sm:block hidden">Thursday</span>
-                <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Thu</span>
-              </th>
-              <th className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                <span className="xl:block lg:block md:block sm:block hidden">Friday</span>
-                <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Fri</span>
-              </th>
-              <th className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
-                <span className="xl:block lg:block md:block sm:block hidden">Saturday</span>
-                <span className="xl:hidden lg:hidden md:hidden sm:hidden block">Sat</span>
-              </th>
+              {days.map((day, index) => (
+                <th key={index} className="p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs">
+                  <span className="xl:block lg:block md:block sm:block hidden">{day}</span>
+                  <span className="xl:hidden lg:hidden md:hidden sm:hidden block">{shortDays[index]}</span>
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {/* inserty here */}
+            {/* insert here */}
             {rows}
-
           </tbody>
         </table>
       </div>
     </div>
   );
 }
+
