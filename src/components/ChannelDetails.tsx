@@ -29,7 +29,7 @@ export const ChannelDetails = () => {
 
     <Tabs className="flex flex-col">
       <TabList className="flex mb-4">
-        <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">BroadCasts</Tab>
+        <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Sändningar</Tab>
         <Tab className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Program</Tab>
       </TabList>
       <TabPanel>
