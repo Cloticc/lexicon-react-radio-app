@@ -77,7 +77,7 @@ export const ProgramComponent: React.FC = () => {
       <div className='container mx-auto p-4'>
         <aside className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 bg'>
           {programs?.map((program, index) => (
-            <li key={`${program.id}-${index}`} className='relative border rounded-lg shadow-lg bg-black list-none p-4 space-y-4 text-white'>
+            <li key={`${program.id}-${index}`} className='relative border rounded-lg shadow-lg bg-white list-none p-4 space-y-4 '>
               <img className="w-full h-64 object-cover mt-2 rounded" src={program.programimage} alt={program.name} />
               <div className="space-y-2">
                 <h3 className="text-lg font-semibold">{program.name}</h3>
