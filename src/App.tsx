@@ -10,6 +10,7 @@ import { MyPage } from "./components/MyPage";
 import { Navbar } from "./components/Navbar";
 import { ProgramComponent } from "./components/Program";
 import { ProgramDetails } from './components/ProgramDetails';
+import { Register } from './components/Register';
 
 const queryClient = new QueryClient()
 
@@ -30,6 +31,7 @@ export function App() {
           <Route path="/programs/program/:id" element={<ProgramDetails />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
