@@ -51,7 +51,7 @@ export function Navbar() {
           <input
             type="text"
             placeholder="Sök på Sveriges Radio..."
-            className="rounded py-2 px-4 text-gray-700 bg-white border-2 border-gray-200 focus:outline-none focus:bg-white focus:border-blue-500"
+            className="rounded py-2 px-4 text-gray-700 bg-white border-2 border-gray-200 focus:outline-none focus:bg-white focus:border-blue-500 w-64"
             value={searchQuery}
             onChange={handleSearchChange}
           />
