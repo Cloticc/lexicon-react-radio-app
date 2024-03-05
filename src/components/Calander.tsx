@@ -25,7 +25,7 @@ export function Calander({ broadcasts }: CalanderProps) {
     return () => clearTimeout(timer);
   }, [currentDate]); // Only re-run the effect if the date changes
 
-  currentDate.setHours(0, 0, 0, 0); // to ignore time part
+  currentDate.setHours(0, 0, 0, 0); // to ignore time part of the date when comparing dates
 
 
 
@@ -36,7 +36,7 @@ export function Calander({ broadcasts }: CalanderProps) {
     const cells = [];
     for (let j = i; j < i + 7 && j < daysInMonth; j++) {
       const isToday = j + 1 === currentDate.getDate();
-      //  
+   
       const dayBroadcasts = broadcasts.filter(broadcast => {
         const startTimeMilliseconds = parseInt(broadcast.localstarttime.replace(/\/Date\((-?\d+)([+-]\d{4})\)\/$/, '$1'));
         const broadcastDate = new Date(startTimeMilliseconds);
