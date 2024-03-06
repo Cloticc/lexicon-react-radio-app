@@ -44,8 +44,8 @@ export const MyPage = () => {
                       <Link className="text-blue-500 hover:underline" to={`/channels/channel/${channel.name}/${channel.id}`}>
                         <h2 className="text-xl font-bold">Länk till detaljer</h2>
                       </Link>
-                      <button onClick={() => removeFavorite(channel)} className="absolute top-0 right-0 m-2">
-                        <FontAwesomeIcon icon={faStar} color="yellow"/>
+                      <button onClick={() => removeFavorite(channel)} className="absolute bottom-0 right-0 m-2">
+                        <FontAwesomeIcon icon={faStar} color="red"/>
                       </button>
                     </div>
                   </div>
@@ -71,8 +71,8 @@ export const MyPage = () => {
                     <Link className="text-blue-500 hover:underline" to={`/programs/program/${program.id}`}>
                     <h2 className="text-xl font-bold">Länk till detaljer</h2>
                     </Link>
-                    <button onClick={() => removeFavorite(program)} className="absolute top-0 right-0 m-2">
-                    <FontAwesomeIcon icon={faStar} color="yellow" />
+                    <button onClick={() => removeFavorite(program)} className="absolute bottom-0 right-0 m-2">
+                    <FontAwesomeIcon icon={faStar} color="red" />
                     </button>
                   </div>
                   </div>
