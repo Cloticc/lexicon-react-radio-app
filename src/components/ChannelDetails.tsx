@@ -46,7 +46,7 @@ export const ChannelDetails = () => {
                     <p className="mt-2 text-gray-500">{episode.description || "No description"}</p>
                     <p className="mt-2 text-gray-500">
 
-                      Publicerad på: {episode.publishdateutc ? new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB') : "No publish date"}
+                      Publicerad: {episode.publishdateutc ? new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB') : "No publish date"}
                     </p>
                     <p>
                       Sändningstid: {episode.broadcasttime ? `${new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - ${new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}` : "Igen sändningstid"}
