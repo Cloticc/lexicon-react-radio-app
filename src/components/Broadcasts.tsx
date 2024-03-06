@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export const Broadcasts = () => {
   const { data: broadcasts, isLoading: broadcastLoading, error: broadcastError } = useBroadcasts();
-  const [isShown, setIsShown] = useState(true);
+  const [isShown, setIsShown] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
   if (broadcastLoading) {
