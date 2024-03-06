@@ -86,8 +86,9 @@ export const Channel: React.FC<ChannelProps> = ({ onPlayAudio }) => {
           <img
             src={channel.image}
             alt={channel.name}
-            className="w-full h-40 object-cover"
+            className="w-full h-64 object-cover-fill"
           />
+          {/*  */}
           <div className="p-4 flex-grow">
             <h2 className="text-xl mb-2">{channel.name}</h2>
             <p className="text-gray-700 mb-2">{channel.tagline}</p>
