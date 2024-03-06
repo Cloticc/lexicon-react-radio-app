@@ -236,7 +236,7 @@ export function ProgramDetails() {
                       <div className="font-bold text-xl mb-2">{episode.title || 'Ingen titel tillgänglig'}</div>
                       <p className="text-gray-700 text-base">{episode.description || 'Ingen beskrivning finns tillgänglig'}</p>
                       <p className="mt-2 text-gray-500">
-                        Publicerad vid: {new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB')}
+                        Publicerad: {new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB')}
                       </p>
                       <p>
                         Sändningstid: {episode.broadcasttime ? `${new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - ${new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}` : "No broadcast"}
