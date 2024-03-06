@@ -9,7 +9,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-export const MyPage = () => {
+interface MyPageProps {
+  onPlayAudio: (src: string) => void;
+}
+
+
+export const MyPage: React.FC<MyPageProps> = ({ onPlayAudio }) => {
   const { favorites, removeFavorite } = useContext(FavoriteContext);
 
   useEffect(() => {
@@ -20,6 +25,9 @@ export const MyPage = () => {
 
   }, [favorites]);
 
+  const handlePlay = (audioSrc: string) => {
+    onPlayAudio(audioSrc);
+  };
 
   return (
     <div className="p-4 rounded-md shadow-lg">
@@ -45,8 +53,9 @@ export const MyPage = () => {
                         <h2 className="text-xl font-bold">Länk till detaljer</h2>
                       </Link>
                       <button onClick={() => removeFavorite(channel)} className="absolute bottom-0 right-0 m-2">
-                        <FontAwesomeIcon icon={faStar} color="red"/>
+                        <FontAwesomeIcon icon={faStar} color="red" />
                       </button>
+                      <button onClick={() => handlePlay(channel.liveaudio.url)}>Play Audio</button>
                     </div>
                   </div>
                 );
@@ -62,19 +71,21 @@ export const MyPage = () => {
                 const program = favorite as IProgram;
                 return (
                   <div key={program.id} className="card border rounded-lg overflow-hidden shadow-md bg-white relative">
-                  <img src={program.programimage} alt={program.name} className="w-full h-64 object-cover-fill" />
-                  <div className="p-4">
-                    <h2 className="text-xl mb-2">{program.name}</h2>
-                    <p className="text-gray-700 mb-2">{program.description}</p>
-                    <p className="text-gray-700 mb-2">{program.broadcastinfo}</p>
-                    <a href={program.programurl} className="text-blue-500 hover:underline mb-2 block">Besök sida</a>
-                    <Link className="text-blue-500 hover:underline" to={`/programs/program/${program.id}`}>
-                    <h2 className="text-xl font-bold">Länk till detaljer</h2>
-                    </Link>
-                    <button onClick={() => removeFavorite(program)} className="absolute bottom-0 right-0 m-2">
-                    <FontAwesomeIcon icon={faStar} color="red" />
-                    </button>
-                  </div>
+                    <img src={program.programimage} alt={program.name} className="w-full h-64 object-cover-fill" />
+                    <div className="p-4">
+                      <h2 className="text-xl mb-2">{program.name}</h2>
+                      <p className="text-gray-700 mb-2">{program.description}</p>
+                      <p className="text-gray-700 mb-2">{program.broadcastinfo}</p>
+                      <a href={program.programurl} className="text-blue-500 hover:underline mb-2 block">Besök sida</a>
+                      <Link className="text-blue-500 hover:underline" to={`/programs/program/${program.id}`}>
+                        <h2 className="text-xl font-bold">Länk till detaljer</h2>
+                      </Link>
+                      <button onClick={() => removeFavorite(program)} className="absolute bottom-0 right-0 m-2">
+                        <FontAwesomeIcon icon={faStar} color="red" />
+                      </button>
+
+
+                    </div>
                   </div>
                 );
               }

@@ -1,4 +1,3 @@
-import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 import { FavoriteContext } from '../context/ContexProvider';
@@ -8,16 +7,16 @@ import { Link } from 'react-router-dom';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { useChannel } from '../api/apiChannel';
 
-export const Channel = () => {
-  const [playingAudio, setPlayingAudio] = useState<HTMLAudioElement | null>(null);
-  const [currentAudioUrl, setCurrentAudioUrl] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+interface ChannelProps {
+  onPlayAudio: (src: string) => void;
+}
+
+
+export const Channel: React.FC<ChannelProps> = ({ onPlayAudio }) => {
   const [isPlayerVisible, setPlayerVisible] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
   const { data: channels, isLoading, isError } = useChannel();
-  const [playingChannelId, setPlayingChannelId] = useState<string | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [playPromise, setPlayPromise] = useState<Promise<void> | null>(null);
+
 
 
   const { addFavorite, removeFavorite, favorites } = useContext(FavoriteContext);
@@ -62,37 +61,10 @@ export const Channel = () => {
     });
   };
 
-  useEffect(() => {
-    let isCancelled = false;
-    if (currentAudioUrl) {
-      const audio = new Audio(currentAudioUrl);
-      setPlayingAudio(audio);
 
-      const handlePlay = () => setIsPlaying(true);
-      const handlePause = () => setIsPlaying(false);
-
-      audio.addEventListener('play', handlePlay);
-      audio.addEventListener('pause', handlePause);
-
-
-      const promise = audio.play();
-      setPlayPromise(promise);
-      if (promise !== undefined) {
-        promise.then(() => {
-          if (!isCancelled) {
-            setIsPlaying(true);
-          }
-        }).catch(error => console.log(error));
-      }
-
-      return () => {
-        isCancelled = true;
-        audio.removeEventListener('play', handlePlay);
-        audio.removeEventListener('pause', handlePause);
-        audio.pause();
-      };
-    }
-  }, [currentAudioUrl]);
+  const handlePlay = (audioSrc: string) => {
+    onPlayAudio(audioSrc);
+  }
 
 
   if (isLoading) {
@@ -104,23 +76,6 @@ export const Channel = () => {
   }
   return (
     <div className="channel flex flex-wrap justify-center gap-4 p-4">
-      {currentAudioUrl && isPlayerVisible && (
-        <audio
-          ref={audioRef}
-          controls
-          src={currentAudioUrl}
-          className={`fixed z-50 bottom-0 w-6/12 left-24 transition-all duration-500 ${isPlayerVisible ? 'bottom-0' : '-bottom-32'} ${isPlayerVisible ? '' : 'hidden'}`}
-          onPlay={(event) => {
-            const audio = event.currentTarget;
-            if (playingAudio && playingAudio !== audio) {
-              playingAudio.pause();
-            }
-            setPlayingAudio(audio);
-          }}
-        >
-          Your browser does not support the audio element.
-        </audio>
-      )}
       <button
         className="fixed z-50 bottom-4 left-4 w-11 h-11 rounded-full bg-blue-500 text-white flex items-center justify-center"
         onClick={() => setPlayerVisible(!isPlayerVisible)}
@@ -158,31 +113,7 @@ export const Channel = () => {
           <div className="p-4 flex justify-between items-end">
 
 
-            <button
-              onClick={async () => {
-                if (isPlaying && playingChannelId === channel.id) {
-                  if (playPromise) {
-                    await playPromise;
-                  }
-                  playingAudio?.pause();
-                  setIsPlaying(false);
-                } else {
-                  if (playingAudio) {
-                    if (playPromise) {
-                      await playPromise;
-                    }
-                    playingAudio.pause();
-                  }
-                  setCurrentAudioUrl(channel.liveaudio.url);
-                  setPlayingChannelId(channel.id);
-                }
-              }}
-            >
-              <FontAwesomeIcon
-                icon={isPlaying && playingChannelId === channel.id ? faPause : faPlay}
-                color={playingChannelId === channel.id ? 'green' : 'black'}
-              />
-            </button>
+            <button onClick={() => handlePlay(channel.liveaudio.url)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Play Audio</button>
 
             <button
               onClick={() => {

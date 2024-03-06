@@ -1,16 +1,21 @@
 import 'react-tabs/style/react-tabs.css'; // Import the styles
 
 // import { AnimatePresence, motion } from 'framer-motion';
-import { IEpisode, IPodFile, ISocialMediaPlatform } from '../interface/Interface';
+import { IBroadcast, IEpisode, IPodFile, ISocialMediaPlatform } from '../interface/Interface';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { useBroadcasts, useEpisodes, usePodFiles, useProgramDetails } from '../api/apiEpisode';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useEpisodes, usePodFiles, useProgramDetails } from '../api/apiEpisode';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
 
-export function ProgramDetails() {
+interface ProgramDetailsProps {
+  onPlayAudio: (src: string) => void;
+}
+
+
+export function ProgramDetails({ onPlayAudio }: ProgramDetailsProps) {
 
 
   const { id: idString } = useParams<{ id: string }>();
@@ -18,7 +23,6 @@ export function ProgramDetails() {
 
   // const [page, setPage] = useState(1);
   const [tabIndex, setTabIndex] = useState(0);
-  const [playingAudio, setPlayingAudio] = useState<HTMLAudioElement | null>(null);
   const { data: program, isLoading: programLoading, error: programError } = useProgramDetails(id);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -29,7 +33,7 @@ export function ProgramDetails() {
   const { data: podFiles, fetchNextPage: fetchNextPodPage, hasNextPage: hasNextPodPage } = usePodFiles(id);
   // const { data: episodes, fetchNextPage: fetchNextEpisodePage, hasNextPage: hasNextEpisodePage } = useEpisodes(id);
   const { data: episodes, fetchNextPage: fetchNextEpisodePage, hasNextPage: hasNextEpisodePage } = useEpisodes(id);
-
+  const { data: broadcasts } = useBroadcasts(id);
 
   const episodeObserver = useRef<IntersectionObserver | null>(null);
   const podObserver = useRef<IntersectionObserver | null>(null);
@@ -117,7 +121,14 @@ export function ProgramDetails() {
       </a>
     );
   });
+  const parseDate = (dateString: string) => {
+    const match = dateString.match(/\/Date\((\d+)\)\//);
+    return match ? new Date(+match[1]) : new Date();
+  };
 
+  const handlePlay = (audioSrc: string) => {
+    onPlayAudio(audioSrc);
+  };
 
   if (programLoading) {
     return null;
@@ -164,11 +175,51 @@ export function ProgramDetails() {
             </div>
           </div>
         </div>
-
+        {isVisible && (
+          <div onClick={scrollToTop} className='scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
+            ↑
+          </div>
+        )}
       </TabPanel>
       <TabPanel>
         {/* BroadCast */}
         <h1>Sändningar</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {broadcasts && broadcasts.length > 0 ? (
+            broadcasts.map((broadcast: IBroadcast) => (
+              <div
+                key={broadcast.id}
+                className="rounded-lg overflow-hidden shadow-md bg-white"
+              >
+                <div className="p-6">
+                  <h2 className="text-xl font-bold mb-2">{broadcast.title}</h2>
+                  <p className="text-gray-700 mb-4">{broadcast.description}</p>
+                  <p className="text-gray-700">Längd: {Math.round(broadcast.broadcastfiles.reduce((acc, file) => acc + file.duration, 0) / 60)} minutes</p>
+
+
+                  <p className="text-gray-700">
+                    Publicerad: {parseDate(broadcast.broadcastdateutc).toLocaleDateString('en-GB')}
+                    <br />
+                    {parseDate(broadcast.broadcastdateutc).toLocaleTimeString('en-GB')}
+                  </p>
+                </div>
+                {broadcast.broadcastfiles.length > 0 ? (
+                  <div className="px-6 pb-4">
+                      <button onClick={() => handlePlay(broadcast.broadcastfiles[0].url)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Play Audio</button>
+                  </div>
+                ) : null}
+              </div>
+            ))
+          ) : (
+            <p className="text-red-500 text-2xl">Inga sändningar tillgängliga</p>
+          )}
+          {isVisible && (
+            <div onClick={scrollToTop} className="scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center">
+              ↑
+            </div>
+          )}
+        </div>
+
 
 
 
@@ -192,19 +243,7 @@ export function ProgramDetails() {
                     <p className="text-gray-600 text-xs">Publicerad: {new Date(parseInt(pod.publishdateutc.substring(6, pod.publishdateutc.length - 2))).toLocaleDateString('en-GB')}</p>
                   </div>
                   <div className="px-6 py-4">
-                    <audio
-                      controls
-                      onPlay={(event) => {
-                        const audio = event.currentTarget;
-                        if (playingAudio && playingAudio !== audio) {
-                          playingAudio.pause();
-                        }
-                        setPlayingAudio(audio);
-                      }}
-                    >
-                      <source src={pod.url} type="audio/mpeg" />
-                      Your browser does not support the audio element.
-                    </audio>
+                  <button onClick={() => handlePlay(pod.url)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Play Audio</button>
                   </div>
                 </div>
               ))

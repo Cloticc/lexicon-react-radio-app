@@ -95,6 +95,27 @@ export const useSearchEpisodes = (search: string) => {
 
 }
 
+// http://api.sr.se/api/v2/broadcasts?programid=3718
+
+const fetchBroadcasts = async (id: number) => {
+  const response = await fetch(`https://api.sr.se/api/v2/broadcasts?programid=${id}&format=json&size=1000`);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  const data = await response.json();
+  console.log(data.broadcasts);
+
+  return data.broadcasts;
+}
+
+export const useBroadcasts = (id: number) => {
+  return useQuery({
+    queryKey: ['broadcasts', id],
+    queryFn: () => fetchBroadcasts(id)
+  });
+}
+
+
 
 
 // const { data: podFiles, isLoading: podFilesLoading, error: podFilesError } = usePodFiles(id);

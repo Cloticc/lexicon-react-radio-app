@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { SearchComponent } from './SearchComponent';
 
 const links = [
-  { to: "/", label: "Home" },
+  // { to: "/", label: "Hem" },
   { to: "/channels", label: "Kanal" },
   { to: "/programs", label: "Program" },
   { to: "/myPage", label: "Min Sida" },

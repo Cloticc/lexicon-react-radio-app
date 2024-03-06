@@ -14,7 +14,7 @@ export interface IFavoriteItem {
   id: string;
   name: string;
   favorite: boolean;
-type: string;
+  type: string;
 
 }
 
@@ -91,6 +91,10 @@ export interface IBroadcast {
     statkey: string;
   };
 }
+
+
+
+
 
 export interface IPodFile {
   id: string;
@@ -214,3 +218,48 @@ export interface ISearchEpisode {
 }
 
 
+
+
+export interface IPagination {
+  page: number;
+  size: number;
+  totalhits: number;
+  totalpages: number;
+  nextpage: string;
+}
+
+export interface IBroadcastFile {
+  id: number;
+  url: string;
+  statkey: string;
+  duration: number;
+  publishdateutc: string;
+}
+
+export interface IPlaylist {
+  id: number;
+  url: string;
+  statkey: string;
+  duration: number;
+  publishdateutc: string;
+}
+
+export interface IBroadcast {
+  id: string;
+  availablestoputc: string;
+  playlist: IPlaylist;
+  broadcastfiles: IBroadcastFile[];
+  title: string;
+  description: string;
+  broadcastdateutc: string;
+  totalduration: number;
+  image: string;
+}
+
+export interface ISr {
+  description: string;
+  copyright: string;
+  pagination: IPagination;
+  name: string;
+  broadcasts: IBroadcast[];
+}
