@@ -221,8 +221,9 @@ export function ProgramDetails() {
 
       </TabPanel>
       <TabPanel>
-        <div className="flex justify-center items-center">
-          <div className="grid grid-cols-1 sm:grid-cols-6 gap-4">
+        <div className="flex justify-center items-center ">
+          <div className="grid grid-cols-1 sm:grid-cols-6 gap-4 rounded-lg">
+
             {episodes && episodes.pages.length > 0 ? (
               episodes.pages.map((page, pageIndex) => (
                 page.data.map((episode: IEpisode, episodeIndex: number) => (
@@ -231,7 +232,7 @@ export function ProgramDetails() {
                     ref={pageIndex === episodes.pages.length - 1 && episodeIndex === page.data.length - 1 ? lastEpisodeElementRef : null}
                     className="shadow-md rounded-lg bg-white"
                   >
-                    <img className="w-full h-44 object-cover" src={episode.imageurl || ""} alt={episode.title || "No title"} />
+                    <img className="w-full h-44 object-cover rounded-lg" src={episode.imageurl || ""} alt={episode.title || "No title"} />
                     <div className="px-6 py-4">
                       <div className="font-bold text-xl mb-2">{episode.title || 'Ingen titel tillgänglig'}</div>
                       <p className="text-gray-700 text-base">{episode.description || 'Ingen beskrivning finns tillgänglig'}</p>
