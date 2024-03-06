@@ -18,11 +18,12 @@ export const Channel = () => {
   const [playingChannelId, setPlayingChannelId] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playPromise, setPlayPromise] = useState<Promise<void> | null>(null);
+  
+  
+  const { addFavorite, removeFavorite, favorites } = useContext(FavoriteContext);
 
 
-
-  const { addFavorite } = useContext(FavoriteContext);
-
+  
   useEffect(() => {
     // Just to show message so dumb
   }, [addFavorite]);
@@ -92,7 +93,7 @@ export const Channel = () => {
       };
     }
   }, [currentAudioUrl]);
-
+ 
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -154,13 +155,24 @@ export const Channel = () => {
               <h2 className="text-xl font-bold">Länk till detaljer</h2>
             </Link>
           </div>
-          <div className="p-4 flex justify-between">
+          <div className="p-4 flex justify-between items-end">
+
             <button
-              onClick={() => addFavorite({ ...channel, type: 'channel' })}
-              className="m-2"
+              onClick={() => {
+                if (favorites.some(favorite => favorite.id === channel.id)) {
+                  removeFavorite({ ...channel, type: 'channel' });
+                } else {
+                  addFavorite({ ...channel, type: 'channel' });
+                }
+              }}
             >
-              <FontAwesomeIcon icon={faStar} color="yellow" />
+              <FontAwesomeIcon
+                icon={faStar}
+                color={favorites.some(favorite => favorite.id === channel.id) ? 'yellow' : 'grey'}
+              />
             </button>
+            
+ 
             <button
               onClick={async () => {
                 if (isPlaying && playingChannelId === channel.id) {
