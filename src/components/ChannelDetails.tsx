@@ -1,7 +1,7 @@
 import { IProgram, ISearchEpisode } from "../interface/Interface";
+import { Link, useParams } from "react-router-dom";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 
-import { useParams } from "react-router-dom";
 import { useProgram } from "../api/apiProgram";
 import { useSearchEpisodes } from "../api/apiEpisode";
 
@@ -51,7 +51,11 @@ export const ChannelDetails = () => {
                     <p>
                       Sändningstid: {episode.broadcasttime ? `${new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - ${new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}` : "Igen sändningstid"}
                     </p>
-                    <a href={episode.url || "#"} className="mt-2 text-indigo-500 hover:underline">{episode.program?.name || "No program name"} Link</a>
+
+                    <div className="flex justify-between items-center mt-4">
+                      <a href={episode.url || "#"} className="mt-2 text-indigo-500 hover:underline">{episode.program?.name || "No program name"} Link</a>
+                      <a href={episode.downloadpodfile?.url || "#"} className="mt-2 text-indigo-500 hover:underline">Ladda ner</a>
+                    </div>
                   </div>
                 </div>
               );
@@ -76,6 +80,16 @@ export const ChannelDetails = () => {
                 <div className="p-8">
                   <h3 className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{program.name}</h3>
                   <p className="mt-2 text-gray-500">{program.description}</p>
+                  <p className="mt-2 text-gray-500">{program.broadcastinfo}</p>
+                  <div className="flex justify-between items-center mt-4">
+                    <a href={program.programurl} target="_blank" rel="noopener noreferrer" className="mt-2 text-indigo-500 hover:underline">
+                      Besök sida
+                    </a>
+                    <Link to={`/programs/program/${program.id}`} className="mt-2 text-indigo-500 hover:underline">
+                      Länk till detaljer
+                    </Link>
+                  </div>
+
                 </div>
               </div>
             );
