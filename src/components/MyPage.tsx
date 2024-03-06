@@ -30,7 +30,7 @@ export const MyPage = () => {
           <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Favorit program</Tab>
         </TabList>
         <TabPanel className="p-4 bg-white rounded-b-lg">
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4'>
             {favorites.filter(favorite => favorite.type === 'channel').map((favorite: IFavoriteItem) => {
               if (favorite.type === 'channel') {
                 const channel = favorite as IChannel;
@@ -56,7 +56,7 @@ export const MyPage = () => {
           </div>
         </TabPanel>
         <TabPanel className="p-4 bg-white rounded-b-lg">
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4'>
             {favorites.filter(favorite => favorite.type === 'program').map((favorite: IFavoriteItem) => {
               if (favorite.type === 'program') {
                 const program = favorite as IProgram;
