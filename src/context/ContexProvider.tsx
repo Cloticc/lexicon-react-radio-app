@@ -24,7 +24,8 @@ export function FavoriteProvider({ children }: IFavoriteProviderProps): ReactEle
     if (isExist) return;
     const newFavoriteList = [...favorites, item];
     setFavorites(newFavoriteList);
-    console.log(newFavoriteList);
+    // console.log(newFavoriteList);
+    localStorage.setItem('favorites', JSON.stringify(newFavoriteList));
     if (newFavoriteList.length > favorites.length) {
       setNotification({ type: 'success', message: 'Channel added to favorites!' });
     } else {
@@ -37,6 +38,7 @@ export function FavoriteProvider({ children }: IFavoriteProviderProps): ReactEle
 
     const newFavoriteList = favorites.filter((favorite) => favorite.id !== item.id);
     setFavorites(newFavoriteList);
+    localStorage.setItem('favorites', JSON.stringify(newFavoriteList));
 
 
     if (newFavoriteList.length < favorites.length) {
@@ -45,6 +47,13 @@ export function FavoriteProvider({ children }: IFavoriteProviderProps): ReactEle
       setNotification({ type: 'error', message: 'Failed to remove channel from favorites.' });
     }
   };
+
+  useEffect(() => {
+    const loadedFavorites = localStorage.getItem('favorites');
+    if (loadedFavorites) {
+      setFavorites(JSON.parse(loadedFavorites));
+    }
+  }, []);
 
   useEffect(() => {
     if (notification) {
