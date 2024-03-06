@@ -13,7 +13,7 @@ interface ChannelProps {
 
 
 export const Channel: React.FC<ChannelProps> = ({ onPlayAudio }) => {
-  const [isPlayerVisible, setPlayerVisible] = useState(true);
+
   const [isVisible, setIsVisible] = useState(false);
   const { data: channels, isLoading, isError } = useChannel();
 
@@ -76,12 +76,6 @@ export const Channel: React.FC<ChannelProps> = ({ onPlayAudio }) => {
   }
   return (
     <div className="channel flex flex-wrap justify-center gap-4 p-4">
-      <button
-        className="fixed z-50 bottom-4 left-4 w-11 h-11 rounded-full bg-blue-500 text-white flex items-center justify-center"
-        onClick={() => setPlayerVisible(!isPlayerVisible)}
-      >
-        {isPlayerVisible ? 'Close' : 'Show'}
-      </button>
 
       {channels?.map((channel: IChannel, index: number) => (
         <div
