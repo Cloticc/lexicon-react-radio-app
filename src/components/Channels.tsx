@@ -18,12 +18,12 @@ export const Channel = () => {
   const [playingChannelId, setPlayingChannelId] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playPromise, setPlayPromise] = useState<Promise<void> | null>(null);
-  
-  
+
+
   const { addFavorite, removeFavorite, favorites } = useContext(FavoriteContext);
 
 
-  
+
   useEffect(() => {
     // Just to show message so dumb
   }, [addFavorite]);
@@ -93,7 +93,7 @@ export const Channel = () => {
       };
     }
   }, [currentAudioUrl]);
- 
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -157,22 +157,7 @@ export const Channel = () => {
           </div>
           <div className="p-4 flex justify-between items-end">
 
-            <button
-              onClick={() => {
-                if (favorites.some(favorite => favorite.id === channel.id)) {
-                  removeFavorite({ ...channel, type: 'channel' });
-                } else {
-                  addFavorite({ ...channel, type: 'channel' });
-                }
-              }}
-            >
-              <FontAwesomeIcon
-                icon={faStar}
-                color={favorites.some(favorite => favorite.id === channel.id) ? 'yellow' : 'grey'}
-              />
-            </button>
-            
- 
+
             <button
               onClick={async () => {
                 if (isPlaying && playingChannelId === channel.id) {
@@ -198,6 +183,22 @@ export const Channel = () => {
                 color={playingChannelId === channel.id ? 'green' : 'black'}
               />
             </button>
+
+            <button
+              onClick={() => {
+                if (favorites.some(favorite => favorite.id === channel.id)) {
+                  removeFavorite({ ...channel, type: 'channel' });
+                } else {
+                  addFavorite({ ...channel, type: 'channel' });
+                }
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faStar}
+                color={favorites.some(favorite => favorite.id === channel.id) ? 'yellow' : 'grey'}
+              />
+            </button>
+
           </div>
         </div>
       ))}
