@@ -6,7 +6,17 @@ export default {
     // 'node_modules/flowbite-react/lib/esm/**/*.js',
   ],
   theme: {
-    extend: {},
+    extend: {
+      backdropFilter: {
+        'none': 'none',
+        'blur': 'blur(20px)',
+      },
+    },
+  },
+  variants: {
+    extend: {
+      backdropFilter: ['responsive'], // or other variants
+    },
   },
   plugins: [
     // eslint-disable-next-line no-undef
