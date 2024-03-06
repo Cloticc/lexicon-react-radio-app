@@ -12,7 +12,7 @@ export const ProgramComponent: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<number | null | undefined>(null);
   const { data: programCategories, isLoading, error } = useProgramCategories(1);
   const { data: programs, isLoading: programsLoading, error: programsError } = useProgramsByCategory(selectedCategory);
-  const { addFavorite } = useContext(FavoriteContext);
+  const { addFavorite, removeFavorite, favorites } = useContext(FavoriteContext);
 
   const handleCategoryChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedCategory: number | null = Number(event.target.value);
@@ -93,9 +93,23 @@ export const ProgramComponent: React.FC = () => {
               <Link className="text-blue-500 hover:underline" to={`/programs/program/${program.id}`}>
                 <h2 className="text-xl font-bold">Länk till detaljer</h2>
               </Link>
-              <button onClick={() => addFavorite({ ...program, type: 'program' })} className="absolute top-0 right-0 m-2 ">
-                <FontAwesomeIcon icon={faStar} color='yellow' />
+              <button
+                onClick={() => {
+                  if (favorites.some(favorite => favorite.id === program.id)) {
+                    removeFavorite({ ...program, type: 'program' });
+                  } else {
+                    addFavorite({ ...program, type: 'program' });
+                  }
+                }}
+                className="absolute bottom-2 right-2 text-yellow-500"
+              >
+                <FontAwesomeIcon
+                  icon={faStar}
+                  color={favorites.some(favorite => favorite.id === program.id) ? 'yellow' : 'grey'}
+                />
               </button>
+
+
             </li>
           ))}
         </aside>
