@@ -5,7 +5,7 @@ export const Home = () => {
       <h1>Welcome to Sveriges Radio</h1>
       </header>
 
-      <section className="mt-4">
+      <section className="mt-4 w-80">
       <p>
         Swedish Radio alone decides on programme content. Nobody outside the company can influence decisions on what should or what should not be broadcast. The broadcasting licence lays down Swedish Radio's journalistic freedom and its independence from political, commercial and other interests. The licence is granted to Swedish Radio by the government for several years at a time.
       </p>
