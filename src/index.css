@@ -10,6 +10,29 @@
 
 body {
   /* background-color: #3B82F6; */
-
+  padding-bottom: 50px;
   font-family: "Roboto", sans-serif;
+
+}
+
+
+audio {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: 50px;
+  z-index: 1000;
+}
+
+
+audio::-webkit-media-controls-panel {
+  background-color: #3B82F6;
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
