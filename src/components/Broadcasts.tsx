@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 export const Broadcasts = () => {
   const { data: broadcasts, isLoading: broadcastLoading, error: broadcastError } = useBroadcasts();
+
+
   const [isShown, setIsShown] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -11,8 +13,9 @@ export const Broadcasts = () => {
     return <div>Loading...</div>;
   }
 
-  if (broadcastError) {
-    return <div>Error: {broadcastError.message}</div>;
+  if (broadcastError  ) {
+    // return <div>Error: {broadcastError.message}</div>;
+    return <div>Error</div>;
   }
 
   const handleTransitionEnd = () => {
