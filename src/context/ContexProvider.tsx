@@ -69,7 +69,7 @@ export function FavoriteProvider({ children }: IFavoriteProviderProps): ReactEle
   return (
     <FavoriteContext.Provider value={{ favorites, addFavorite, removeFavorite }}>
       {notification && (
-        <div role="alert" className="rounded-xl border border-gray-100 bg-white p-4 absolute bottom-4 right-4  h-32">
+      <div role="alert" className={`rounded-xl border border-gray-100 p-4 fixed bottom-4 right-20 ${notification.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
           <div className="flex items-start gap-4">
             <span className="text-green-600">
               <svg
@@ -89,8 +89,8 @@ export function FavoriteProvider({ children }: IFavoriteProviderProps): ReactEle
             </span>
 
             <div className="flex-1">
-              <strong className="block font-medium text-gray-900">{notification.type === 'success' ? 'Success' : 'Error'}</strong>
-              <p className="mt-1 text-sm text-gray-700">{notification.message}</p>
+              <strong className="block font-medium">{notification.type === 'success' ? 'Success' : 'Error'}</strong>
+              <p className="mt-1 text-sm">{notification.message}</p>
             </div>
 
             <button onClick={() => setNotification(null)} className="absolute top-0 right-0 m-2">
@@ -103,4 +103,3 @@ export function FavoriteProvider({ children }: IFavoriteProviderProps): ReactEle
     </FavoriteContext.Provider>
   );
 }
-
