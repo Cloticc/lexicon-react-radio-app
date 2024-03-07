@@ -1,5 +1,6 @@
+import { useQueries, useQuery } from '@tanstack/react-query';
+
 import { IChannel } from '../interface/Interface';
-import { useQuery } from '@tanstack/react-query';
 
 export const getChannel = async () => {
   let page = 1;
@@ -35,8 +36,8 @@ export const useChannel = () => {
 };
 
 
-export const getChannelSchedule = async (id: number) => {
-  const response = await fetch(`https://api.sr.se/api/v2/scheduledepisodes?channelid=${id}&format=json&pagination=false&size=1000`);
+export const getChannelSchedule = async (id: number, date: string) => {
+  const response = await fetch(`https://api.sr.se/api/v2/scheduledepisodes?channelid=${id}&date=${date}&format=json&size=1000`);
   const data = await response.json();
 
   if (data) {
@@ -47,10 +48,18 @@ export const getChannelSchedule = async (id: number) => {
 }
 
 export const useChannelSchedule = (id: number) => {
-  return useQuery({
-    queryKey: ['channelSchedule', id],
-    queryFn: () => getChannelSchedule(id),
-    enabled: true
-  });
-};
+  const currentDate = new Date();
+  const queries = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(currentDate);
+    date.setDate(date.getDate() + i);
+    const formattedDate = date.toISOString().split('T')[0];
 
+    
+    return {
+      queryKey: ['channelSchedule', id, formattedDate],
+      queryFn: () => getChannelSchedule(id, formattedDate),
+    };
+  });
+
+  return useQueries({queries});
+};
