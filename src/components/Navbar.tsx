@@ -25,7 +25,7 @@ export function Navbar() {
 
 
   return (
-    <nav className="bg-blue-600 p-6 flex flex-col sm:flex-row items-center justify-between">
+    <nav className="bg-gray-800 p-6 flex flex-col sm:flex-row items-center justify-between">
       <div className="flex items-center space-x-2 mb-4 sm:mb-0">
         <img src="https://upload.wikimedia.org/wikipedia/commons/d/d2/Logo-de-World-Hits-Radio.png" alt="Radio logo" className="h-8 w-8" />
         <span className="text-white text-xl font-semibold tracking-tight">Sveriges Radio</span>
@@ -39,15 +39,6 @@ export function Navbar() {
           ))}
         </div>
         <div>
-          {/* <input
-            type="text"
-            placeholder="Sök på Sveriges Radio..."
-            className="rounded py-2 px-4 text-gray-700 bg-white border-2 border-gray-200 focus:outline-none focus:bg-white focus:border-blue-500"
-            // onChange={(event) => setSearch(event.target.value)}
-            onChange={handleSearchChange}
-            onKeyDown={handleKeyDown}
-          /> */}
-          {/* <SearchComponent onSearch={handleSearch} /> */}
           <input
             type="text"
             placeholder="Sök på Sveriges Radio..."
