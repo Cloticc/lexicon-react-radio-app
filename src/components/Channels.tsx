@@ -1,27 +1,22 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
-import { FavoriteContext } from '../context/ContexProvider';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IChannel } from '../interface/Interface';
-import { Link } from 'react-router-dom';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { useChannel } from '../api/apiChannel';
+import { FavoriteContext } from "../context/ContexProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IChannel } from "../interface/Interface";
+import { Link } from "react-router-dom";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { useChannel } from "../api/apiChannel";
 
 interface ChannelProps {
   onPlayAudio: (src: string) => void;
 }
 
-
 export const Channel: React.FC<ChannelProps> = ({ onPlayAudio }) => {
-
   const [isVisible, setIsVisible] = useState(false);
   const { data: channels, isLoading, isError } = useChannel();
 
-
-
-  const { addFavorite, removeFavorite, favorites } = useContext(FavoriteContext);
-
-
+  const { addFavorite, removeFavorite, favorites } =
+    useContext(FavoriteContext);
 
   useEffect(() => {
     // Just to show message so dumb
@@ -29,16 +24,19 @@ export const Channel: React.FC<ChannelProps> = ({ onPlayAudio }) => {
 
   const observer = useRef<IntersectionObserver | null>(null);
 
-  const lastChannelElementRef = useCallback((node: HTMLDivElement | null) => {
-    if (isLoading) return;
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        // TODO: Implement pagination logic here
-      }
-    });
-    if (node) observer.current.observe(node);
-  }, [isLoading]);
+  const lastChannelElementRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          // TODO: Implement pagination logic here
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading]
+  );
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -49,23 +47,21 @@ export const Channel: React.FC<ChannelProps> = ({ onPlayAudio }) => {
       }
     };
 
-    window.addEventListener('scroll', toggleVisibility);
+    window.addEventListener("scroll", toggleVisibility);
 
-    return () => window.removeEventListener('scroll', toggleVisibility);
+    return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
-
   const handlePlay = (audioSrc: string) => {
     onPlayAudio(audioSrc);
-  }
-
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -76,7 +72,6 @@ export const Channel: React.FC<ChannelProps> = ({ onPlayAudio }) => {
   }
   return (
     <div className="channel flex flex-wrap justify-center gap-4 p-4">
-
       {channels?.map((channel: IChannel, index: number) => (
         <div
           ref={index === channels.length - 1 ? lastChannelElementRef : null}
@@ -106,34 +101,42 @@ export const Channel: React.FC<ChannelProps> = ({ onPlayAudio }) => {
             </Link>
           </div>
           <div className="p-4 flex justify-between items-end">
-
-
-            <button onClick={() => handlePlay(channel.liveaudio.url)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Play Audio</button>
+            <button
+              onClick={() => handlePlay(channel.liveaudio.url)}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+            >
+              Play Audio
+            </button>
 
             <button
               onClick={() => {
-                if (favorites.some(favorite => favorite.id === channel.id)) {
-                  removeFavorite({ ...channel, type: 'channel' });
+                if (favorites.some((favorite) => favorite.id === channel.id)) {
+                  removeFavorite({ ...channel, type: "channel" });
                 } else {
-                  addFavorite({ ...channel, type: 'channel' });
+                  addFavorite({ ...channel, type: "channel" });
                 }
               }}
             >
               <FontAwesomeIcon
                 icon={faStar}
-                color={favorites.some(favorite => favorite.id === channel.id) ? 'yellow' : 'grey'}
+                color={
+                  favorites.some((favorite) => favorite.id === channel.id)
+                    ? "yellow"
+                    : "grey"
+                }
               />
             </button>
-
           </div>
         </div>
       ))}
       {isVisible && (
-        <div onClick={scrollToTop} className='scroll-to-top z-50 cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
+        <div
+          onClick={scrollToTop}
+          className="scroll-to-top z-50 cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center"
+        >
           ↑
         </div>
       )}
     </div>
-
   );
 };

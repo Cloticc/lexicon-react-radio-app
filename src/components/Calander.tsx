@@ -4,6 +4,7 @@ import { IBroadcast } from '../interface/Interface';
 
 interface CalanderProps {
   broadcasts: IBroadcast[];
+  // channels: IChannel[];
 }
 
 export function Calander({ broadcasts }: CalanderProps) {
@@ -56,13 +57,16 @@ export function Calander({ broadcasts }: CalanderProps) {
         broadcastDate.getDate() === cellDate.getDate();
     });
 
+
+
+
     cells.push(
-      <td key={i} className={`border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease ${isToday ? 'bg-gray-100 text-white' : 'hover:bg-gray-300'}`}>
-        <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
-          <div className="top h-5 w-full">
-            <span className="text-gray-500">{i}</span>
-          </div>
-          <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer overflow-auto">
+      <td key={i} className={`border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition-all duration-500 ease ${isToday ? 'bg-gray-100 text-white' : 'hover:bg-gray-300'} hover:h-auto`}>
+      <div className="flex flex-col h-40 mx-auto xl:w-40 lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden hover:h-auto">
+        <div className="top h-5 w-full">
+          <span className="text-gray-500">{i}</span>
+        </div>
+        <div className="bottom flex-grow h-30 py-1 w-full cursor-pointer overflow-auto hover:h-auto">
             {dayBroadcasts.map((broadcast, index) => (
               <div key={index} className="event bg-purple-400 text-white rounded p-1 text-sm mb-1" onClick={() => window.open(broadcast.liveaudio.url, '_blank')}>
                 <span >{broadcast.name}</span>
@@ -105,7 +109,6 @@ export function Calander({ broadcasts }: CalanderProps) {
             </tr>
           </thead>
           <tbody>
-            {/* insert here */}
             {rows}
           </tbody>
         </table>
