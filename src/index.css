@@ -10,13 +10,14 @@
 
 body {
   /* background-color: #3B82F6; */
+  background-color: black;
   padding-bottom: 50px;
   font-family: "Roboto", sans-serif;
 
 }
 
 
-audio {
+/* audio {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -35,4 +36,4 @@ audio::-webkit-media-controls-panel {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
