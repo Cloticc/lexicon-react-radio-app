@@ -49,15 +49,6 @@ export const ChannelDetails = () => {
 
     const timer = setTimeout(() => {
       setCurrentDate(new Date());
-      /**
-       * The code defines functions to fetch and return the schedule of a specific channel using the Sveriges
-       * Radio API in a TypeScript React application.
-       * @param {number} id - The `id` parameter in the `getChannelSchedule` and `useChannelSchedule`
-       * functions is used to specify the channel ID for which you want to retrieve the schedule. This ID is
-       * used in the API request to fetch the schedule data for the specified channel.
-       * @returns The `useChannelSchedule` function is returning the result of a `useQuery` hook that queries
-       * the channel schedule data using the `getChannelSchedule` function for a specific channel ID.
-       */
     }, timeUntilMidnight);
 
     // Cleanup function to clear the timeout when the component unmounts
