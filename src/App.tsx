@@ -36,7 +36,7 @@ export function App() {
         <Broadcasts />
         <Routes>
           {/* <Route path="/" element={<Home onPlayAudio={handlePlayAudio} />} /> */}
-          <Route path="/channels" element={<Channel onPlayAudio={handlePlayAudio} />} /> {/* Ensure that the onPlayAudio prop is properly defined in the Channel component */}
+          <Route path="/channels" element={<Channel onPlayAudio={handlePlayAudio} />} />
           <Route path="/channels/channel/:name/:channelId" element={<ChannelDetails/>} />
           <Route path="/programs" element={<ProgramComponent />} />
           <Route path="/programs/program/:id" element={<ProgramDetails onPlayAudio={handlePlayAudio} />} />
