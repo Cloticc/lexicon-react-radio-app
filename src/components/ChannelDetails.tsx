@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { useEffect, useState } from "react";
 
-import { WeeklyCalendar } from "./testing";
+import { WeeklyCalendar } from "./CalanderList";
 import { useChannelSchedule } from "../api/apiChannel";
 import { useProgram } from "../api/apiProgram";
 import { useSearchEpisodes } from "../api/apiEpisode";

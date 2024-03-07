@@ -20,7 +20,7 @@ export const WeeklyCalendar = ({ channelScheduleResults }: { channelScheduleResu
   });
   const hoursOfDay = Array.from({ length: 24 }, (_, i) => i);
 
-  const currentHour = new Date().getHours();
+  // const currentHour = new Date().getHours();
 // const hoursOfDay = Array.from({ length: 24 }, (_, i) => (currentHour + i) % 24);
 
 
