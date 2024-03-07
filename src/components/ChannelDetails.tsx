@@ -81,13 +81,13 @@ export const ChannelDetails = () => {
   return (
     <Tabs className="flex flex-col">
       <TabList className="flex space-x-4 mt-5">
-        <Tab selectedClassName="bg-blue-500" className="bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+        <Tab className="mr-2 bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
           Sändningar
         </Tab>
-        <Tab selectedClassName="bg-blue-500" className="bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+        <Tab className="mr-2 bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
           Program
         </Tab>
-        <Tab selectedClassName="bg-blue-500" className="bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+        <Tab className="mr-2 bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
           Kalender
 
         </Tab>
