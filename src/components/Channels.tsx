@@ -71,30 +71,31 @@ export const Channel: React.FC<ChannelProps> = ({ onPlayAudio }) => {
     return <div>Error fetching channels</div>;
   }
   return (
-    <div className="channel flex flex-wrap justify-center gap-4 p-4">
+    <div className="flex flex-wrap justify-center gap-4 mt-8">
       {channels?.map((channel: IChannel, index: number) => (
         <div
           ref={index === channels.length - 1 ? lastChannelElementRef : null}
           key={`${channel.id}-${channel.name}-${index}`}
-          className="bg-white rounded-lg overflow-hidden shadow-md flex flex-col w-full sm:w-1/2 md:w-1/3 lg:w-1/6"
+          className="bg-gray-800 text-white rounded-lg overflow-hidden shadow-md flex flex-col w-full sm:w-1/2 md:w-1/3 lg:w-1/5"
         >
-          <img
-            src={channel.image}
-            alt={channel.name}
-            className="w-full h-64 object-cover-fill"
-          />
+
+          <div className="aspect-w-16 aspect-h-9 overflow-hidden">
+            <img src={channel.image} alt={channel.name} className="w-full h-full object-cover" />
+          </div>
+
+
           {/*  */}
           <div className="p-4 flex-grow">
             <h2 className="text-xl mb-2">{channel.name}</h2>
-            <p className="text-gray-700 mb-2">{channel.tagline}</p>
+            <p className="text-gray-300 mb-2">{channel.tagline}</p>
             <a
               href={channel.siteurl}
-              className="text-blue-500 hover:underline mb-2 block"
+              className="text-blue-400 hover:underline mb-2 block"
             >
               Besök sida
             </a>
             <Link
-              className="text-blue-500 hover:underline"
+              className="text-blue-400 hover:underline"
               to={`/channels/channel/${channel.name}/${channel.id}`}
             >
               <h2 className="text-xl font-bold">Länk till detaljer</h2>
