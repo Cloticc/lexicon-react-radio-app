@@ -235,7 +235,7 @@ const [isVisible, setIsVisible] = useState(false);
         <WeeklyCalendar channelScheduleResults={channelScheduleResults} />
       </TabPanel>
         {isVisible && (
-          <div onClick={scrollToTop} className='scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
+          <div onClick={scrollToTop} className='z-50 scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
             ↑
           </div>
         )}
