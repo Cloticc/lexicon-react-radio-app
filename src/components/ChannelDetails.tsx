@@ -13,7 +13,7 @@ import { useSearchEpisodes } from "../api/apiEpisode";
 
 export const ChannelDetails = () => {
   const { name, channelId } = useParams();
-const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const { data: searchEpisode, isLoading: searchEpisodeLoading, error: searchEpisodeError, } = useSearchEpisodes(name || "");
 
   const { data: programs, isLoading: programsLoading, error: programsError } = useProgram(channelId ? parseInt(channelId) : 0);
@@ -70,24 +70,24 @@ const [isVisible, setIsVisible] = useState(false);
   currentDate.setHours(0, 0, 0, 0); // to ignore time part of the date when comparing dates later
 
 
-  if (searchEpisodeLoading || programsLoading ) {
+  if (searchEpisodeLoading || programsLoading) {
     return <div>Loading...</div>;
   }
 
-  if (searchEpisodeError || programsError ) {
+  if (searchEpisodeError || programsError) {
     return <div>Error fetching data</div>;
   }
 
   return (
     <Tabs className="flex flex-col">
-      <TabList className="flex mb-4">
-        <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+      <TabList className="flex space-x-4">
+        <Tab selectedClassName="bg-blue-500" className="bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
           Sändningar
         </Tab>
-        <Tab className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+        <Tab selectedClassName="bg-blue-500" className="bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
           Program
         </Tab>
-        <Tab className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+        <Tab selectedClassName="bg-blue-500" className="bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
           Kalender
         </Tab>
       </TabList>
@@ -111,23 +111,23 @@ const [isVisible, setIsVisible] = useState(false);
                 return (
                   <div
                     key={episode.id}
-                    className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-auto"
+                    className="max-w-md mx-auto bg-gray-800 text-white rounded-xl shadow-md overflow-hidden md:max-w-auto"
                   >
                     <div>
                       <img
-                        className="w-full object-contain"
-                        src={episode.imageurl || ""}
+                        src={episode.imageurl}
                         alt={episode.title || "No title"}
+                        className="w-full h-64 rounded"
                       />
                     </div>
                     <div className="p-8">
-                      <h3 className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+                      <h3 className="uppercase tracking-wide text-sm text-blue-400 font-semibold">
                         {episode.title || "No title"}
                       </h3>
-                      <p className="mt-2 text-gray-500">
+                      <p className="mt-2 text-gray-300">
                         {episode.description || "No description"}
                       </p>
-                      <p className="mt-2 text-gray-500">
+                      <p className="mt-2 text-gray-300">
                         Publicerad:{" "}
                         {episode.publishdateutc
                           ? new Date(
@@ -140,7 +140,7 @@ const [isVisible, setIsVisible] = useState(false);
                           ).toLocaleDateString("en-GB")
                           : "No publish date"}
                       </p>
-                      <p>
+                      <p className="text-gray-300">
                         Sändningstid:{" "}
                         {episode.broadcasttime
                           ? `${new Date(
@@ -164,13 +164,13 @@ const [isVisible, setIsVisible] = useState(false);
                       <div className="flex justify-between items-center mt-4">
                         <a
                           href={episode.url || "#"}
-                          className="mt-2 text-indigo-500 hover:underline"
+                          className="mt-2 text-blue-400 hover:underline"
                         >
                           {episode.program?.name || "No program name"} Link
                         </a>
                         <a
                           href={episode.downloadpodfile?.url || "#"}
-                          className="mt-2 text-indigo-500 hover:underline"
+                          className="mt-2 text-blue-400 hover:underline"
                         >
                           Ladda ner
                         </a>
@@ -180,45 +180,46 @@ const [isVisible, setIsVisible] = useState(false);
                 );
               })
           ) : (
-            <div>Inga avsnitt tillgängliga</div>
+            <div className="text-red-500 text-2xl">Inga avsnitt tillgängliga</div>
           )}
         </div>
       </TabPanel>
       <TabPanel>
         {/* program related to the channel */}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {programs?.map((program: IProgram) => {
             return (
               <div
                 key={program.id}
-                className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-auto"
+                className="max-w-md mx-auto bg-gray-800 text-white rounded-xl shadow-md overflow-hidden md:max-w-auto"
               >
                 <div>
                   <img
-                    className="h-48 w-full object-cover"
-                    src={program.programimagetemplate.replace("{?}", "400x400")}
+                    src={program.programimage}
                     alt={program.name}
+                    className="w-full h-64 object-cover mt-2 rounded"
                   />
+
                 </div>
                 <div className="p-8">
-                  <h3 className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+                  <h3 className="uppercase tracking-wide text-sm text-blue-400 font-semibold">
                     {program.name}
                   </h3>
-                  <p className="mt-2 text-gray-500">{program.description}</p>
-                  <p className="mt-2 text-gray-500">{program.broadcastinfo}</p>
+                  <p className="mt-2 text-gray-300">{program.description}</p>
+                  <p className="mt-2 text-gray-300">{program.broadcastinfo}</p>
                   <div className="flex justify-between items-center mt-4">
                     <a
                       href={program.programurl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-2 text-indigo-500 hover:underline"
+                      className="mt-2 text-blue-400 hover:underline"
                     >
                       Besök sida
                     </a>
                     <Link
                       to={`/programs/program/${program.id}`}
-                      className="mt-2 text-indigo-500 hover:underline"
+                      className="mt-2 text-blue-400 hover:underline"
                     >
                       Länk till detaljer
                     </Link>
@@ -234,11 +235,11 @@ const [isVisible, setIsVisible] = useState(false);
         {/* <WeeklyCalendar channelSchedule={channelSchedule} /> */}
         <WeeklyCalendar channelScheduleResults={channelScheduleResults} />
       </TabPanel>
-        {isVisible && (
-          <div onClick={scrollToTop} className='z-50 scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
-            ↑
-          </div>
-        )}
+      {isVisible && (
+        <div onClick={scrollToTop} className='z-50 scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
+          ↑
+        </div>
+      )}
     </Tabs>
   );
 };
