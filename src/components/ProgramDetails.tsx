@@ -175,11 +175,7 @@ export function ProgramDetails({ onPlayAudio }: ProgramDetailsProps) {
             </div>
           </div>
         </div>
-        {isVisible && (
-          <div onClick={scrollToTop} className='scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
-            ↑
-          </div>
-        )}
+     
       </TabPanel>
       <TabPanel>
         {/* BroadCast */}
@@ -213,11 +209,7 @@ export function ProgramDetails({ onPlayAudio }: ProgramDetailsProps) {
           ) : (
             <p className="text-red-500 text-2xl">Inga sändningar tillgängliga</p>
           )}
-          {isVisible && (
-            <div onClick={scrollToTop} className="scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center">
-              ↑
-            </div>
-          )}
+      
         </div>
 
 
@@ -251,11 +243,7 @@ export function ProgramDetails({ onPlayAudio }: ProgramDetailsProps) {
           ) : (
             <p className="text-red-500 text-2xl">Inga poddar tillgängliga</p>
           )}
-          {isVisible && (
-            <div onClick={scrollToTop} className="scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center">
-              ↑
-            </div>
-          )}
+       
         </div>
 
       </TabPanel>
@@ -308,14 +296,14 @@ export function ProgramDetails({ onPlayAudio }: ProgramDetailsProps) {
           </div>
         </div>
 
+
+      </TabPanel>
+
         {isVisible && (
           <div onClick={scrollToTop} className='scroll-to-top cursor-pointer text-2xl w-10 h-10 bg-gray-700 text-white fixed bottom-5 right-5 rounded-full flex items-center justify-center'>
             ↑
           </div>
         )}
-
-      </TabPanel>
-
 
     </Tabs>
 
