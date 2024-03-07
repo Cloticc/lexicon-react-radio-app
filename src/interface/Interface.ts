@@ -60,17 +60,34 @@ export interface IProgram extends IFavoriteItem {
 }
 export type FavoriteItem = IChannel | IProgram;
 
+// export interface IScheduleEpisode {
+//   episodeid: string;
+//   title: string;
+//   description: string;
+//   starttimeutc: string;
+//   endtimeutc: string;
+//   program: IProgram;
+//   channel: IChannel;
+//   imageurl: string;
+//   imageurltemplate: string;
+//   photographer: string;
+// }
+
+
+
 export interface IScheduleEpisode {
   episodeid: string;
   title: string;
-  description: string;
   starttimeutc: string;
   endtimeutc: string;
   program: IProgram;
   channel: IChannel;
-  imageurl: string;
-  imageurltemplate: string;
-  photographer: string;
+  imageurl?: string;
+  imageurltemplate?: string;
+}
+
+export interface ISchedule {
+  scheduledepisode: IScheduleEpisode[];
 }
 
 export interface ILiveAudio {
