@@ -38,13 +38,12 @@ export const Broadcasts = () => {
   };
 
   return (
-    <div className="flex flex-col">
-      <button onClick={handleClick} className='bg-blue-500 text-white p-2 rounded-md'>
+    <div className="flex flex-col bg-gray-800 text-white">
+      <button onClick={handleClick} className='bg-gray-800 text-white p-2 rounded-md border-2 border-gray-500'>
         {isShown ? 'Göm kalender' : 'Visa kalender'}
       </button>
       <div className={`transition-transform duration-500 ease-in-out transform ${isShown ? 'translate-x-0' : '-translate-x-full'}`} onTransitionEnd={handleTransitionEnd}>
         {(isShown || isAnimating) && <Calander broadcasts={broadcasts}  />}
-         
       </div>
     </div>
   );
