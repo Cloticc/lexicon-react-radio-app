@@ -152,30 +152,28 @@ export function ProgramDetails({ onPlayAudio }: ProgramDetailsProps) {
   return (
 
     <Tabs className="flex flex-col" selectedIndex={tabIndex} onSelect={index => setTabIndex(index)}>
-      <TabList className="flex mb-4">
+      <TabList className="flex mt-4 mb-4">
         <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Detaljer</Tab>
         <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Sändningar</Tab>
         <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Pod</Tab>
         <Tab className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Avsnitt</Tab>
       </TabList>
       <TabPanel>
-
-        <div className="space-y-4 bg-white shadow-lg rounded-lg p-6 flex items-start gap-6">
+        <div className="space-y-4 bg-gray-800 text-white shadow-lg rounded-lg p-6 flex items-start gap-6">
           <div className="w-1/6 rounded-md overflow-hidden">
             <img className="h-full object-cover" src={program?.programimage} alt={program?.name} />
           </div>
 
           <div className="flex-grow">
-            <h2 className='text-3xl font-bold text-gray-800'>{program?.name}</h2>
-            <p className='text-gray-600'>{program?.broadcastinfo}</p>
-            <p className='text-gray-600'>{program?.description}</p>
-            <a className='text-blue-500 hover:underline' href={program?.programurl}>Visit Site</a>
+            <h2 className='text-3xl font-bold'>{program?.name}</h2>
+            <p className='text-gray-300'>{program?.broadcastinfo}</p>
+            <p className='text-gray-300'>{program?.description}</p>
+            <a className='text-blue-400 hover:underline' href={program?.programurl}>Visit Site</a>
             <div className='flex space-x-4 mt-4'>
               {socialMedia}
             </div>
           </div>
         </div>
-     
       </TabPanel>
       <TabPanel>
         {/* BroadCast */}
@@ -185,15 +183,14 @@ export function ProgramDetails({ onPlayAudio }: ProgramDetailsProps) {
             broadcasts.map((broadcast: IBroadcast) => (
               <div
                 key={broadcast.id}
-                className="rounded-lg overflow-hidden shadow-md bg-white"
+                className="rounded-lg overflow-hidden shadow-md bg-gray-800 text-white"
               >
                 <div className="p-6">
                   <h2 className="text-xl font-bold mb-2">{broadcast.title}</h2>
-                  <p className="text-gray-700 mb-4">{broadcast.description}</p>
-                  <p className="text-gray-700">Längd: {Math.round(broadcast.broadcastfiles.reduce((acc, file) => acc + file.duration, 0) / 60)} minutes</p>
+                  <p className="text-gray-300 mb-4">{broadcast.description}</p>
+                  <p className="text-gray-300">Längd: {Math.round(broadcast.broadcastfiles.reduce((acc, file) => acc + file.duration, 0) / 60)} minutes</p>
 
-
-                  <p className="text-gray-700">
+                  <p className="text-gray-300">
                     Publicerad: {parseDate(broadcast.broadcastdateutc).toLocaleDateString('en-GB')}
                     <br />
                     {parseDate(broadcast.broadcastdateutc).toLocaleTimeString('en-GB')}
@@ -226,16 +223,16 @@ export function ProgramDetails({ onPlayAudio }: ProgramDetailsProps) {
                 <div
                   key={pod.id}
                   ref={pageIndex === podFiles.pages.length - 1 && podIndex === page.data.length - 1 ? lastPodFileElementRef : null}
-                  className="rounded-lg overflow-hidden shadow-md bg-white"
+                  className="rounded-lg overflow-hidden shadow-md bg-gray-800 text-white"
                 >
                   <div className="p-6">
                     <h2 className="text-xl font-bold mb-2">{pod.title}</h2>
-                    <p className="text-gray-700 mb-4">{pod.description}</p>
-                    <p className="text-gray-600 text-xs">Varaktighet: {Math.round(pod.duration / 60)} minutes</p>
-                    <p className="text-gray-600 text-xs">Publicerad: {new Date(parseInt(pod.publishdateutc.substring(6, pod.publishdateutc.length - 2))).toLocaleDateString('en-GB')}</p>
+                    <p className="text-gray-300 mb-4">{pod.description}</p>
+                    <p className="text-gray-300">Varaktighet: {Math.round(pod.duration / 60)} minutes</p>
+                    <p className="text-gray-300">Publicerad: {new Date(parseInt(pod.publishdateutc.substring(6, pod.publishdateutc.length - 2))).toLocaleDateString('en-GB')}</p>
                   </div>
                   <div className="px-6 py-4">
-                  <button onClick={() => handlePlay(pod.url)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Play Audio</button>
+                    <button onClick={() => handlePlay(pod.url)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Play Audio</button>
                   </div>
                 </div>
               ))
@@ -257,16 +254,16 @@ export function ProgramDetails({ onPlayAudio }: ProgramDetailsProps) {
                   <div
                     key={episode.id ? episode.id : 'No ID'}
                     ref={pageIndex === episodes.pages.length - 1 && episodeIndex === page.data.length - 1 ? lastEpisodeElementRef : null}
-                    className="shadow-md rounded-lg bg-white"
+                    className="shadow-md rounded-lg bg-gray-800 text-white"
                   >
                     <img className="w-full h-44 object-cover rounded-lg" src={episode.imageurl || ""} alt={episode.title || "No title"} />
                     <div className="px-6 py-4">
                       <div className="font-bold text-xl mb-2">{episode.title || 'Ingen titel tillgänglig'}</div>
-                      <p className="text-gray-700 text-base">{episode.description || 'Ingen beskrivning finns tillgänglig'}</p>
-                      <p className="mt-2 text-gray-500">
+                      <p className="text-gray-300 text-base">{episode.description || 'Ingen beskrivning finns tillgänglig'}</p>
+                      <p className="mt-2 text-gray-300">
                         Publicerad: {new Date(parseInt(episode.publishdateutc.substring(6, episode.publishdateutc.length - 2))).toLocaleDateString('en-GB')}
                       </p>
-                      <p>
+                      <p className="text-gray-300">
                         Sändningstid: {episode.broadcasttime ? `${new Date(parseInt(episode.broadcasttime.starttimeutc.substring(6, episode.broadcasttime.starttimeutc.length - 2))).toLocaleTimeString('en-GB')} - ${new Date(parseInt(episode.broadcasttime.endtimeutc.substring(6, episode.broadcasttime.endtimeutc.length - 2))).toLocaleTimeString('en-GB')}` : "No broadcast"}
                       </p>
                     </div>
