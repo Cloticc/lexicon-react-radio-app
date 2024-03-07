@@ -45,9 +45,12 @@ export function App() {
           <Route path="/register" element={<Register />} />
         </Routes>
         {audioSrc && (
-          <audio controls autoPlay src={audioSrc}>
-            Your browser does not support the audio element.
-          </audio>
+          <div className="fixed bottom-0 left-0 w-full flex justify-center items-center bg-white">
+            <audio controls autoPlay src={audioSrc}>
+              Your browser does not support the audio element.
+            </audio>
+            <button onClick={() => setAudioSrc(null)} className='ml-20 bg-red-500 text-white p-2 rounded-md'>Stäng</button>
+          </div>
         )}
       </BrowserRouter>
     </QueryClientProvider>
