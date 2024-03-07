@@ -62,18 +62,18 @@ export function ProgramDetails({ onPlayAudio }: ProgramDetailsProps) {
 
   );
 
-  useEffect(() => {
-    if (localStorage.getItem('isRefreshed')) {
-      console.log('The page was refreshed');
-    } else {
-      localStorage.setItem('isRefreshed', 'true');
-    }
+  // useEffect(() => {
+  //   if (localStorage.getItem('isRefreshed')) {
+  //     console.log('The page was refreshed');
+  //   } else {
+  //     localStorage.setItem('isRefreshed', 'true');
+  //   }
 
 
-    return () => {
-      localStorage.removeItem('isRefreshed');
-    };
-  }, []);
+  //   return () => {
+  //     localStorage.removeItem('isRefreshed');
+  //   };
+  // }, []);
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -151,7 +151,7 @@ export function ProgramDetails({ onPlayAudio }: ProgramDetailsProps) {
 
   return (
 
-    <Tabs className="flex flex-col" selectedIndex={tabIndex} onSelect={index => setTabIndex(index)}>
+     <Tabs className="flex flex-col" selectedIndex={tabIndex} onSelect={index => setTabIndex(index)}>
       <TabList className="flex mt-4 mb-4">
         <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Detaljer</Tab>
         <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Sändningar</Tab>
