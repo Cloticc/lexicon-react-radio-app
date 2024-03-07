@@ -77,18 +77,18 @@ export const ProgramComponent: React.FC = () => {
       <div className='container mx-auto p-4'>
         <aside className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 bg'>
           {programs?.map((program, index) => (
-            <li key={`${program.id}-${index}`} className='relative border rounded-lg shadow-lg bg-white list-none p-4 space-y-4 '>
+            <li key={`${program.id}-${index}`} className='relative  rounded-lg shadow-lg bg-gray-800 text-white list-none p-4 space-y-4 '>
               <img className="w-full h-64 object-cover mt-2 rounded" src={program.programimage} alt={program.name} />
               <div className="space-y-2">
                 <h3 className="text-lg font-semibold">{program.name}</h3>
-                <p>{program.description}</p>
-                <p>{program.broadcastinfo}</p>
+                <p className="text-gray-300">{program.description}</p>
+                <p className="text-gray-300">{program.broadcastinfo}</p>
 
-                <p>SR Url: <a className="font-bold  text-blue-500" href={program.programurl}>Link</a></p>
+                <p className="text-gray-300">SR Url: <a className="font-bold  text-blue-500" href={program.programurl}>Link</a></p>
                 <ul className='space-y-2 text-blue-500'>
                   {socialMediaPlatforms(program)}
                 </ul>
-                <p>Arkiverad: <span className="font-bold">{program.archived ? 'Ja' : 'Nej'}</span></p>
+                <p className="text-gray-300">Arkiverad: <span className="font-bold">{program.archived ? 'Ja' : 'Nej'}</span></p>
               </div>
               <Link className="text-blue-500 hover:underline" to={`/programs/program/${program.id}`}>
                 <h2 className="text-xl font-bold">Länk till detaljer</h2>
@@ -108,8 +108,6 @@ export const ProgramComponent: React.FC = () => {
                   color={favorites.some(favorite => favorite.id === program.id) ? 'yellow' : 'grey'}
                 />
               </button>
-
-
             </li>
           ))}
         </aside>
