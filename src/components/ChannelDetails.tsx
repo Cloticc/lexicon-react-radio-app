@@ -80,7 +80,7 @@ export const ChannelDetails = () => {
 
   return (
     <Tabs className="flex flex-col">
-      <TabList className="flex space-x-4">
+      <TabList className="flex space-x-4 mt-5">
         <Tab selectedClassName="bg-blue-500" className="bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
           Sändningar
         </Tab>
@@ -89,9 +89,10 @@ export const ChannelDetails = () => {
         </Tab>
         <Tab selectedClassName="bg-blue-500" className="bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
           Kalender
+
         </Tab>
       </TabList>
-      <TabPanel>
+      <TabPanel className='mt-5' >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {searchEpisode && searchEpisode.length > 0 ? (
             searchEpisode
