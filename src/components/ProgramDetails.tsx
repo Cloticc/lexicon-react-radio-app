@@ -153,10 +153,18 @@ export function ProgramDetails({ onPlayAudio }: ProgramDetailsProps) {
 
      <Tabs className="flex flex-col" selectedIndex={tabIndex} onSelect={index => setTabIndex(index)}>
       <TabList className="flex mt-4 mb-4">
-        <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Detaljer</Tab>
-        <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Sändningar</Tab>
-        <Tab className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Pod</Tab>
-        <Tab className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">Avsnitt</Tab>
+        <Tab className="mr-2 bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+          Detaljer
+        </Tab>
+        <Tab className="mr-2 bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+          Sändningar
+        </Tab>
+        <Tab className="mr-2 bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+          Pod
+        </Tab>
+        <Tab className="bg-gray-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition duration-200 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+          Avsnitt
+        </Tab>
       </TabList>
       <TabPanel>
         <div className="space-y-4 bg-gray-800 text-white shadow-lg rounded-lg p-6 flex items-start gap-6">
